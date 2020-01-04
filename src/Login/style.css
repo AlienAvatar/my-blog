@@ -1,0 +1,17 @@
+.login-form{
+    position: absolute;
+    padding: 64px;
+    background: #ccc;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 0 1px 5px gray;
+}
+
+input[type='button']:checked{
+    position: fixed;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    background: rgba(0,0,0,.8);
+}
