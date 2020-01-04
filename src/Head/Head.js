@@ -21,7 +21,7 @@ class Head extends Component{
         this.setState({
             isShowLogin:temp
         });
-        //
+
         // document.body.cssText = shadowWindow;
     }
 
