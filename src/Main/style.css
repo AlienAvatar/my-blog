@@ -7,3 +7,11 @@ body::before{
     background: rgba(0,0,0,.8);
 }
 
+#container{
+    min-height: 400px;
+    height: 806px;
+}
+
+#footer{
+    background: #001529;
+}

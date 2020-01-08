@@ -1,48 +1,70 @@
 import { Form, Icon, Input, Button, Checkbox,Select, AutoComplete,Option,AutoCompleteOption,Cascader,Tooltip,Row,Col } from 'antd';
 import React, {Component} from 'react';
 import "./style.css"
-import RegisterForm from "./RegisterForm";
-import Head from "../Head/Head";
 
-const url = 'http://localhost:8081/api/queryUser';
-const user = 'user=';
-const password = 'password=';
-class LoginForm extends React.Component {
+const url = 'http://111.229.76.149:8081/api/getUser';
+class RegisterForm extends React.Component{
     constructor(props){
         super(props);
-        this.openRegisterWindow = this.openRegisterWindow.bind(this);
-        this.checkLogin = this.checkLogin.bind(this);
-    }
-
-    checkLogin(result){
-        console.log(result);
+        this.state = {
+            confirmDirty: false,
+            autoCompleteResult: [],
+        };
     }
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
+        this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
             }
-            let queryUrl = `${url}?${user}${values.username}&${password}${values.password}`;
-            fetch(queryUrl,{
-                    method: 'POST',
-                })
+            fetch(url)
                 .then(response => response.json())
-                .then(result => this.checkLogin(result))
+                .then(result => this.props.setSearchTopStories(result))
                 .catch(e => e)
         });
     };
 
-    openRegisterWindow(isShowLogin){
-        isShowLogin = "register";
-        this.props.showLogin(isShowLogin);
-    }
-
     render() {
         const { getFieldDecorator } = this.props.form;
+        const { autoCompleteResult } = this.state;
+
+        const formItemLayout = {
+            labelCol: {
+                xs: { span: 24 },
+                sm: { span: 8 },
+            },
+            wrapperCol: {
+                xs: { span: 24 },
+                sm: { span: 16 },
+            },
+        };
+        const tailFormItemLayout = {
+            wrapperCol: {
+                xs: {
+                    span: 24,
+                    offset: 0,
+                },
+                sm: {
+                    span: 16,
+                    offset: 8,
+                },
+            },
+        };
+        const prefixSelector = getFieldDecorator('prefix', {
+            initialValue: '86',
+        })(
+            <Select style={{ width: 70 }}>
+                <Option value="86">+86</Option>
+                <Option value="87">+87</Option>
+            </Select>,
+        );
+
+        const websiteOptions = autoCompleteResult.map(website => (
+            <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
+        ));
         return (
-            <div id="login" style={loginStyle}>
+            <div className="register">
                 <Form onSubmit={this.handleSubmit} className="login-form">
                     <Form.Item>
                         {getFieldDecorator('username', {
@@ -80,7 +102,7 @@ class LoginForm extends React.Component {
                     </Form.Item>
                 </Form>
             </div>
-        );
+        )
     }
 }
 const loginStyle = {
@@ -88,6 +110,6 @@ const loginStyle = {
     position : 'fixed',
     justifyContent : 'center',
     alignItems : 'center'
-}
+};
 
-export default LoginForm
+export default RegisterForm;
