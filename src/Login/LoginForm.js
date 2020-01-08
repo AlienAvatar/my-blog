@@ -5,7 +5,7 @@ import RegisterForm from "./RegisterForm";
 import Head from "../Head/Head";
 
 const url = 'http://localhost:8081/api/queryUser';
-const user = 'user=';
+const username = 'username=';
 const password = 'password=';
 class LoginForm extends React.Component {
     constructor(props){
@@ -16,21 +16,36 @@ class LoginForm extends React.Component {
 
     checkLogin(result){
         console.log(result);
+        if(result.code === "200"){
+            this.props.closeLoginWindow();
+        }
     }
 
     handleSubmit = e => {
         e.preventDefault();
+
+        let headers = new Headers({
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'text/plain'
+        });
+
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
             }
-            let queryUrl = `${url}?${user}${values.username}&${password}${values.password}`;
+            let queryUrl = `${url}?${username}${values.username}&${password}${values.password}`;
             fetch(queryUrl,{
-                    method: 'POST',
+                method: 'POST',
+                headers: headers,
                 })
-                .then(response => response.json())
-                .then(result => this.checkLogin(result))
-                .catch(e => e)
+                .then(res => {
+                    return res.json();
+                }).then(json => {
+                    console.log('获取的结果', json);
+                    return json;
+                }).catch(err => {
+                    console.log('请求错误', err);
+                })
         });
     };
 
@@ -39,11 +54,14 @@ class LoginForm extends React.Component {
         this.props.showLogin(isShowLogin);
     }
 
+
+
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
-            <div id="login" style={loginStyle}>
+            <div id="login" className="login" style={loginStyle}>
                 <Form onSubmit={this.handleSubmit} className="login-form">
+                    <a href="#" className="closeLoginWindow" onClick={this.props.closeLoginWindow}>X</a>
                     <Form.Item>
                         {getFieldDecorator('username', {
                             rules: [{ required: true, message: 'Please input your username!' }],
@@ -88,6 +106,6 @@ const loginStyle = {
     position : 'fixed',
     justifyContent : 'center',
     alignItems : 'center'
-}
+};
 
 export default LoginForm

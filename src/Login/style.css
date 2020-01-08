@@ -8,3 +8,9 @@
     z-index:20;
 }
 
+.closeLoginWindow{
+    position: relative;
+    left: 100%;
+    cursor: pointer;
+    top: 100%;
+}

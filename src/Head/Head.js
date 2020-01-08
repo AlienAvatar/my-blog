@@ -25,14 +25,14 @@ class Head extends Component{
         this.setState({
             isShowLogin : 'closed'
         });
-        document.getElementsByClassName("headOverlay")[0].style.cssText = "display:none";
-        document.getElementById("login").style.cssText = "display:none";
+        // document.getElementsByClassName("headOverlay")[0].style.cssText = "display:none";
     }
+
     handleChange(){
         this.setState({
             isShowLogin : 'login'
         });
-        document.getElementsByClassName("headOverlay")[0].style.cssText = "display:block";
+        // document.getElementsByClassName("headOverlay")[0].style.cssText = "display:block";
     }
 
     render() {
@@ -43,8 +43,8 @@ class Head extends Component{
         return (
             <div className="header">
                 <div className="headOverlay">
-                    {isShowLogin === "login" ? <NormalLoginForm setSearchTopStories={this.setSearchTopStories} showLogin={this.showLogin} isShowLogin={this.state.isShowLogin}></NormalLoginForm>  : null}
                 </div>
+                {isShowLogin === "login" ? <NormalLoginForm closeLoginWindow={this.closeLoginWindow} setSearchTopStories={this.setSearchTopStories} showLogin={this.showLogin} isShowLogin={this.state.isShowLogin}></NormalLoginForm>  : null}
                 <Layout>
                     <div className="header-container">
                         <div className="bannerLine" style={css_bannerLine} />
@@ -67,6 +67,7 @@ class Head extends Component{
                             <div className="right-banner">
                                 <Button onClick={this.handleChange} className="head-btn" type="primary">{loginLabel}</Button>
                             </div>
+
                         </Header>
                     </div>
                 </Layout>
