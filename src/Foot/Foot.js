@@ -25,4 +25,6 @@ class Foot extends Component{
     }
 }
 
+
+
 export default Foot;
