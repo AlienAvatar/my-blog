@@ -28,6 +28,13 @@
 #logo{
     z-index: 999;
 }
+
+.right-banner{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+}
 /*.logo{*/
 /*    background-image: url("../../public/image/avatar.jpg");*/
 /*    background-repeat: no-repeat;*/
@@ -36,3 +43,4 @@
 /*    width:30px;*/
 /*    height:30px;*/
 /*}*/
+

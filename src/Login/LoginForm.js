@@ -10,15 +10,19 @@ const password = 'password=';
 class LoginForm extends React.Component {
     constructor(props){
         super(props);
-        this.openRegisterWindow = this.openRegisterWindow.bind(this);
         this.checkLogin = this.checkLogin.bind(this);
+        this.openRegister = this.openRegister.bind(this);
     }
 
     checkLogin(result){
-        console.log(result);
-        if(result.code === "200"){
-            this.props.closeLoginWindow();
+        console.log(result.code === 200);
+        if(result.code === 200){
+            this.props.succeedLoginWindow(result.data[0]);
         }
+    }
+    openRegister(){
+        debugger;
+        this.props.openRegisterWindow();
     }
 
     handleSubmit = e => {
@@ -42,19 +46,13 @@ class LoginForm extends React.Component {
                     return res.json();
                 }).then(json => {
                     console.log('获取的结果', json);
+                    this.checkLogin(json);
                     return json;
                 }).catch(err => {
                     console.log('请求错误', err);
                 })
         });
     };
-
-    openRegisterWindow(isShowLogin){
-        isShowLogin = "register";
-        this.props.showLogin(isShowLogin);
-    }
-
-
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -94,7 +92,7 @@ class LoginForm extends React.Component {
                         <Button type="primary" htmlType="submit" className="login-form-button">
                             Log in
                         </Button>
-                        Or <a href=""  onClick={this.openRegisterWindow}>注册</a>
+                        Or <a href=""  onClick={this.openRegister}>注册</a>
                     </Form.Item>
                 </Form>
             </div>

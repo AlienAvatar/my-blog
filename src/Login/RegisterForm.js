@@ -18,61 +18,23 @@ class RegisterForm extends React.Component{
             if (!err) {
                 console.log('Received values of form: ', values);
             }
-            fetch(url)
-                .then(response => response.json())
-                .then(result => this.props.setSearchTopStories(result))
-                .catch(e => e)
+
         });
     };
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { autoCompleteResult } = this.state;
-
-        const formItemLayout = {
-            labelCol: {
-                xs: { span: 24 },
-                sm: { span: 8 },
-            },
-            wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 16 },
-            },
-        };
-        const tailFormItemLayout = {
-            wrapperCol: {
-                xs: {
-                    span: 24,
-                    offset: 0,
-                },
-                sm: {
-                    span: 16,
-                    offset: 8,
-                },
-            },
-        };
-        const prefixSelector = getFieldDecorator('prefix', {
-            initialValue: '86',
-        })(
-            <Select style={{ width: 70 }}>
-                <Option value="86">+86</Option>
-                <Option value="87">+87</Option>
-            </Select>,
-        );
-
-        const websiteOptions = autoCompleteResult.map(website => (
-            <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
-        ));
         return (
-            <div className="register">
+            <div id="login" className="login" style={loginStyle}>
                 <Form onSubmit={this.handleSubmit} className="login-form">
+                    <a href="#" className="closeLoginWindow" onClick={this.props.closeLoginWindow}>X</a>
                     <Form.Item>
                         {getFieldDecorator('username', {
                             rules: [{ required: true, message: 'Please input your username!' }],
                         })(
                             <Input
                                 prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                placeholder="Username"
+                                placeholder="register"
                             />,
                         )}
                     </Form.Item>
@@ -98,11 +60,10 @@ class RegisterForm extends React.Component{
                         <Button type="primary" htmlType="submit" className="login-form-button">
                             Log in
                         </Button>
-                        Or <a href=""  onClick={this.openRegisterWindow}>注册</a>
                     </Form.Item>
                 </Form>
             </div>
-        )
+        );
     }
 }
 const loginStyle = {
