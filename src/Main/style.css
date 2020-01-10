@@ -10,6 +10,7 @@ body::before{
 #container{
     min-height: 400px;
     height: 806px;
+    background: #dddddd;
 }
 
 #footer{

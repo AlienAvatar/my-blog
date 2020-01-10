@@ -1,6 +1,5 @@
 import React, {Component, Fragment} from 'react';
 import {Form, Layout, Menu} from "antd";
-import logoImage from "../../public/Image/avatar.jpg";
 import { Button } from 'antd';
 import LoginForm from  "../Login/LoginForm";
 import "./style.css";
