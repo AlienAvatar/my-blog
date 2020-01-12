@@ -13,18 +13,38 @@ const css_closeLoginWindow = 'position: fixed; top:0;right:0;bottom:0;left:0;bac
 class Head extends Component{
     constructor(props){
         super(props);
+        this.state = {
+            isShowLogin : "closed",
+            loginMsg : {}
+        };
         this.handleChange = this.handleChange.bind(this);
         this.closeLoginWindow = this.closeLoginWindow.bind(this);
-        this.state = {
-            label : '登录',
-            isShowLogin : "closed",
-        }
+        this.succeedLoginWindow = this.succeedLoginWindow.bind(this);
+        this.logout = this.logout.bind(this);
+        this.openRegisterWindow = this.openRegisterWindow.bind(this);
     }
+
+    logout(){
+        this.setState({
+            isShowLogin : 'closed',
+            loginMsg : {}
+        });
+        document.querySelector(".head-btn").style.cssText = "display:block";
+    }
+
     closeLoginWindow(){
         this.setState({
             isShowLogin : 'closed'
         });
         // document.getElementsByClassName("headOverlay")[0].style.cssText = "display:none";
+    }
+
+    succeedLoginWindow(msg){
+        this.setState({
+            isShowLogin : 'loginIn',
+            loginMsg:msg
+        });
+        document.querySelector(".head-btn").style.cssText = "display:none";
     }
 
     handleChange(){
@@ -34,16 +54,39 @@ class Head extends Component{
         // document.getElementsByClassName("headOverlay")[0].style.cssText = "display:block";
     }
 
+
+    openRegisterWindow(){
+        this.setState({
+            isShowLogin : 'register'
+        });
+    }
+
+    componentDidUpdate(){
+
+    }
+
     render() {
-        let loginLabel = this.state.label;
         let isShowLogin = this.state.isShowLogin;
         const NormalLoginForm = Form.create({ name: 'normal_login' })(LoginForm);
         const NormalRegisterForm = Form.create({ name: 'normal_register' })(RegisterForm);
+        let loginFormComponent= null;
+        let loginInMsgComponent = null;
+
+        if(isShowLogin === "login" ){
+            loginFormComponent = <NormalLoginForm closeLoginWindow={this.closeLoginWindow} succeedLoginWindow={this.succeedLoginWindow} isShowLogin={isShowLogin} openRegisterWindow={this.openRegisterWindow} ></NormalLoginForm>
+        }else if(isShowLogin === "register"){
+            loginFormComponent = <NormalRegisterForm closeLoginWindow={this.closeLoginWindow} isShowLogin={this.state.isShowLogin}></NormalRegisterForm>
+        }
+        if(isShowLogin === "loginIn"){
+            console.log(this.state.loginMsg);
+            let nickname = this.state.loginMsg.nickname;
+            loginInMsgComponent = <Menu.SubMenu title={nickname}><Menu.Item>设置</Menu.Item><Menu.Item onClick={this.logout}>退出</Menu.Item></Menu.SubMenu>
+        }
         return (
             <div className="header">
                 <div className="headOverlay">
                 </div>
-                {isShowLogin === "login" ? <NormalLoginForm closeLoginWindow={this.closeLoginWindow} setSearchTopStories={this.setSearchTopStories} showLogin={this.showLogin} isShowLogin={this.state.isShowLogin}></NormalLoginForm>  : null}
+                {loginFormComponent}
                 <Layout>
                     <div className="header-container">
                         <div className="bannerLine" style={css_bannerLine} />
@@ -64,7 +107,15 @@ class Head extends Component{
                                 </div>
                             </div>
                             <div className="right-banner">
-                                <Button onClick={this.handleChange} className="head-btn" type="primary">{loginLabel}</Button>
+                                <Menu
+                                    theme="dark"
+                                    mode="horizontal"
+                                    defaultSelectedKeys={['2']}
+                                    style={{ lineHeight: '64px' }}
+                                >
+                                    {loginInMsgComponent}
+                                </Menu>
+                                <Button onClick={this.handleChange} className="head-btn" type="primary">登录</Button>
                             </div>
 
                         </Header>
