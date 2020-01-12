@@ -1,7 +1,13 @@
 import React, {Component, Fragment} from 'react';
 import "./style.css";
-import {Footer, Layout, Menu,Divider,Icon} from "antd";
+import {Footer, Layout, Menu,Divider,Icon,BackTop} from "antd";
+import { Affix, Button } from 'antd';
+
 class Foot extends Component{
+    state = {
+        bottom: 10,
+    };
+
     render() {
         return (
             <div className="footer">
@@ -17,8 +23,22 @@ class Foot extends Component{
                 </div>
                 <div className="footer-msg">
                     <div className="btn-group">
-                        <Icon style={{ fontSize: '30px'}} type="message" />
+                        {/*<Affix className="btn-msg" offsetBottom={this.state.bottom}>*/}
+                        {/*    <Icon*/}
+                        {/*        style={{ fontSize: '30px'}} type="message"*/}
+                        {/*        onClick={() => {*/}
+                        {/*            this.setState({*/}
+                        {/*                bottom: this.state.bottom + 10,*/}
+                        {/*            });*/}
+                        {/*        }}*/}
+                        {/*    >*/}
+                        {/*    </Icon>*/}
+                        {/*</Affix>*/}
+                        <div className="back-top">
+                            <BackTop visibilityHeight={400}/>
+                        </div>
                     </div>
+
                 </div>
             </div>
         )

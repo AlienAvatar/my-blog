@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import ArticleListCell from './ArticleListCell'
 import "./style.css";
 import Pagination from "antd/es/pagination";
-
+import { Input,Tabs } from 'antd';
+const { Search } = Input;
+const { TabPane } = Tabs;
 const DEFAULT_QUERY = 'redux';
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
@@ -22,9 +24,7 @@ class ArticleList extends Component {
     }
 
     onChange = page => {
-
         let items = this.getArticle(page);
-        // console.log(items);
         if(!items){
             return null;
         }
@@ -34,21 +34,9 @@ class ArticleList extends Component {
         });
     };
 
-    // onShowSizeChange = () =>{
-    //     let pageSize = this.getPageSize();
-    //     console.log(pageSize);
-    //     this.setState({pageSize:pageSize});
-    // };
-    setPageSize(pageSize){
-        this.setState({pageSize:pageSize});
-    }
     componentDidMount() {
         this.getPageSize();
         this.getArticle(this.state.current);
-    }
-
-    setItems(params){
-        this.setState({items:params});
     }
 
     getPageSize(){
@@ -58,8 +46,7 @@ class ArticleList extends Component {
         }).then(res => {
             return res.json();
         }).then((result) => {
-            // console.log(result);
-            this.setPageSize(result.msg);
+            this.setState({pageSize:result.msg});
         }).catch(err => {
             console.log('请求错误', err);
         })
@@ -72,27 +59,39 @@ class ArticleList extends Component {
         }).then(res => {
             return res.json();
         }).then((result) => {
-            this.setItems(result);
+            this.setState({items:result});
         }).catch(err => {
             console.log('请求错误', err);
         })
     }
 
     render() {
-        const {tags} = this.props;
         const items = this.state.items;
         if(!items){
             return null;
         }
-
         return(
-            <div className="art-container">
+            <div className="left-article">
+                <div className="input-container">
+                    <Search
+                        style={{ width: 500 }}
+                        placeholder="input search text"
+                        enterButton="Search"
+                        size="large"
+                        onSearch={value => console.log(value)}
+                    />
+                </div>
                 {
                     items.map((item,index) => (
-                        <ArticleListCell history={this.props.history} key={index} data={item} tags={tags} />
+                        <div className="article-container">
+                            <ArticleListCell key={index} data={item} />
+                        </div>
                     ))
                 }
-                <Pagination defaultCurrent={this.state.current} onChange={this.onChange} pageSize={5} total={this.state.pageSize} />;
+
+                <div className="article-page">
+                    <Pagination defaultCurrent={this.state.current} onChange={this.onChange} pageSize={5} total={this.state.pageSize} />
+                </div>
             </div>
         )
     }

@@ -41,14 +41,7 @@ blockquote p{
     font-size: 20px;
     font-family: inherit;
 }
-.ac_container{
-    color:white;
-    text-align: center;
 
-}
-.ac_content{
-    border-radius: 3px;
-}
 main{
     background: hsla(0,0%,100%,.3);
     position: relative;
@@ -65,4 +58,38 @@ main::before{
     filter:blur(20px);
     margin: -30px;
     /*background: rgba(255,0,0,.5);*/
+}
+
+.left-article{
+    height: 100%;
+}
+
+.article-container{
+    height: 30%;
+    margin: 37px 0;
+    position: relative;
+    border-radius: 5px;
+    background: #ffffff;
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5);
+}
+
+.article-container:hover{
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,2.5);
+}
+
+/*Cell Style*/
+.cell_container{
+    height: 100%;
+    width: 100%;
+    position: relative;
+    padding: 23px;
+
+}
+
+.cell_content{
+    height: 100px;
+}
+
+.cell-foot-line{
+    margin:1px;
 }

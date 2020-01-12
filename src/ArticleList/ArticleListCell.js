@@ -1,22 +1,28 @@
 import React, { Component } from 'react'
 import './style.css'
+import {Divider} from "antd";
 
 class ArticleListCell extends Component{
     constructor(props){
         super(props);
-        this.state = {items:this.props.items}
     }
 
     render() {
-        console.log(this.props.items);
-        let items = this.state.items;
+        let item = this.props.item;
+        console.log(item);
         return(
-            <div className="ac_container">
-                <div className="ac_content">
+            <div className="cell_container">
+                <div className="cell_title"/>
+                <Divider></Divider>
+                <div className="cell_content">
                    <div>
 
                    </div>
                 </div>
+                <div className="cell-foot">
+                    <Divider className="cell-foot-line"/>
+                </div>
+
             </div>
         )
     }

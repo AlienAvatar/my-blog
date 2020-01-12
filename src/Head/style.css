@@ -35,12 +35,15 @@
     align-items: center;
     flex-wrap: nowrap;
 }
-/*.logo{*/
-/*    background-image: url("../../public/image/avatar.jpg");*/
-/*    background-repeat: no-repeat;*/
-/*    background-size: cover;*/
-/*    background-position:center;*/
-/*    width:30px;*/
-/*    height:30px;*/
-/*}*/
+
+.logo {
+    width: 120px;
+    height: 31px;
+    background: url("../../public/image/avatar.jpg");
+    margin: 16px 24px 16px 0;
+    float: left;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0px -5px;
+}
 

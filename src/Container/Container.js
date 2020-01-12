@@ -3,26 +3,17 @@ import "./style.css";
 import { Input,Tabs } from 'antd';
 import ArticleList from "../ArticleList/ArticleList";
 import Animation from "../Animation/Animation";
+import Pagination from "antd/es/pagination";
 
 const { Search } = Input;
 const { TabPane } = Tabs;
 class Container extends Component{
+
     render() {
         return(
             <div className="container">
                 <div className="left-container">
-                    <div className="input-container">
-                        <Search
-                            style={{ width: 500 }}
-                            placeholder="input search text"
-                            enterButton="Search"
-                            size="large"
-                            onSearch={value => console.log(value)}
-                        />
-                    </div>
-                    <div className="article-container">
-                        <ArticleList />
-                    </div>
+                    <ArticleList />
                 </div>
                 <div className="right-container">
                     <div className="msg-container">
