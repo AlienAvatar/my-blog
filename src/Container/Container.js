@@ -8,7 +8,6 @@ import Pagination from "antd/es/pagination";
 const { Search } = Input;
 const { TabPane } = Tabs;
 class Container extends Component{
-
     render() {
         return(
             <div className="container">
@@ -29,8 +28,12 @@ class Container extends Component{
                             </TabPane>
                         </Tabs>
                     </div>
+
+                    <div className="tag-container shadow-container">
+
+                    </div>
                     <div className="animation-container">
-                        {/*<Animation />*/}
+                        <Animation />
                     </div>
                 </div>
             </div>

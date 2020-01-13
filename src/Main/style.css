@@ -8,8 +8,7 @@ body::before{
 }
 
 #container{
-    min-height: 400px;
-    height: 806px;
+    min-height: 1415px;
     background: #dddddd;
 }
 

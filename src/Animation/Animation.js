@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import "./style.css";
-
+// import img from "../../public/image/avatar.jpg"
 class Animation extends Component{
     render() {
         return (

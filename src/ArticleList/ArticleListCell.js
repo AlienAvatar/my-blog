@@ -1,26 +1,34 @@
 import React, { Component } from 'react'
 import './style.css'
-import {Divider} from "antd";
+import {Divider,Icon} from "antd";
+import { Typography } from 'antd';
 
+const { Text,Title,Paragraph  } = Typography;
 class ArticleListCell extends Component{
     constructor(props){
         super(props);
     }
 
     render() {
-        let item = this.props.item;
+        let item = this.props.data;
         console.log(item);
+        let createDate = item.createDate.toString().substr(0,9);
         return(
-            <div className="cell_container">
-                <div className="cell_title"/>
-                <Divider></Divider>
-                <div className="cell_content">
-                   <div>
-
-                   </div>
+            <div className="cell-container">
+                <div className="cell-title">
+                    <Divider orientation="left" className="cell-title-content"><Title level={1}>{item.title}</Title></Divider>
                 </div>
+                <div className="cell-content">
+                    <Paragraph className="cell-content-text" ellipsis>{item.content}</Paragraph>
+                </div>
+                <Divider className="cell-foot-line"/>
                 <div className="cell-foot">
-                    <Divider className="cell-foot-line"/>
+                    <div className="cell-foot-group">
+                        <span><a href="#" className="cell-foot-item cell-comment"><Icon className="cell-icon" type="form" />{item.commentCount}</a></span>
+                        <span><a href="#" className="cell-foot-item cell-calendar"><Icon className="cell-icon" type="calendar" />{createDate}</a></span>
+                        <span><a href="#" className="cell-foot-item cell-author"><Icon className="cell-icon" type="user" />{item.username}</a></span>
+                        <span><a href="#" className="cell-foot-item cell-viewCount"><Icon className="cell-icon" type="eye" />{item.viewCount}</a></span>
+                    </div>
                 </div>
 
             </div>
