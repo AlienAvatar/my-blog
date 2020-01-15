@@ -62,10 +62,6 @@ class Head extends Component{
         });
     }
 
-    componentDidUpdate(){
-
-    }
-
     render() {
         let isShowLogin = this.state.isShowLogin;
         const NormalLoginForm = Form.create({ name: 'normal_login' })(LoginForm);
@@ -104,7 +100,7 @@ class Head extends Component{
                                             <Menu.SubMenu title="菜单"><Menu.Item>子菜单项1</Menu.Item><Menu.Item>子菜单项2</Menu.Item></Menu.SubMenu>
                                             <Menu.SubMenu title="友情链接">{null}</Menu.SubMenu>
                                             <Menu.SubMenu title="关于我">
-                                                <Menu.Item>我的介绍</Menu.Item>
+                                                <Menu.Item onClick={openAboutMe}>我的介绍</Menu.Item>
                                                 <Menu.Item onClick={openGithub}>GitHub</Menu.Item>
                                             </Menu.SubMenu>
                                     </Menu>
@@ -134,6 +130,10 @@ class Head extends Component{
 
 function openGithub() {
     window.open("https://github.com/AlienAvatar","github");
+}
+
+function openAboutMe() {
+    window.open("http://localhost:8080/aboutme");
 }
 
 const css_bannerLine = {

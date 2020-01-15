@@ -1,3 +1,41 @@
 .about-container{
-    height: 100%;
+    min-height: 1000px;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.about-title{
+    text-align: center;
+    position: relative;
+    padding-top: 27px;
+}
+
+.about-cell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.about-content{
+    font-size: 16px;
+    padding: 0 16px;
+}
+
+.about-content-skill{
+    margin-right: 16px;
+}
+
+/*Comment Style*/
+.comment-container{
+    min-height: 300px;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 50px;
+}
+
+.comment-content{
+    position: relative;
+    padding: 30px;
+    height: 300px;
 }
