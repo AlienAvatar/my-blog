@@ -4,6 +4,7 @@
     height: 100%;
     display: flex;
     justify-content: flex-start;
+    min-height: 1459px;
 
 }
 /*left-container*/
@@ -63,4 +64,18 @@
 }
 .shadow-container:hover{
     box-shadow: 2px 2px 2px 2px rgba(0,0,0,2.5);
+}
+
+/*Tag Style*/
+.right-tag{
+    width: 100px;
+    height: 42px;
+    font-size: smaller;
+    text-align: center;
+    line-height: inherit;
+    margin: 0 20px 20px 0;
+}
+
+.right-tag:hover{
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5);
 }

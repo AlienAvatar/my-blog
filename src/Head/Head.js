@@ -4,6 +4,7 @@ import { Button } from 'antd';
 import LoginForm from  "../Login/LoginForm";
 import "./style.css";
 import RegisterForm from "../Login/RegisterForm";
+import { Link } from 'react-router-dom';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -101,8 +102,11 @@ class Head extends Component{
                                         style={{ lineHeight: '64px' }}
                                     >
                                             <Menu.SubMenu title="菜单"><Menu.Item>子菜单项1</Menu.Item><Menu.Item>子菜单项2</Menu.Item></Menu.SubMenu>
-                                            <Menu.SubMenu title="菜单2"><Menu.Item>子菜单项1</Menu.Item><Menu.Item>子菜单项2</Menu.Item></Menu.SubMenu>
-                                            <Menu.SubMenu title="菜单3"><Menu.Item>子菜单项1</Menu.Item><Menu.Item>子菜单项2</Menu.Item></Menu.SubMenu>
+                                            <Menu.SubMenu title="友情链接">{null}</Menu.SubMenu>
+                                            <Menu.SubMenu title="关于我">
+                                                <Menu.Item>我的介绍</Menu.Item>
+                                                <Menu.Item onClick={openGithub}>GitHub</Menu.Item>
+                                            </Menu.SubMenu>
                                     </Menu>
                                 </div>
                             </div>
@@ -124,6 +128,12 @@ class Head extends Component{
             </div>
         )
     }
+}
+
+
+
+function openGithub() {
+    window.open("https://github.com/AlienAvatar","github");
 }
 
 const css_bannerLine = {

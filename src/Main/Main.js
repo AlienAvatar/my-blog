@@ -3,13 +3,12 @@ import 'antd/dist/antd.css';
 import {Layout, Menu, Breadcrumb, Ico, Form} from 'antd';
 import Head from '../Head/Head';
 import Foot from '../Foot/Foot';
-import LoginForm from "../Login/LoginForm";
-import RegisterForm from "../Login/RegisterForm";
 import Container from "../Container/Container";
-const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
 import "./style.css";
-
+import { BrowserRouter as Router, Route,Switch} from "react-router-dom";
+import AboutMeContainer from "../Container/AboutMeContainer";
+const { SubMenu } = Menu;
+const { Header, Content, Sider , Link} = Layout;
 
 class Main extends Component{
     constructor(props){
@@ -23,13 +22,23 @@ class Main extends Component{
         return(
             <div id="page">
                 <div id="header">
-                    <Head ></Head>
+                    <Head />
                 </div>
+
                 <div  id="container">
-                    <Container ></Container>
+                    <Router>
+                        <Switch>
+                            <Route exact path="/">
+                                <Container />
+                            </Route>
+                            <Route path="/aboutme">
+                                <AboutMeContainer />
+                            </Route>
+                        </Switch>
+                    </Router>
                 </div>
                 <div id="footer">
-                    <Foot></Foot>
+                    <Foot />
                 </div>
             </div>
         )

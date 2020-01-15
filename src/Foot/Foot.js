@@ -19,7 +19,7 @@ class Foot extends Component{
                     </div>
                     <span>好好学习，努力投身于社会主义建设，早日实现伟大复兴中国梦</span>
                     <Divider />
-                    <span>Avatar Design ©2018 Created by Avatar dxf</span>
+                    <span>Avatar Design ©2020 Created by Avatar dxf</span>
                 </div>
                 <div className="footer-msg">
                     <div className="btn-group">

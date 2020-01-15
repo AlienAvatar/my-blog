@@ -39,11 +39,9 @@
 .logo {
     width: 120px;
     height: 31px;
-    background: url("../../public/image/avatar.jpg");
     margin: 16px 24px 16px 0;
     float: left;
-    background-repeat: no-repeat;
     background-size: cover;
-    background-position: 0px -5px;
+    background: url("../../public/image/avatar.jpg") no-repeat 0px -5px;
 }
 
