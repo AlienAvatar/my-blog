@@ -1,0 +1,24 @@
+.comment-input-group{
+    display: flex;
+    justify-content: space-around;
+    font-size: 19px;
+    align-items: center;
+    margin: 20px;
+    position:relative;
+}
+
+.comment-input{
+    width: 200px;
+}
+
+.comment-button{
+    position:relative;
+    width:100%;
+}
+
+
+/*Article Comment*/
+.article-comment{
+    margin-top: 30px;
+    padding: 20px;
+}

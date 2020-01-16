@@ -1,24 +1,27 @@
 import React, { Component } from 'react'
 import "./style.css";
 import "../index.css";
-import {Icon,Typography,Input } from "antd";
+import {Form,Icon,Typography,Input,Button  } from "antd";
 import {local} from "../Constant/loginConstant";
 import Divider from "antd/lib/divider";
 // import img from "../../public/image/avatar.jpg"
+import SendComment from "../Comment/SendComment";
+import Comment from "../Comment/Comment";
 
 const { Title,Text} = Typography;
-const item = {
-    commentCount : 1,
-    createDate: new Date().toLocaleDateString(),
-    viewCount : 1,
-    username : '阿凡达达人'
-};
+const { TextArea } = Input;
+// const item = {
+//     commentCount : 1,
+//     createDate: new Date().toLocaleDateString(),
+//     viewCount : 1,
+//     username : '阿凡达达人'
+// };
 
 class AboutMe extends Component{
     constructor(props){
         super(props);
         this.state = {
-            item : null
+            item : {}
         };
         this.getAboutMeArticle = this.getAboutMeArticle.bind(this);
     }
@@ -34,19 +37,22 @@ class AboutMe extends Component{
         }).then(res => {
             return res.json();
         }).then((result) => {
-            console.log(result);
-            this.setState({item:result.data});
+            this.setState({item:result.data[0]});
         }).catch(err => {
             console.log('请求错误', err);
         })
     }
 
+    sendAboutMeComment(){
+
+    }
+
     render() {
-        // let item = this.state.item;
-        // console.log(item);
-        // if(item){
-        //     return null;
-        // }
+        let item = this.state.item;
+        if(!item){
+            return null;
+        }
+        const SendCommentForm = Form.create({ name: 'normal_login' })(SendComment);
         return(
             <div className="about-article">
                 <div className="about-container shadow-container">
@@ -106,9 +112,11 @@ class AboutMe extends Component{
                     </div>
                 </div>
 
+                <Comment />
                 <div className="comment-container shadow-container">
                     <div className="comment-content">
-                        <Input placeholder="Basic usage" />
+                        <Title level={3}>发表评论</Title>
+                        <SendCommentForm />
                     </div>
                 </div>
             </div>

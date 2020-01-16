@@ -26,7 +26,7 @@
     margin-right: 16px;
 }
 
-/*Comment Style*/
+/*SendComment Style*/
 .comment-container{
     min-height: 300px;
     width: 100%;
@@ -39,3 +39,4 @@
     padding: 30px;
     height: 300px;
 }
+

@@ -1,0 +1,87 @@
+import {Comment, Tooltip, List, Typography, Input} from 'antd';
+import moment from 'moment';
+import React, { Component } from 'react'
+import "./style.css";
+
+const { Title,Text} = Typography;
+const { TextArea } = Input;
+const data = [
+    {
+        actions: [<span key="comment-list-reply-to-0">Reply to</span>],
+        author: 'Han Solo',
+        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        content: (
+            <p>
+                We supply a series of design principles, practical patterns and high quality design
+                resources (Sketch and Axure), to help people create their product prototypes beautifully and
+                efficiently.
+            </p>
+        ),
+        datetime: (
+            <Tooltip
+                title={moment()
+                    .subtract(1, 'days')
+                    .format('YYYY-MM-DD HH:mm:ss')}
+            >
+        <span>
+          {moment()
+              .subtract(1, 'days')
+              .fromNow()}
+        </span>
+            </Tooltip>
+        ),
+    },
+    {
+        actions: [<span key="comment-list-reply-to-0">Reply to</span>],
+        author: 'Han Solo',
+        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        content: (
+            <p>
+                We supply a series of design principles, practical patterns and high quality design
+                resources (Sketch and Axure), to help people create their product prototypes beautifully and
+                efficiently.
+            </p>
+        ),
+        datetime: (
+            <Tooltip
+                title={moment()
+                    .subtract(2, 'days')
+                    .format('YYYY-MM-DD HH:mm:ss')}
+            >
+        <span>
+          {moment()
+              .subtract(2, 'days')
+              .fromNow()}
+        </span>
+            </Tooltip>
+        ),
+    },
+];
+
+class ArticleComment extends Component {
+    render() {
+        return(
+            <div className="article-comment shadow-container">
+                <List
+                    className="comment-list"
+                    header={`${data.length} 条评论`}
+                    itemLayout="horizontal"
+                    dataSource={data}
+                    renderItem={item => (
+                        <li>
+                            <Comment
+                                actions={item.actions}
+                                author={item.author}
+                                avatar={item.avatar}
+                                content={item.content}
+                                datetime={item.datetime}
+                            />
+                        </li>
+                    )}
+                />
+            </div>
+        )
+    }
+}
+
+export default ArticleComment;

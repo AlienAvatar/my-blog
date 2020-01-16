@@ -1,0 +1,77 @@
+import React, { Component } from 'react'
+import "./style.css";
+import {Form, Icon, Input, Button, Checkbox, Typography} from 'antd';
+const { Title,Text} = Typography;
+const { TextArea } = Input;
+
+const url = "http://localhost:8081/api/addComment";
+const author = "author=";
+const email = "email=";
+const content= "content";
+
+class SendComment extends Component {
+    handleSubmit = e => {
+        let headers = new Headers({
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'text/plain'
+        });
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log('Received values of form: ', values);
+            }
+            let queryUrl = `${url}?${author}${values.author}&${email}${values.email}&${content}${values.content}`;
+            fetch(queryUrl,{
+                method: 'POST',
+                headers: headers,
+            }).then(res => {
+                return res.json();
+            }).then(json => {
+                console.log('获取的结果', json);
+                return json;
+            }).catch(err => {
+                console.log('请求错误', err);
+            })
+        });
+    };
+
+    render() {
+        const { getFieldDecorator } = this.props.form;
+        return (
+            <Form onSubmit={this.handleSubmit} className="comment-form">
+                <Form.Item>
+                    {getFieldDecorator('content', {
+                        rules: [{ required: true, message: 'Please input your content!' }],
+                    })(
+                        <TextArea rows={4}/>
+                    )}
+                </Form.Item>
+                <div className="comment-input-group">
+                    <Text>用户名:</Text>
+                    <Form.Item>
+                        {getFieldDecorator('author', {
+                            rules: [{ required: true, message: 'Please input your author!' }],
+                        })(
+                            <Input className="comment-input" placeholder="author" />
+                        )}
+                    </Form.Item>
+
+                    <Text>电子邮箱:</Text>
+                    <Form.Item>
+                        {getFieldDecorator('email', {
+                            rules: [{ required: true, message: 'Please input your email!' }],
+                        })(
+                            <Input className="comment-input" placeholder="email" />
+                        )}
+                    </Form.Item>
+
+                </div>
+                <div className="comment-button-send">
+                    <Button type="primary" className="comment-button">发送评论</Button>
+                </div>
+            </Form>
+        )
+    }
+}
+
+export default SendComment;
