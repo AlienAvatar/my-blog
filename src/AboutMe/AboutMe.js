@@ -6,7 +6,7 @@ import {local} from "../Constant/loginConstant";
 import Divider from "antd/lib/divider";
 // import img from "../../public/image/avatar.jpg"
 import SendComment from "../Comment/SendComment";
-import Comment from "../Comment/Comment";
+import ArticleComment from "../Comment/ArticleComment";
 
 const { Title,Text} = Typography;
 const { TextArea } = Input;
@@ -41,10 +41,6 @@ class AboutMe extends Component{
         }).catch(err => {
             console.log('请求错误', err);
         })
-    }
-
-    sendAboutMeComment(){
-
     }
 
     render() {
@@ -111,12 +107,11 @@ class AboutMe extends Component{
                         <Text>767808421@qq.com</Text>
                     </div>
                 </div>
-
-                <Comment />
+                <ArticleComment aritcleId={item.pkid}/>
                 <div className="comment-container shadow-container">
                     <div className="comment-content">
                         <Title level={3}>发表评论</Title>
-                        <SendCommentForm />
+                        <SendCommentForm aritcleId={item.pkid} commentCount={item.commentCount}/>
                     </div>
                 </div>
             </div>

@@ -7,7 +7,9 @@ const { TextArea } = Input;
 const url = "http://localhost:8081/api/addComment";
 const author = "author=";
 const email = "email=";
-const content= "content";
+const content= "content=";
+const aritcleId = "aritcleId=";
+const commentCount = "commentCount=";
 
 class SendComment extends Component {
     handleSubmit = e => {
@@ -17,10 +19,16 @@ class SendComment extends Component {
         });
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            if (!err) {
+            if (err) {
                 console.log('Received values of form: ', values);
+                return;
             }
-            let queryUrl = `${url}?${author}${values.author}&${email}${values.email}&${content}${values.content}`;
+            const aritcleIdValue = this.props.aritcleId;
+            const commentCountValue = this.props.commentCount || 0;
+            console.log("aritcleIdValue=" + aritcleIdValue);
+            console.log("commentCountValue=" + commentCountValue);
+
+            let queryUrl = `${url}?${author}${values.author}&${email}${values.email}&${content}${values.content}&${aritcleId}${aritcleIdValue}&${commentCount}${commentCountValue}`;
             fetch(queryUrl,{
                 method: 'POST',
                 headers: headers,
@@ -66,9 +74,11 @@ class SendComment extends Component {
                     </Form.Item>
 
                 </div>
-                <div className="comment-button-send">
-                    <Button type="primary" className="comment-button">发送评论</Button>
-                </div>
+                <Form.Item>
+                    <div className="comment-button-send">
+                        <Button type="primary"  htmlType="submit" className="comment-button">发送评论</Button>
+                    </div>
+                </Form.Item>
             </Form>
         )
     }
