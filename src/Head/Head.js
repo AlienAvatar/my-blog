@@ -1,15 +1,20 @@
 import React, {Component, Fragment} from 'react';
 import {Form, Layout, Menu} from "antd";
-import { Button } from 'antd';
+import { Button,notification  } from 'antd';
 import LoginForm from  "../Login/LoginForm";
 import "./style.css";
 import RegisterForm from "../Login/RegisterForm";
 import { Link } from 'react-router-dom';
-
+import {openLoginNotificationWithIcon} from "../Constant/loginConstant"
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 const css_ShadowWindow = 'position: fixed; top:0;right:0;bottom:0;left:0;background: rgba(0,0,0,0.8)';
 const css_closeLoginWindow = 'position: fixed; top:0;right:0;bottom:0;left:0;background: rgba(0,0,0,0)';
+notification.config({
+    placement: 'topRight',
+    top:60,
+    duration: 3,
+});
 
 class Head extends Component{
     constructor(props){
@@ -18,11 +23,12 @@ class Head extends Component{
             isShowLogin : "closed",
             loginMsg : {}
         };
-        this.handleChange = this.handleChange.bind(this);
+        this.openLoginWindow = this.openLoginWindow.bind(this);
         this.closeLoginWindow = this.closeLoginWindow.bind(this);
-        this.succeedLoginWindow = this.succeedLoginWindow.bind(this);
+        this.LoginInLoginWindow = this.LoginInLoginWindow.bind(this);
         this.logout = this.logout.bind(this);
         this.openRegisterWindow = this.openRegisterWindow.bind(this);
+        this.RegisterConfirmWindow = this.RegisterConfirmWindow.bind(this);
     }
 
     logout(){
@@ -30,36 +36,66 @@ class Head extends Component{
             isShowLogin : 'closed',
             loginMsg : {}
         });
-        document.querySelector(".head-btn").style.cssText = "display:block";
     }
 
     closeLoginWindow(){
         this.setState({
             isShowLogin : 'closed'
         });
-        // document.getElementsByClassName("headOverlay")[0].style.cssText = "display:none";
+        document.getElementsByClassName("headOverlay")[0].style.cssText = "display:none";
     }
 
-    succeedLoginWindow(msg){
-        this.setState({
-            isShowLogin : 'loginIn',
-            loginMsg:msg
-        });
-        document.querySelector(".head-btn").style.cssText = "display:none";
+    LoginInLoginWindow(msg){
+        if(msg.code === 200){
+            this.setState({
+                isShowLogin : 'loginIn',
+                loginMsg:msg.data[0]
+            });
+            openLoginNotificationWithIcon("success","登录成功","欢迎光临");
+        }else if(msg.code === 1000){
+            this.setState({
+                isShowLogin : 'closed',
+                loginMsg:{}
+            });
+            openLoginNotificationWithIcon("error","登录失败","密码错误");
+        }else if(msg.code === 1001){
+            this.setState({
+                isShowLogin : 'closed',
+                loginMsg:{}
+            });
+            openLoginNotificationWithIcon("error","登录失败","不存在此用户名");
+        }
+        document.getElementsByClassName("headOverlay")[0].style.cssText = "display:none";
     }
 
-    handleChange(){
+    RegisterConfirmWindow(msg){
+        if(msg.code === 200){
+            this.setState({
+                isShowLogin : 'closed',
+            });
+            openLoginNotificationWithIcon("success","注册成功","现在可以登录");
+        }else{
+            this.setState({
+                isShowLogin : 'closed',
+            });
+            openLoginNotificationWithIcon("error","注册失败","请联系管理员");
+        }
+        document.getElementsByClassName("headOverlay")[0].style.cssText = "display:none";
+    }
+    openLoginWindow(){
         this.setState({
             isShowLogin : 'login'
         });
-        // document.getElementsByClassName("headOverlay")[0].style.cssText = "display:block";
+        document.getElementsByClassName("headOverlay")[0].style.cssText = "display:block";
     }
 
 
     openRegisterWindow(){
+        console.log("update state register");
         this.setState({
             isShowLogin : 'register'
         });
+        document.getElementsByClassName("headOverlay")[0].style.cssText = "display:block";
     }
 
     render() {
@@ -70,15 +106,15 @@ class Head extends Component{
         let loginInMsgComponent = null;
 
         if(isShowLogin === "login" ){
-            loginFormComponent = <NormalLoginForm closeLoginWindow={this.closeLoginWindow} succeedLoginWindow={this.succeedLoginWindow} isShowLogin={isShowLogin} openRegisterWindow={this.openRegisterWindow} ></NormalLoginForm>
+            loginFormComponent = <NormalLoginForm closeLoginWindow={this.closeLoginWindow} isShowLogin={this.state.isShowLogin} LoginInLoginWindow={this.LoginInLoginWindow}></NormalLoginForm>
         }else if(isShowLogin === "register"){
-            loginFormComponent = <NormalRegisterForm closeLoginWindow={this.closeLoginWindow} isShowLogin={this.state.isShowLogin}></NormalRegisterForm>
-        }
-        if(isShowLogin === "loginIn"){
+            loginFormComponent = <NormalRegisterForm closeLoginWindow={this.closeLoginWindow} isShowLogin={this.state.isShowLogin} RegisterConfirmWindow={this.RegisterConfirmWindow}></NormalRegisterForm>
+        } else if(isShowLogin === "loginIn"){
             console.log(this.state.loginMsg);
-            let nickname = this.state.loginMsg.nickname;
-            loginInMsgComponent = <Menu.SubMenu title={nickname}><Menu.Item>设置</Menu.Item><Menu.Item onClick={this.logout}>退出</Menu.Item></Menu.SubMenu>
+            const {loginMsg } = this.state;
+            loginInMsgComponent = <Menu.SubMenu title={loginMsg.nickname}><Menu.Item>设置</Menu.Item><Menu.Item onClick={this.logout}>退出</Menu.Item></Menu.SubMenu>
         }
+
         return (
             <div className="header">
                 <div className="headOverlay">
@@ -97,8 +133,8 @@ class Head extends Component{
                                         defaultSelectedKeys={['2']}
                                         style={{ lineHeight: '64px' }}
                                     >
-                                            <Menu.SubMenu title="菜单"><Menu.Item>子菜单项1</Menu.Item><Menu.Item>子菜单项2</Menu.Item></Menu.SubMenu>
-                                            <Menu.SubMenu title="友情链接">{null}</Menu.SubMenu>
+                                            <Menu.SubMenu title="菜单"><Menu.Item>杂谈</Menu.Item><Menu.Item>随笔</Menu.Item></Menu.SubMenu>
+                                            <Menu.SubMenu title="友情链接" onTitleClick={openFriendLink}>{null}</Menu.SubMenu>
                                             <Menu.SubMenu title="关于我">
                                                 <Menu.Item onClick={openAboutMe}>我的介绍</Menu.Item>
                                                 <Menu.Item onClick={openGithub}>GitHub</Menu.Item>
@@ -115,7 +151,8 @@ class Head extends Component{
                                 >
                                     {loginInMsgComponent}
                                 </Menu>
-                                <Button onClick={this.handleChange} className="head-btn" type="primary">登录</Button>
+                                {isShowLogin === "loginIn" ?  null : <Button onClick={this.openLoginWindow} className="head-btn" type="primary">登录</Button>}
+                                <Button type="link" onClick={this.openRegisterWindow} className="head-btn">注册</Button>
                             </div>
 
                         </Header>
@@ -133,7 +170,11 @@ function openGithub() {
 }
 
 function openAboutMe() {
-    window.open("http://localhost:8080/aboutme");
+    window.location.href = "http://localhost:8080/aboutme";
+}
+
+function openFriendLink() {
+    window.location.href = "http://localhost:8080/friendLink";
 }
 
 const css_bannerLine = {

@@ -1,17 +1,14 @@
 import React, {Component, Fragment} from 'react';
 import "./style.css";
-import { Input,Tabs } from 'antd';
 import RightContainer from "./RightContainer";
-import AboutMe from "../SendArticle/AboutMe";
+import TestComponent from "../TestCompoent/TestComponent";
 
-const { Search } = Input;
-const { TabPane } = Tabs;
-class AboutMeContainer extends Component{
+class TestContainer extends Component{
     render() {
         return(
             <div className="container">
                 <div className="left-container">
-                    <AboutMe />
+                    <TestComponent />
                 </div>
                 <RightContainer />
             </div>
@@ -20,4 +17,4 @@ class AboutMeContainer extends Component{
 }
 
 
-export default AboutMeContainer;
+export default FriendLinkContainer;

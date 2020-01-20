@@ -1,16 +1,25 @@
-.login-form{
+.login-container{
     position: absolute;
-    padding: 64px;
-    background: #ccc;
+    min-width:382px;
+    min-height: 382px;
+    background: #dddddd;
     border: 1px solid black;
     border-radius: 5px;
     box-shadow: 0 1px 5px gray;
     z-index:20;
+    padding:20px;
 }
 
-.closeLoginWindow{
-    position: relative;
-    left: 100%;
-    cursor: pointer;
-    top: 100%;
+
+.close-login{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
+
+.login-form-button{
+    display: flex;
+    justify-content: flex-end;
+}
+
+

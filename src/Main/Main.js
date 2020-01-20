@@ -7,6 +7,11 @@ import Container from "../Container/Container";
 import "./style.css";
 import { BrowserRouter as Router, Route,Switch} from "react-router-dom";
 import AboutMeContainer from "../Container/AboutMeContainer";
+import ArticleContainer from "../Container/ArticleContainer";
+import FriendLink from "../SendArticle/FriendLink";
+import FriendLinkContainer from "../Container/FriendLinkContainer";
+import TestComponent from "../TestCompoent/TestComponent";
+
 const { SubMenu } = Menu;
 const { Header, Content, Sider , Link} = Layout;
 
@@ -33,6 +38,15 @@ class Main extends Component{
                             </Route>
                             <Route path="/aboutme">
                                 <AboutMeContainer />
+                            </Route>
+                            <Route path="/sendArticle">
+                                <ArticleContainer />
+                            </Route>
+                            <Route path="/friendLink">
+                                <FriendLinkContainer />
+                            </Route>
+                            <Route path="/test">
+                                <TestComponent />
                             </Route>
                         </Switch>
                     </Router>
