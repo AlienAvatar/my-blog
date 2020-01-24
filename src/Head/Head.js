@@ -52,18 +52,24 @@ class Head extends Component{
                 loginMsg:msg.data[0]
             });
             openLoginNotificationWithIcon("success","登录成功","欢迎光临");
-        }else if(msg.code === 1000){
+        }else if(msg.code === 1003){
             this.setState({
                 isShowLogin : 'closed',
                 loginMsg:{}
             });
-            openLoginNotificationWithIcon("error","登录失败","密码错误");
+            openLoginNotificationWithIcon("error","登录失败","用户名或密码错误");
         }else if(msg.code === 1001){
             this.setState({
                 isShowLogin : 'closed',
                 loginMsg:{}
             });
-            openLoginNotificationWithIcon("error","登录失败","不存在此用户名");
+            openLoginNotificationWithIcon("error","登录失败","用户名不能为空");
+        }else if(msg.code === 1002){
+            this.setState({
+                isShowLogin : 'closed',
+                loginMsg:{}
+            });
+            openLoginNotificationWithIcon("error","登录失败","密码不能为空");
         }
         document.getElementsByClassName("headOverlay")[0].style.cssText = "display:none";
     }
@@ -154,7 +160,6 @@ class Head extends Component{
                                 {isShowLogin === "loginIn" ?  null : <Button onClick={this.openLoginWindow} className="head-btn" type="primary">登录</Button>}
                                 <Button type="link" onClick={this.openRegisterWindow} className="head-btn">注册</Button>
                             </div>
-
                         </Header>
                     </div>
                 </Layout>

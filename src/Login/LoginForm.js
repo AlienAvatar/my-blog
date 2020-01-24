@@ -7,7 +7,6 @@ import Head from "../Head/Head";
 const url = 'http://localhost:8081/api';
 const username = 'username=';
 const password = 'password=';
-const queryUserUrl = `${url}/queryUser`;
 const isExistUserUrl = `${url}/isExistUser`;
 
 const headers = new Headers({
@@ -25,42 +24,21 @@ class LoginForm extends React.Component {
         this.props.LoginInLoginWindow(result);
     }
 
-    // checkIsExist(event){
-    //     const usernameVal = document.getElementById("normal_login_username").value;
-    //     const queryIsExist = `${isExistUserUrl}?${username}${usernameVal}`;
-    //     fetch(queryIsExist,{
-    //         method: "GET",
-    //         headers: headers
-    //     }).then(res => {
-    //         return res.json();
-    //     }).then(json => {
-    //         console.log('获取结果', json);
-    //         if(json.code !== 1002) {
-    //             this.handleSubmit(event);
-    //         }else{
-    //             this.checkLogin(json)
-    //         }
-    //         return json;
-    //     }).catch(err => {
-    //         console.log('请求错误', err);
-    //     });
-    // }
-
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
             }
-            const queryUrl = `${queryUserUrl}?${username}${values.username}&${password}${values.password}`;
+            const queryUrl = `${isExistUserUrl}?${username}${values.username}&${password}${values.password}`;
             fetch(queryUrl,{
                 method: "POST",
                 headers: headers
             }).then(res => {
                 return res.json();
             }).then(json => {
-                this.checkLogin(json);
                 console.log('获取结果', json);
+                this.checkLogin(json);
                 return json;
             }).catch(err => {
                 console.log('请求错误', err);
