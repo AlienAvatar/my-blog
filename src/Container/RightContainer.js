@@ -4,7 +4,11 @@ import "./style.css";
 import Animation from "../Animation/Animation";
 import Pagination from "antd/es/pagination";
 import Divider from "antd/lib/divider";
+import WeatherComponent from "../Weather/Weather";
+import DailySentenceComponent from "../DailySentence/DailySentenceComponent";
+
 const { TabPane } = Tabs;
+
 
 function RightContainer() {
     return (
@@ -12,13 +16,13 @@ function RightContainer() {
             <div className="msg-container">
                 <Tabs defaultActiveKey="1" onChange={callback}>
                     <TabPane tab="天气" key="1">
-                        Content of Tab Pane 1
+                        <WeatherComponent />
                     </TabPane>
                     <TabPane tab="每日一句" key="2">
-                        Content of Tab Pane 2
+                        <DailySentenceComponent />
                     </TabPane>
-                    <TabPane tab="Tab 3" key="3">
-                        Content of Tab Pane 3
+                    <TabPane tab="签到" key="3">
+                        
                     </TabPane>
                 </Tabs>
             </div>

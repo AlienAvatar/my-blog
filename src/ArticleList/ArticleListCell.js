@@ -3,7 +3,7 @@ import './style.css'
 import {Divider,Icon} from "antd";
 import { Typography } from 'antd';
 
-const { Text,Title,Paragraph  } = Typography;
+const { Title,Paragraph  } = Typography;
 class ArticleListCell extends Component{
     constructor(props){
         super(props);
@@ -11,7 +11,6 @@ class ArticleListCell extends Component{
 
     render() {
         let item = this.props.data;
-        console.log(item);
         let createDate = item.createDate.toString().substr(0,9);
         return(
             <div className="cell-container">

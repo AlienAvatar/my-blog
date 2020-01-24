@@ -5,10 +5,11 @@ import Pagination from "antd/es/pagination";
 import { Input,Tabs } from 'antd';
 const { Search } = Input;
 const { TabPane } = Tabs;
-const DEFAULT_QUERY = 'redux';
-const PATH_BASE = 'https://hn.algolia.com/api/v1';
-const PATH_SEARCH = '/search';
-const PARAM_SEARCH = 'query=';
+const SEARCH_URL = 'http://localhost:8081/api/getArticleByTitle';
+const TITLE = 'title=';
+const PAGE = 'page=';
+const GET_ARTICLE_URL = 'http://localhost:8081/api/getArticle';
+const PAGE_SIZE_URL = "http://localhost:8081/api/getPageSize";
 
 class ArticleList extends Component {
     constructor(props) {
@@ -21,10 +22,20 @@ class ArticleList extends Component {
             pageSize:0
         };
         this.getArticle = this.getArticle.bind(this);
+        this.getPageSize = this.getPageSize.bind(this);
+        this.searchArticleByTitle = this.searchArticleByTitle.bind(this);
+        this.openArticle = this.openArticle.bind(this);
     }
 
     onChange = page => {
-        let items = this.getArticle(page);
+        const valueTitle = document.getElementById("search-title").value;
+        let items = null;
+        if(valueTitle !== "" && typeof valueTitle !== undefined){
+             items = this.getArticle(page,valueTitle);
+        }else {
+            items = this.getArticle(page,"");
+        }
+
         if(!items){
             return null;
         }
@@ -36,11 +47,13 @@ class ArticleList extends Component {
 
     componentDidMount() {
         this.getPageSize();
-        this.getArticle(this.state.current);
+        this.getArticle(this.state.current,"");
     }
 
     getPageSize(){
-        fetch('http://localhost:8081/api/getPageSize',{
+        const valueTitle = "";
+        const URL = `${PAGE_SIZE_URL}?${TITLE}${valueTitle}`;
+        fetch(URL,{
             method: 'GET',
             mode: 'cors',
         }).then(res => {
@@ -52,17 +65,45 @@ class ArticleList extends Component {
         })
     }
 
-    getArticle(page){
-        fetch('http://localhost:8081/api/getArticle?page='+page,{
+     getArticle(valuePage,valueTitle){
+        const URL = `${GET_ARTICLE_URL}?${PAGE}${valuePage}&${TITLE}${valueTitle}`;
+        fetch(URL,{
             method: 'GET',
             mode: 'cors',
         }).then(res => {
             return res.json();
         }).then((result) => {
-            this.setState({items:result});
+            this.setState({
+                items:result
+            });
         }).catch(err => {
             console.log('请求错误', err);
         })
+    }
+
+    searchArticleByTitle(){
+        this.getPageSize();
+        const valueTitle = document.getElementById("search-title").value || "";
+
+        const valuePage = this.state.current;
+        const URL = `${GET_ARTICLE_URL}?${PAGE}${valuePage}&${TITLE}${valueTitle}`;
+        fetch(URL,{
+            method: 'GET',
+            mode: 'cors',
+        }).then(res => {
+            return res.json();
+        }).then((result) => {
+            console.log(result);
+            this.setState({
+                items:result,
+            });
+        }).catch(err => {
+            console.log('请求错误', err);
+        })
+    }
+
+    openArticle(pkid){
+        console.log(pkid);
     }
 
     render() {
@@ -74,17 +115,19 @@ class ArticleList extends Component {
             <div className="left-article">
                 <div className="input-container">
                     <Search
+                        id="search-title"
                         style={{ width: 500 }}
-                        placeholder="input search text"
+                        placeholder="请输入要查找的标题"
                         enterButton="Search"
                         size="large"
-                        onSearch={value => console.log(value)}
+                        onSearch={this.searchArticleByTitle}
                     />
                 </div>
                 {
-                    items.map((item,index) => (
-                        <div className="article-container">
-                            <ArticleListCell key={index} data={item} />
+                    items.map((item) => (
+                        <div className="article-container" onClick={this.openArticle(item.pkid)}>
+                            {item.pkid}
+                            <ArticleListCell key={item.pkid} data={item} />
                         </div>
                     ))
                 }
@@ -96,5 +139,4 @@ class ArticleList extends Component {
         )
     }
 }
-
 export default ArticleList
