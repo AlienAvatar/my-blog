@@ -31,6 +31,21 @@ class Head extends Component{
         this.logout = this.logout.bind(this);
         this.openRegisterWindow = this.openRegisterWindow.bind(this);
         this.RegisterConfirmWindow = this.RegisterConfirmWindow.bind(this);
+        this.keepLoginMsgInfo = this.keepLoginMsgInfo.bind(this);
+    }
+
+    componentDidMount() {
+        this.keepLoginMsgInfo();
+    }
+
+    keepLoginMsgInfo() {
+        let userInfo = window.sessionStorage.userInfo;
+        if(userInfo !== null && userInfo !== undefined && userInfo !== "null") {
+            this.setState({
+                loginMsg: JSON.parse(userInfo),
+                isShowLogin:'loginIn'
+            });
+        }
     }
 
     logout(){
@@ -38,6 +53,7 @@ class Head extends Component{
             isShowLogin : 'closed',
             loginMsg : {}
         });
+        window.sessionStorage.userInfo = null;
     }
 
     closeLoginWindow(){
@@ -55,6 +71,8 @@ class Head extends Component{
             });
             window.sessionStorage.userInfo = JSON.stringify(msg.data[0]);
             openLoginNotificationWithIcon("success","登录成功","欢迎光临");
+            document.getElementsByClassName("headOverlay")[0].style.cssText = "display:none";
+            return;
         }else if(msg.code === 1003){
             this.setState({
                 isShowLogin : 'closed',
@@ -74,6 +92,7 @@ class Head extends Component{
             });
             openLoginNotificationWithIcon("error","登录失败","密码不能为空");
         }
+        window.sessionStorage.userInfo = null;
         document.getElementsByClassName("headOverlay")[0].style.cssText = "display:none";
     }
 
@@ -100,7 +119,6 @@ class Head extends Component{
 
 
     openRegisterWindow(){
-        console.log("update state register");
         this.setState({
             isShowLogin : 'register'
         });
@@ -115,13 +133,12 @@ class Head extends Component{
         let loginInMsgComponent = null;
 
         if(isShowLogin === "login" ){
-            loginFormComponent = <NormalLoginForm closeLoginWindow={this.closeLoginWindow} isShowLogin={this.state.isShowLogin} LoginInLoginWindow={this.LoginInLoginWindow}></NormalLoginForm>
+            loginFormComponent = <NormalLoginForm closeLoginWindow={this.closeLoginWindow} isShowLogin={isShowLogin} LoginInLoginWindow={this.LoginInLoginWindow}></NormalLoginForm>
         }else if(isShowLogin === "register"){
-            loginFormComponent = <NormalRegisterForm closeLoginWindow={this.closeLoginWindow} isShowLogin={this.state.isShowLogin} RegisterConfirmWindow={this.RegisterConfirmWindow}></NormalRegisterForm>
+            loginFormComponent = <NormalRegisterForm closeLoginWindow={this.closeLoginWindow} isShowLogin={isShowLogin} RegisterConfirmWindow={this.RegisterConfirmWindow}></NormalRegisterForm>
         } else if(isShowLogin === "loginIn"){
-            console.log(this.state.loginMsg);
             const {loginMsg } = this.state;
-            loginInMsgComponent = <Menu.SubMenu title={loginMsg.nickname}><Menu.Item>设置</Menu.Item><Menu.Item onClick={this.logout}>退出</Menu.Item></Menu.SubMenu>
+            loginInMsgComponent = <Menu.SubMenu title={loginMsg.nickname}><Menu.Item onClick={openSendArticle}>发表文章</Menu.Item><Menu.Item>设置</Menu.Item><Menu.Item onClick={this.logout}>退出</Menu.Item></Menu.SubMenu>
         }
 
         return (
@@ -171,6 +188,12 @@ class Head extends Component{
             </div>
         )
     }
+}
+
+function openSendArticle(){
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    window.location.href = `http://${hostname}:${port}/sendArticle`;
 }
 
 function openMain(){

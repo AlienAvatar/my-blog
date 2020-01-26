@@ -48,9 +48,6 @@ class FriendLink extends Component {
                     <div className="send-container shadow-container">
                         <span> <Title level={3}>友情链接</Title></span>
                         <Text>友人A</Text>
-                        <div className="article-button-send">
-                            <Button type="primary"  htmlType="submit" className="comment-button">发送文章</Button>
-                        </div>
                     </div>
 
                     <ArticleComment aritcleId={item.pkid}/>

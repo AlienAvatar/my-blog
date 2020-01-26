@@ -25,7 +25,6 @@ class ArticleList extends Component {
         this.getArticle = this.getArticle.bind(this);
         this.getPageSize = this.getPageSize.bind(this);
         this.searchArticleByTitle = this.searchArticleByTitle.bind(this);
-        this.openArticle = this.openArticle.bind(this);
     }
 
     onChange = page => {
@@ -102,8 +101,7 @@ class ArticleList extends Component {
         })
     }
 
-    openArticle(pkid){
-    }
+
 
     render() {
         const items = this.state.items;
@@ -124,10 +122,9 @@ class ArticleList extends Component {
                 </div>
                 {
                     items.map((item) => (
-                        <div className="article-container">
+                        <div className="article-container" key={item.pkid}>
                         {/*<div className="article-container" onClick={this.openArticle(item.pkid)}>*/}
-                            {item.pkid}
-                            <ArticleListCell key={item.pkid} data={item} />
+                            <ArticleListCell data={item} />
                         </div>
                     ))
                 }
@@ -139,4 +136,6 @@ class ArticleList extends Component {
         )
     }
 }
+
+
 export default ArticleList

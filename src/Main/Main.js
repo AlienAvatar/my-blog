@@ -8,9 +8,9 @@ import "./style.css";
 import { BrowserRouter as Router, Route,Switch} from "react-router-dom";
 import AboutMeContainer from "../Container/AboutMeContainer";
 import ArticleContainer from "../Container/ArticleContainer";
-import FriendLink from "../SendArticle/FriendLink";
 import FriendLinkContainer from "../Container/FriendLinkContainer";
 import TestComponent from "../TestCompoent/TestComponent";
+import ArticleDetailContainer from "../Container/ArticleDetailContainer";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider , Link} = Layout;
@@ -19,12 +19,17 @@ class Main extends Component{
     constructor(props){
         super(props);
         this.state = {
-            isShowLogin: "closed"
+            userInfo:""
         };
     }
 
     componentDidMount() {
         // List list = (List)session.getAttribute("userInfo");
+        // let userInfo = window.sessionStorage.userInfo;
+        // this.setState({
+        //     userInfo:userInfo
+        // });
+
     }
 
     render() {
@@ -48,6 +53,8 @@ class Main extends Component{
                             </Route>
                             <Route path="/friendLink">
                                 <FriendLinkContainer />
+                            </Route>
+                            <Route path="/articleDetail" children={<ArticleDetailContainer />}>
                             </Route>
                             <Route path="/test">
                                 <TestComponent />
