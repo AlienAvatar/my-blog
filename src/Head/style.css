@@ -37,8 +37,10 @@
     height: 31px;
     margin: 16px 24px 16px 0;
     float: left;
+    background: url("../../public/image/avatar.jpg");
+    background-repeat: no-repeat;
+    background-position:0px -5px;
     background-size: cover;
-    background: url("../image/avatar.jpg") no-repeat 0px -5px;
 }
 
 .head-btn{

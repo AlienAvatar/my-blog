@@ -6,6 +6,8 @@ import "./style.css";
 import RegisterForm from "../Login/RegisterForm";
 import { Link } from 'react-router-dom';
 import {openLoginNotificationWithIcon} from "../Constant/loginConstant"
+import imgAvatar from "../../public/image/avatar.jpg"
+
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 const css_ShadowWindow = 'position: fixed; top:0;right:0;bottom:0;left:0;background: rgba(0,0,0,0.8)';
@@ -51,6 +53,7 @@ class Head extends Component{
                 isShowLogin : 'loginIn',
                 loginMsg:msg.data[0]
             });
+            window.sessionStorage.userInfo = JSON.stringify(msg.data[0]);
             openLoginNotificationWithIcon("success","登录成功","欢迎光临");
         }else if(msg.code === 1003){
             this.setState({
@@ -131,15 +134,20 @@ class Head extends Component{
                         <div className="bannerLine" style={css_bannerLine} />
                         <Header className="banner">
                             <div className="left-banner">
-                                <a href="#" className="logo"/>
+
+                                {/*<img className="logo" src={imgAvatar}/>*/}
+                                {/*<a href="#" className="logo"/>*/}
                                 <div className="container" style={css_container}>
+                                    <a href="javascript:void(0);" onClick={openMain} className="logo"/>
                                     <Menu
                                         theme="dark"
                                         mode="horizontal"
                                         defaultSelectedKeys={['2']}
                                         style={{ lineHeight: '64px' }}
                                     >
-                                            <Menu.SubMenu title="菜单"><Menu.Item>杂谈</Menu.Item><Menu.Item>随笔</Menu.Item></Menu.SubMenu>
+                                            <Menu.SubMenu title="菜单">
+                                                {/*<Menu.Item>杂谈</Menu.Item><Menu.Item>随笔</Menu.Item>*/}
+                                            </Menu.SubMenu>
                                             <Menu.SubMenu title="友情链接" onTitleClick={openFriendLink}>{null}</Menu.SubMenu>
                                             <Menu.SubMenu title="关于我">
                                                 <Menu.Item onClick={openAboutMe}>我的介绍</Menu.Item>
@@ -168,18 +176,26 @@ class Head extends Component{
     }
 }
 
-
+function openMain(){
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    window.location.href = `http://${hostname}:${port}/`;
+}
 
 function openGithub() {
     window.open("https://github.com/AlienAvatar","github");
 }
 
 function openAboutMe() {
-    window.location.href = "http://localhost:8080/aboutme";
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    window.location.href = `http://${hostname}:${port}/aboutme`;
 }
 
 function openFriendLink() {
-    window.location.href = "http://localhost:8080/friendLink";
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    window.location.href = `http://${hostname}:${port}/friendLink`;
 }
 
 const css_bannerLine = {
