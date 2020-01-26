@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Button, Input, Typography} from "antd";
-
+import ArticleEditor from "./ArticleEditor"
 const { TextArea } = Input;
 const { Title,Text} = Typography;
 
@@ -39,7 +39,8 @@ class SendArticle extends Component {
                 <div className="about-article">
                     <div className="send-container shadow-container">
                         <span> <Title level={3}>发表文章</Title></span>
-                        <TextArea id="article-content" rows={40}/>
+                        {/*<TextArea id="article-content" rows={40}/>*/}
+                        <ArticleEditor className="article-content"/>
                         <div className="article-button-send">
                             <Button type="primary"  htmlType="submit" className="comment-button">发送文章</Button>
                         </div>
