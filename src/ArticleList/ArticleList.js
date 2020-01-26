@@ -19,7 +19,8 @@ class ArticleList extends Component {
             arr:null,
             result:null,
             current: 1,
-            pageSize:0
+            pageSize:0,
+
         };
         this.getArticle = this.getArticle.bind(this);
         this.getPageSize = this.getPageSize.bind(this);
@@ -93,7 +94,6 @@ class ArticleList extends Component {
         }).then(res => {
             return res.json();
         }).then((result) => {
-            console.log(result);
             this.setState({
                 items:result,
             });
@@ -103,7 +103,6 @@ class ArticleList extends Component {
     }
 
     openArticle(pkid){
-        console.log(pkid);
     }
 
     render() {
@@ -125,7 +124,8 @@ class ArticleList extends Component {
                 </div>
                 {
                     items.map((item) => (
-                        <div className="article-container" onClick={this.openArticle(item.pkid)}>
+                        <div className="article-container">
+                        {/*<div className="article-container" onClick={this.openArticle(item.pkid)}>*/}
                             {item.pkid}
                             <ArticleListCell key={item.pkid} data={item} />
                         </div>

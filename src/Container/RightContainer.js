@@ -22,7 +22,7 @@ function RightContainer() {
                         <DailySentenceComponent />
                     </TabPane>
                     <TabPane tab="签到" key="3">
-                        
+
                     </TabPane>
                 </Tabs>
             </div>

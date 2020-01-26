@@ -134,11 +134,8 @@ class Head extends Component{
                         <div className="bannerLine" style={css_bannerLine} />
                         <Header className="banner">
                             <div className="left-banner">
-
-                                {/*<img className="logo" src={imgAvatar}/>*/}
-                                {/*<a href="#" className="logo"/>*/}
                                 <div className="container" style={css_container}>
-                                    <a href="javascript:void(0);" onClick={openMain} className="logo"/>
+                                    <a href="#" onClick={openMain} className="logo"/>
                                     <Menu
                                         theme="dark"
                                         mode="horizontal"

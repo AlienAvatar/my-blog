@@ -23,6 +23,10 @@ class Main extends Component{
         };
     }
 
+    componentDidMount() {
+        // List list = (List)session.getAttribute("userInfo");
+    }
+
     render() {
         return(
             <div id="page">
