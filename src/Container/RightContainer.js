@@ -6,6 +6,7 @@ import Pagination from "antd/es/pagination";
 import Divider from "antd/lib/divider";
 import WeatherComponent from "../Weather/Weather";
 import DailySentenceComponent from "../DailySentence/DailySentenceComponent";
+import WhateverSay from "../DailySentence/WhateverSay";
 
 const { TabPane } = Tabs;
 
@@ -21,8 +22,8 @@ function RightContainer() {
                     <TabPane tab="每日一句" key="2">
                         <DailySentenceComponent />
                     </TabPane>
-                    <TabPane tab="签到" key="3">
-
+                    <TabPane tab="说说" key="3">
+                        <WhateverSay />
                     </TabPane>
                 </Tabs>
             </div>
@@ -33,10 +34,10 @@ function RightContainer() {
                 <div>
                     <Tag className="right-tag" color="magenta">杂谈</Tag>
                     <Tag className="right-tag" color="red">技术</Tag>
-                    <Tag className="right-tag" color="volcano">volcano</Tag>
-                    <Tag className="right-tag" color="orange">orange</Tag>
-                    <Tag className="right-tag" color="gold">gold</Tag>
-                    <Tag className="right-tag" color="lime">lime</Tag>
+                    <Tag className="right-tag" color="volcano" onClick={openGithub}>GitHub</Tag>
+                    <Tag className="right-tag" color="orange">无问东西</Tag>
+                    <Tag className="right-tag" color="gold">流浪远方</Tag>
+                    <Tag className="right-tag" color="lime">镜花水月</Tag>
                 </div>
             </div>
             <div className="animation-container">
@@ -46,4 +47,7 @@ function RightContainer() {
     )
 }
 
+function openGithub() {
+    window.open("https://github.com/AlienAvatar","github");
+}
 export default RightContainer;

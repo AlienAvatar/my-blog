@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Button, Form, Icon, Input, Typography} from "antd";
+import {Form, Icon, Typography} from "antd";
 import ArticleComment from "../Comment/ArticleComment";
 import SendComment from "../Comment/SendComment";
 import {local} from "../Constant/loginConstant";
@@ -14,7 +14,7 @@ class DetailComponent extends Component {
         super(props);
         this.getArticleDetail = this.getArticleDetail.bind(this);
         this.state = {
-            item:{}
+            item: null
         }
     }
 
@@ -26,7 +26,7 @@ class DetailComponent extends Component {
         const hostname = window.location.hostname;
         const port = 8081;
         const id = getQueryVariable("id");
-        const url = `http://${hostname}:${port}/api/queryArticle?${pkid}${id}`;
+        const url = `http://${hostname}:${port}/api/queryArticleDetail?${pkid}${id}`;
         fetch(url,{
             method: 'GET',
             mode: 'cors',
@@ -45,6 +45,7 @@ class DetailComponent extends Component {
         if(!item){
             return null;
         }
+        let createDate = item.createDate.toString().substring(0,10);
         const SendCommentForm = Form.create({ name: 'normal_login' })(SendComment);
         return(
             <div className="send-article-container">
@@ -55,7 +56,7 @@ class DetailComponent extends Component {
                         <div className="about-cell">
                             <div className="about-cell-group">
                                 <span><a href="#" className="cell-foot-item cell-comment"><Icon className="cell-icon" type="form" />{item.commentCount}</a></span>
-                                <span><a href="#" className="cell-foot-item cell-calendar"><Icon className="cell-icon" type="calendar" />{item.createDate}</a></span>
+                                <span><a href="#" className="cell-foot-item cell-calendar"><Icon className="cell-icon" type="calendar" />{createDate}</a></span>
                                 <span><a href="#" className="cell-foot-item cell-author"><Icon className="cell-icon" type="user" />{item.username}</a></span>
                                 <span><a href="#" className="cell-foot-item cell-viewCount"><Icon className="cell-icon" type="eye" />{item.viewCount}</a></span>
                             </div>

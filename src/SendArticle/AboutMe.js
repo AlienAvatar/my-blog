@@ -1,32 +1,25 @@
 import React, { Component } from 'react'
 import "./style.css";
 import "../index.css";
-import {Form,Icon,Typography,Input,Button  } from "antd";
+import {Form,Icon,Typography} from "antd";
 import {local} from "../Constant/loginConstant";
 import Divider from "antd/lib/divider";
-// import img from "../../public/image/avatar.jpg"
 import SendComment from "../Comment/SendComment";
 import ArticleComment from "../Comment/ArticleComment";
+// import img from "../../public/image/avatar.jpg"
 
 const { Title,Text} = Typography;
-const { TextArea } = Input;
-// const item = {
-//     commentCount : 1,
-//     createDate: new Date().toLocaleDateString(),
-//     viewCount : 1,
-//     username : '阿凡达达人'
-// };
 
 class AboutMe extends Component{
     constructor(props){
         super(props);
         this.state = {
-            item : {}
+            item : null
         };
         this.getAboutMeArticle = this.getAboutMeArticle.bind(this);
     }
 
-    componentWillMount(){
+    componentDidMount() {
         this.getAboutMeArticle();
     }
 
@@ -48,6 +41,7 @@ class AboutMe extends Component{
         if(!item){
             return null;
         }
+        let createDate = item.createDate.toString().substring(0,10);
         const SendCommentForm = Form.create({ name: 'normal_login' })(SendComment);
         return(
             <div className="about-article">
@@ -56,7 +50,7 @@ class AboutMe extends Component{
                     <div className="about-cell">
                         <div className="about-cell-group">
                             <span><a href="#" className="cell-foot-item cell-comment"><Icon className="cell-icon" type="form" />{item.commentCount}</a></span>
-                            <span><a href="#" className="cell-foot-item cell-calendar"><Icon className="cell-icon" type="calendar" />{item.createDate}</a></span>
+                            <span><a href="#" className="cell-foot-item cell-calendar"><Icon className="cell-icon" type="calendar" />{createDate}</a></span>
                             <span><a href="#" className="cell-foot-item cell-author"><Icon className="cell-icon" type="user" />{item.username}</a></span>
                             <span><a href="#" className="cell-foot-item cell-viewCount"><Icon className="cell-icon" type="eye" />{item.viewCount}</a></span>
                         </div>

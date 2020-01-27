@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import "./style.css";
 import {Form, Icon, Input, Button, Checkbox, Typography} from 'antd';
+import ArticleEditor from "../SendArticle/ArticleEditor";
 const { Title,Text} = Typography;
 const { TextArea } = Input;
 
@@ -51,12 +52,13 @@ class SendComment extends Component {
                     {getFieldDecorator('content', {
                         rules: [{ required: true, message: 'Please input your content!' }],
                     })(
-                        <TextArea rows={4}/>
+                        <TextArea row={3}/>
+                        // <ArticleEditor />
                     )}
                 </Form.Item>
                 <div className="comment-input-group">
                     <Text>用户名:</Text>
-                    <Form.Item>
+                    <Form.Item style={{marginBottom:"0"}}>
                         {getFieldDecorator('author', {
                             rules: [{ required: true, message: 'Please input your author!' }],
                         })(
@@ -65,7 +67,7 @@ class SendComment extends Component {
                     </Form.Item>
 
                     <Text>电子邮箱:</Text>
-                    <Form.Item>
+                    <Form.Item style={{marginBottom:"0"}}>
                         {getFieldDecorator('email', {
                             rules: [{ required: true, message: 'Please input your email!' }],
                         })(

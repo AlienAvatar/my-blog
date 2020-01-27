@@ -39,6 +39,7 @@ class ArticleComment extends Component {
 
         // const url = `http://${hostname}:${port}/api/queryComment?aritcleId=`+ aritcleId;
         const url = "http://localhost:8081/api/queryComment?aritcleId="+ aritcleId;
+        console.log(url);
         fetch(url,{
             method: 'GET',
             mode: 'cors',
@@ -75,7 +76,7 @@ class ArticleComment extends Component {
 
         const actions = [
 
-            <span key="comment-basic-reply-to">Reply to</span>,
+            <span key="comment-basic-reply-to"></span>,
         ];
 
         return(

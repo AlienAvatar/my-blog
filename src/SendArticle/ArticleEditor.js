@@ -27,6 +27,7 @@ class ArticleEditor extends React.Component {
                     ref={this.setEditor}
                     editorState={this.state.editorState}
                     onChange={this.onChange}
+                    name="content"
                 />
             </div>
         );

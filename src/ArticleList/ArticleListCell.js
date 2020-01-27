@@ -17,7 +17,7 @@ class ArticleListCell extends Component{
     }
     render() {
         let item = this.props.data;
-        let createDate = item.createDate.toString().substr(0,9);
+        let createDate = item.createDate.toString().substr(0,10);
         return(
             <div className="cell-container" onClick={this.openArticle}>
                 <div className="cell-title">
