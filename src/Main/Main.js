@@ -11,6 +11,7 @@ import ArticleContainer from "../Container/ArticleContainer";
 import FriendLinkContainer from "../Container/FriendLinkContainer";
 import TestComponent from "../TestCompoent/TestComponent";
 import ArticleDetailContainer from "../Container/ArticleDetailContainer";
+import SettingContainer from "../Container/SettingContainer";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider , Link} = Layout;
@@ -55,6 +56,9 @@ class Main extends Component{
                                 <FriendLinkContainer />
                             </Route>
                             <Route path="/articleDetail" children={<ArticleDetailContainer />}>
+                            </Route>
+                            <Route path="/setting">
+                                <SettingContainer />
                             </Route>
                             <Route path="/test">
                                 <TestComponent />

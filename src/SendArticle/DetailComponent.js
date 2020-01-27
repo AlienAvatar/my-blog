@@ -5,11 +5,8 @@ import SendComment from "../Comment/SendComment";
 import {local} from "../Constant/loginConstant";
 import Divider from "antd/lib/divider";
 
-const { TextArea } = Input;
 const { Title,Text} = Typography;
 
-const addArticleUrl = "http://localhost:8081/api/addArticle";
-const content = "content=";
 const pkid = "pkid=";
 
 class DetailComponent extends Component {
@@ -30,7 +27,6 @@ class DetailComponent extends Component {
         const port = 8081;
         const id = getQueryVariable("id");
         const url = `http://${hostname}:${port}/api/queryArticle?${pkid}${id}`;
-        console.log(url);
         fetch(url,{
             method: 'GET',
             mode: 'cors',
@@ -69,9 +65,7 @@ class DetailComponent extends Component {
                             <Text>
                                 {item.content}
                             </Text>
-
                         </div>
-
                     </div>
 
                     <ArticleComment aritcleId={item.pkid}/>

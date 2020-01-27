@@ -2,15 +2,16 @@ import React, { Component } from 'react'
 import ArticleListCell from './ArticleListCell'
 import "./style.css";
 import Pagination from "antd/es/pagination";
-import { Input,Tabs } from 'antd';
+import { Input } from 'antd';
 const { Search } = Input;
-const { TabPane } = Tabs;
-const SEARCH_URL = 'http://localhost:8081/api/getArticleByTitle';
 const TITLE = 'title=';
 const PAGE = 'page=';
+const hostname = window.location.hostname;
+const port = window.location.port;
+// const GET_ARTICLE_URL = `http://${hostname}:${port}/api/getArticle`;
+// const PAGE_SIZE_URL = `http://${hostname}:${port}/api/getPageSize`;
 const GET_ARTICLE_URL = 'http://localhost:8081/api/getArticle';
 const PAGE_SIZE_URL = "http://localhost:8081/api/getPageSize";
-
 class ArticleList extends Component {
     constructor(props) {
         super(props);
@@ -52,6 +53,7 @@ class ArticleList extends Component {
 
     getPageSize(){
         const valueTitle = "";
+
         const URL = `${PAGE_SIZE_URL}?${TITLE}${valueTitle}`;
         fetch(URL,{
             method: 'GET',
@@ -123,7 +125,6 @@ class ArticleList extends Component {
                 {
                     items.map((item) => (
                         <div className="article-container" key={item.pkid}>
-                        {/*<div className="article-container" onClick={this.openArticle(item.pkid)}>*/}
                             <ArticleListCell data={item} />
                         </div>
                     ))
