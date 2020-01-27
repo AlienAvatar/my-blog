@@ -16,10 +16,10 @@ function RightContainer() {
             <div className="msg-container">
                 <Tabs defaultActiveKey="1">
                     <TabPane tab="天气" key="1">
-                        {/*<WeatherComponent />*/}
+                        <WeatherComponent />
                     </TabPane>
                     <TabPane tab="每日一句" key="2">
-                        {/*<DailySentenceComponent />*/}
+                        <DailySentenceComponent />
                     </TabPane>
                     <TabPane tab="签到" key="3">
 
