@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import "./style.css";
 import {Form, Icon, Input, Button, Checkbox, Typography} from 'antd';
 import ArticleEditor from "../SendArticle/ArticleEditor";
+import {local} from "../Constant/loginConstant";
+
 const { Title,Text} = Typography;
 const { TextArea } = Input;
 
-const url = "http://localhost:8081/api/addComment";
+const url = `${local.url}/addComment`;
 const author = "author=";
 const email = "email=";
 const content= "content=";

@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import {Button, Input, Typography} from "antd";
 import ArticleEditor from "./ArticleEditor"
+import {local} from "../Constant/loginConstant";
+
 const { TextArea } = Input;
 const { Title,Text} = Typography;
 
-const addArticleUrl = "http://localhost:8081/api/addArticle";
+const addArticleUrl = `${local.url}/addArticle`;
 const content = "content=";
 class SendArticle extends Component {
     constructor(props){

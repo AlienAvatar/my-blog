@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import RightContainer from "../Container/RightContainer";
 
-const addArticleUrl = "http://localhost:8081/api/addArticle";
-const content = "content=";
-
 const TestButton = ({onClick,className = 'test-btn',children}) =>{
     return (
         <button

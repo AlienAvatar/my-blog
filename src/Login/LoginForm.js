@@ -1,13 +1,11 @@
 import { Form, Icon, Input, Button, Checkbox,Select, AutoComplete,Option,AutoCompleteOption,Cascader,Tooltip,Row,Col } from 'antd';
 import React, {Component} from 'react';
 import "./style.css"
-import RegisterForm from "./RegisterForm";
-import Head from "../Head/Head";
+import {local} from "../Constant/loginConstant"
 
-const url = 'http://localhost:8081/api';
 const username = 'username=';
 const password = 'password=';
-const isExistUserUrl = `${url}/isExistUser`;
+const isExistUserUrl = `${local.url}/isExistUser`;
 
 const headers = new Headers({
     'Access-Control-Allow-Origin': '*',

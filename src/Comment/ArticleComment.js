@@ -3,12 +3,6 @@ import moment from 'moment';
 import React, {Component, Fragment} from 'react'
 import "./style.css";
 import {local} from "../Constant/loginConstant";
-import ArticleListCell from "../ArticleList/ArticleListCell";
-
-const { Title,Text} = Typography;
-const { TextArea } = Input;
-const hostname = window.location.hostname;
-const port = window.location.port;
 
 class ArticleComment extends Component {
     constructor(props){
@@ -37,8 +31,7 @@ class ArticleComment extends Component {
             return;
         }
 
-        // const url = `http://${hostname}:${port}/api/queryComment?aritcleId=`+ aritcleId;
-        const url = "http://localhost:8081/api/queryComment?aritcleId="+ aritcleId;
+        const url = local.url + "/queryComment?aritcleId="+ aritcleId;
         console.log(url);
         fetch(url,{
             method: 'GET',

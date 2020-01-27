@@ -4,11 +4,7 @@ import ArticleComment from "../Comment/ArticleComment";
 import SendComment from "../Comment/SendComment";
 import {local} from "../Constant/loginConstant";
 
-const { TextArea } = Input;
 const { Title,Text} = Typography;
-
-const addArticleUrl = "http://localhost:8081/api/addArticle";
-const content = "content=";
 
 class FriendLink extends Component {
     constructor(props){

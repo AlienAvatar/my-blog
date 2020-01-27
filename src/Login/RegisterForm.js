@@ -1,9 +1,9 @@
 import { Form, Icon, Input, Button, Checkbox,Select, AutoComplete,Option,AutoCompleteOption,Cascader,Tooltip,Row,Col } from 'antd';
 import React, {Component} from 'react';
 import "./style.css"
+import {local} from "../Constant/loginConstant"
 
-const url = 'http://111.229.76.149:8081/api/getUser';
-const addUserUrl = "http://localhost:8081/api/addUser";
+const addUserUrl = `${local.url}/addUser`;
 const username = "username=";
 const password = "password=";
 const nickname = "nickname=";

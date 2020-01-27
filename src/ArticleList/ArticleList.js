@@ -3,15 +3,14 @@ import ArticleListCell from './ArticleListCell'
 import "./style.css";
 import Pagination from "antd/es/pagination";
 import { Input } from 'antd';
+import {local} from "../Constant/loginConstant"
+
 const { Search } = Input;
 const TITLE = 'title=';
 const PAGE = 'page=';
-const hostname = window.location.hostname;
-const port = window.location.port;
-// const GET_ARTICLE_URL = `http://${hostname}:${port}/api/getArticle`;
-// const PAGE_SIZE_URL = `http://${hostname}:${port}/api/getPageSize`;
-const GET_ARTICLE_URL = 'http://localhost:8081/api/getArticle';
-const PAGE_SIZE_URL = "http://localhost:8081/api/getPageSize";
+
+const GET_ARTICLE_URL = `${local.url}/getArticle`;
+const PAGE_SIZE_URL = `${local.url}/getPageSize`;
 class ArticleList extends Component {
     constructor(props) {
         super(props);

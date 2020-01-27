@@ -138,7 +138,7 @@ class Head extends Component{
             loginFormComponent = <NormalRegisterForm closeLoginWindow={this.closeLoginWindow} isShowLogin={isShowLogin} RegisterConfirmWindow={this.RegisterConfirmWindow}></NormalRegisterForm>
         } else if(isShowLogin === "loginIn"){
             const {loginMsg } = this.state;
-            loginInMsgComponent = <Menu.SubMenu title={loginMsg.nickname}><Menu.Item onClick={openSendArticle}>发表文章</Menu.Item><Menu.Item>设置</Menu.Item><Menu.Item onClick={this.logout}>退出</Menu.Item></Menu.SubMenu>
+            loginInMsgComponent = <Menu.SubMenu title={loginMsg.nickname}><Menu.Item onClick={openSendArticle}>发表文章</Menu.Item><Menu.Item onClick={openSetting}>设置</Menu.Item><Menu.Item onClick={this.logout}>退出</Menu.Item></Menu.SubMenu>
         }
 
         return (
@@ -218,6 +218,11 @@ function openFriendLink() {
     window.location.href = `http://${hostname}:${port}/friendLink`;
 }
 
+function openSetting() {
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    window.location.href = `http://${hostname}:${port}/setting`;
+}
 const css_bannerLine = {
     borderLeft:'202px solid #666',
     height:'4px',
