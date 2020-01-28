@@ -34,9 +34,9 @@ module.exports = {
                     {
                         loader: 'url-loader',
                         options: {
-                            limit: 8192,    // 小于8k的图片自动转成base64格式，并且不会存在实体图片
-                            name:'../image/[name].[ext]'
-                            // outputPath: 'images/'   // 图片打包后存放的目录
+                            // limit: 8192,    // 小于8k的图片自动转成base64格式，并且不会存在实体图片
+                            name:'../image/[name].[ext]',
+                            outputPath: 'image/'   // 图片打包后存放的目录
                         }
                     }
                 ]
@@ -51,7 +51,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './public/index.html',
             favicon: './public/favicon.ico',
-            img:'./public/image'
+            img:'./public/image/'
         }),
         new ExtractTextWebpackPlugin('css/style.css'),
         new CleanWebpackPlugin()

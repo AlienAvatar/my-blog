@@ -50,3 +50,11 @@
 .send-container{
     padding:16px;
 }
+
+.article-select{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 20px;
+}

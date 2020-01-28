@@ -5,10 +5,6 @@ import { Typography } from 'antd';
 const { Text } = Typography;
 
 const weatherURL = `https://www.tianqiapi.com/api/?appid=${APPID}&appsecret=${APPSECRET}`;
-let headers = new Headers({
-    'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'text/plain'
-});
 
 class WeatherComponent extends Component {
     constructor(props) {

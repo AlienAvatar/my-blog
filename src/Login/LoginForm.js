@@ -7,10 +7,6 @@ const username = 'username=';
 const password = 'password=';
 const isExistUserUrl = `${local.url}/isExistUser`;
 
-const headers = new Headers({
-    'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'text/plain'
-});
 class LoginForm extends React.Component {
     constructor(props){
         super(props);
@@ -25,13 +21,14 @@ class LoginForm extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            if (!err) {
+            if (err) {
                 console.log('Received values of form: ', values);
+                return;
             }
             const queryUrl = `${isExistUserUrl}?${username}${values.username}&${password}${values.password}`;
             fetch(queryUrl,{
                 method: "POST",
-                headers: headers
+                mode: 'cors',
             }).then(res => {
                 return res.json();
             }).then(json => {

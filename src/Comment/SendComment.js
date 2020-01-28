@@ -16,10 +16,6 @@ const commentCount = "commentCount=";
 
 class SendComment extends Component {
     handleSubmit = e => {
-        let headers = new Headers({
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'text/plain'
-        });
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (err) {
@@ -34,7 +30,7 @@ class SendComment extends Component {
             let queryUrl = `${url}?${author}${values.author}&${email}${values.email}&${content}${values.content}&${aritcleId}${aritcleIdValue}&${commentCount}${commentCountValue}`;
             fetch(queryUrl,{
                 method: 'POST',
-                headers: headers,
+                mode: 'cors',
             }).then(res => {
                 return res.json();
             }).then(json => {

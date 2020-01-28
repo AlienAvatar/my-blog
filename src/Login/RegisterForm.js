@@ -1,4 +1,4 @@
-import { Form, Icon, Input, Button, Checkbox,Select, AutoComplete,Option,AutoCompleteOption,Cascader,Tooltip,Row,Col } from 'antd';
+import { Form, Icon, Input, Button, Tooltip,Row,Col } from 'antd';
 import React, {Component} from 'react';
 import "./style.css"
 import {local} from "../Constant/loginConstant"
@@ -24,10 +24,6 @@ class RegisterForm extends React.Component{
     }
 
     handleSubmit = e => {
-        let headers = new Headers({
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'text/plain'
-        });
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (err) {
@@ -41,7 +37,7 @@ class RegisterForm extends React.Component{
             const url = `${addUserUrl}?${usernameParam}&${nicknameParam}&${passwordParam}&${emailParam}`;
             fetch(url,{
                 method: 'POST',
-                headers: headers,
+                mode: "cors",
             }).then(res => {
                 return res.json();
             }).then(json => {
