@@ -79,3 +79,28 @@
 .right-tag:hover{
     box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5);
 }
+
+/*Support Style*/
+
+.support-container{
+    display: flex;
+    margin: 25px auto;
+    justify-content: space-around;
+    flex-direction: row;
+    max-height: 300px;
+}
+
+.support-banner{
+    max-width: 200px;
+    max-height: 200px;
+}
+
+.support-left{
+    background: url("../../public/image/paywx.png");
+    background-size: cover;
+}
+
+.support-right{
+    background: url("../../public/image/payzfb.jpg");
+    background-size: cover;
+}

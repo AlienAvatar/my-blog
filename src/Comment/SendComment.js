@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import "./style.css";
-import {Form, Icon, Input, Button, Checkbox, Typography} from 'antd';
+import {Form, Icon, Input, Button, Checkbox, Typography, message} from 'antd';
 import ArticleEditor from "../SendArticle/ArticleEditor";
 import {local} from "../Constant/loginConstant";
 
@@ -15,6 +15,23 @@ const aritcleId = "aritcleId=";
 const commentCount = "commentCount=";
 
 class SendComment extends Component {
+    constructor(props){
+        super(props);
+        this.checkSendArticle = this.checkSendArticle.bind(this);
+    }
+
+    checkSendArticle(json){
+        if(json.code === 200){
+            document.getElementById("send_comment_content").value = "";
+            document.getElementById("send_comment_author").value = "";
+            document.getElementById("send_comment_email").value = "";
+            message.success('评论成功');
+            window.location.reload();
+        }else{
+            message.error('文章评论失败，好好反省下自己');
+        }
+    }
+
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -34,7 +51,7 @@ class SendComment extends Component {
             }).then(res => {
                 return res.json();
             }).then(json => {
-                console.log('获取的结果', json);
+                this.checkSendArticle(json)
                 return json;
             }).catch(err => {
                 console.log('请求错误', err);

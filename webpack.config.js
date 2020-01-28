@@ -53,7 +53,8 @@ module.exports = {
             favicon: './public/favicon.ico',
             img:'./public/image/'
         }),
-        new ExtractTextWebpackPlugin('css/style.css')
+        new ExtractTextWebpackPlugin('css/style.css'),
+        new CleanWebpackPlugin()
     ]
 };
 //        new CleanWebpackPlugin()

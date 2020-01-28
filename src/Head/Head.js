@@ -160,7 +160,8 @@ class Head extends Component{
                                         style={{ lineHeight: '64px' }}
                                     >
                                             <Menu.SubMenu title="菜单">
-                                                {/*<Menu.Item>杂谈</Menu.Item><Menu.Item>随笔</Menu.Item>*/}
+                                                <Menu.Item onClick={openSupport}>支持</Menu.Item>
+                                                {/*<Menu.Item>随笔</Menu.Item>*/}
                                             </Menu.SubMenu>
                                             <Menu.SubMenu title="友情链接" onTitleClick={openFriendLink}>{null}</Menu.SubMenu>
                                             <Menu.SubMenu title="关于我">
@@ -223,6 +224,13 @@ function openSetting() {
     const port = window.location.port;
     window.location.href = `http://${hostname}:${port}/setting`;
 }
+
+function openSupport() {
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    window.location.href = `http://${hostname}:${port}/support`;
+}
+
 const css_bannerLine = {
     borderLeft:'202px solid #666',
     height:'4px',

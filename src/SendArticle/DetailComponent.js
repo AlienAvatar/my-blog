@@ -46,7 +46,7 @@ class DetailComponent extends Component {
             return null;
         }
         let createDate = item.createDate.toString().substring(0,10);
-        const SendCommentForm = Form.create({ name: 'normal_login' })(SendComment);
+        const SendCommentForm = Form.create({ name: 'send_comment' })(SendComment);
         return(
             <div className="send-article-container">
                 <div className="about-article">

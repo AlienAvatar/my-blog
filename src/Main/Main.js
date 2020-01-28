@@ -12,6 +12,7 @@ import FriendLinkContainer from "../Container/FriendLinkContainer";
 import TestComponent from "../TestCompoent/TestComponent";
 import ArticleDetailContainer from "../Container/ArticleDetailContainer";
 import SettingContainer from "../Container/SettingContainer";
+import SupportContainer from "../Container/SupportContainer";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider , Link} = Layout;
@@ -59,6 +60,9 @@ class Main extends Component{
                             </Route>
                             <Route path="/setting">
                                 <SettingContainer />
+                            </Route>
+                            <Route path="/support">
+                                <SupportContainer />
                             </Route>
                             <Route path="/test">
                                 <TestComponent />
