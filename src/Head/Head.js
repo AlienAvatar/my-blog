@@ -1,12 +1,12 @@
 import React, {Component, Fragment} from 'react';
-import {Form, Layout, Menu} from "antd";
-import { Button,notification  } from 'antd';
+import {Avatar, Form, Layout, Menu,Icon} from "antd";
+import { Button,notification,Tooltip } from 'antd';
 import LoginForm from  "../Login/LoginForm";
 import "./style.css";
 import RegisterForm from "../Login/RegisterForm";
 import { Link } from 'react-router-dom';
 import {openLoginNotificationWithIcon} from "../Constant/loginConstant"
-import imgAvatar from "../../public/image/avatar.jpg"
+import {isMobileOrPc} from "../Utils/Utils";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -18,12 +18,19 @@ notification.config({
     duration: 3,
 });
 
+const avatar = <Tooltip placement="bottom" title="玩游戏就是要赢！"><Avatar
+    src="https://overwatch.nosdn.127.net/1/images/heroes/dva/icon-portrait.png"
+    alt="Dva"
+/></Tooltip>;
+
 class Head extends Component{
     constructor(props){
         super(props);
         this.state = {
             isShowLogin : "closed",
-            loginMsg : {}
+            loginMsg : {},
+            isMobile : false,
+            collapsed: false,
         };
         this.openLoginWindow = this.openLoginWindow.bind(this);
         this.closeLoginWindow = this.closeLoginWindow.bind(this);
@@ -34,9 +41,22 @@ class Head extends Component{
         this.keepLoginMsgInfo = this.keepLoginMsgInfo.bind(this);
     }
 
+    componentWillMount() {
+        let isMobile = isMobileOrPc();
+        this.setState({
+            isMobile : isMobile
+        })
+    }
+
     componentDidMount() {
         this.keepLoginMsgInfo();
     }
+
+    toggleCollapsed = () => {
+        this.setState({
+            collapsed: !this.state.collapsed,
+        });
+    };
 
     keepLoginMsgInfo() {
         let userInfo = window.sessionStorage.userInfo;
@@ -126,21 +146,58 @@ class Head extends Component{
     }
 
     render() {
-        let isShowLogin = this.state.isShowLogin;
+        let {isShowLogin,isMobile} = this.state;
         const NormalLoginForm = Form.create({ name: 'normal_login' })(LoginForm);
         const NormalRegisterForm = Form.create({ name: 'normal_register' })(RegisterForm);
         let loginFormComponent= null;
         let loginInMsgComponent = null;
-
         if(isShowLogin === "login" ){
             loginFormComponent = <NormalLoginForm closeLoginWindow={this.closeLoginWindow} isShowLogin={isShowLogin} LoginInLoginWindow={this.LoginInLoginWindow}></NormalLoginForm>
         }else if(isShowLogin === "register"){
             loginFormComponent = <NormalRegisterForm closeLoginWindow={this.closeLoginWindow} isShowLogin={isShowLogin} RegisterConfirmWindow={this.RegisterConfirmWindow}></NormalRegisterForm>
         } else if(isShowLogin === "loginIn"){
             const {loginMsg } = this.state;
-            loginInMsgComponent = <Menu.SubMenu title={loginMsg.nickname}><Menu.Item onClick={openSendArticle}>发表文章</Menu.Item><Menu.Item onClick={openSetting}>设置</Menu.Item><Menu.Item onClick={this.logout}>退出</Menu.Item></Menu.SubMenu>
+            loginInMsgComponent = <Menu
+                                    theme="dark"
+                                    mode="horizontal"
+                                    defaultSelectedKeys={['2']}
+                                    style={{ lineHeight: '64px' }}
+                                    >
+                                    <Menu.SubMenu title={avatar}></Menu.SubMenu>
+                                    <Menu.SubMenu title={loginMsg.nickname}><Menu.Item onClick={openSendArticle}>发表文章</Menu.Item><Menu.Item onClick={openSetting}>设置</Menu.Item><Menu.Item onClick={this.logout}>退出</Menu.Item></Menu.SubMenu>
+                                  </Menu>
+            // loginInMsgComponent = <Menu.SubMenu title={loginMsg.nickname}><Menu.Item onClick={openSendArticle}>发表文章</Menu.Item><Menu.Item onClick={openSetting}>设置</Menu.Item><Menu.Item onClick={this.logout}>退出</Menu.Item></Menu.SubMenu>
         }
 
+        const MobileComponent = () => {
+            return(
+                <div className="right-banner">
+                    <Button type="primary" onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
+                        <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
+                    </Button>
+
+                    {/*{isShowLogin === "loginIn" ?  null : <Button onClick={this.openLoginWindow} className="head-btn" type="primary">登录</Button>}*/}
+                    {/*<Button type="link" onClick={this.openRegisterWindow} className="head-btn">注册</Button>*/}
+                </div>
+            )};
+
+
+        const PCComponent = () => {
+                return(
+                    <div className="right-banner">
+                        {loginInMsgComponent}
+                        {isShowLogin === "loginIn" ? null :
+                            <Button onClick={this.openLoginWindow} className="head-btn" type="primary">登录</Button>}
+                        <Button type="link" onClick={this.openRegisterWindow} className="head-btn">注册</Button>
+                    </div>
+                )};
+
+        let RightLoginCompoent;
+        if(isMobile){
+            RightLoginCompoent = <MobileComponent />
+        }else{
+            RightLoginCompoent = <PCComponent/>
+        }
         return (
             <div className="header">
                 <div className="headOverlay">
@@ -151,7 +208,7 @@ class Head extends Component{
                         <div className="bannerLine" style={css_bannerLine} />
                         <Header className="banner">
                             <div className="left-banner">
-                                <div className="container" style={css_container}>
+                                <div className="left-header-container" style={css_container}>
                                     <a href="#" onClick={openMain} className="logo"/>
                                     <Menu
                                         theme="dark"
@@ -171,18 +228,7 @@ class Head extends Component{
                                     </Menu>
                                 </div>
                             </div>
-                            <div className="right-banner">
-                                <Menu
-                                    theme="dark"
-                                    mode="horizontal"
-                                    defaultSelectedKeys={['2']}
-                                    style={{ lineHeight: '64px' }}
-                                >
-                                    {loginInMsgComponent}
-                                </Menu>
-                                {isShowLogin === "loginIn" ?  null : <Button onClick={this.openLoginWindow} className="head-btn" type="primary">登录</Button>}
-                                <Button type="link" onClick={this.openRegisterWindow} className="head-btn">注册</Button>
-                            </div>
+                            {RightLoginCompoent}
                         </Header>
                     </div>
                 </Layout>

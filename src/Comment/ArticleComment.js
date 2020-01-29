@@ -3,7 +3,12 @@ import moment from 'moment';
 import React, {Component, Fragment} from 'react'
 import "./style.css";
 import {local} from "../Constant/loginConstant";
-
+const imageArr = [
+    "https://overwatch.nosdn.127.net/1/images/heroes/dva/icon-portrait.png",
+    "https://overwatch.nosdn.127.net/1/images/heroes/mercy/icon-portrait.png",
+    "https://overwatch.nosdn.127.net/1/images/heroes/reinhardt/icon-portrait.png",
+    "https://overwatch.nosdn.127.net/1/images/heroes/hanzo/icon-portrait.png",
+];
 class ArticleComment extends Component {
     constructor(props){
         super(props);
@@ -32,7 +37,6 @@ class ArticleComment extends Component {
         }
 
         const url = local.url + "/queryComment?aritcleId="+ aritcleId;
-        console.log(url);
         fetch(url,{
             method: 'GET',
             mode: 'cors',
@@ -68,21 +72,22 @@ class ArticleComment extends Component {
         }
 
         const actions = [
-
             <span key="comment-basic-reply-to"></span>,
         ];
 
+        let imageUrl = null;
         return(
             <Fragment>
             {
                 items.map((item,index) => (
                     <div className="article-comment shadow-container" key={index}>
+
                         <Comment
                             actions={actions}
                             author={<a>{item.author}</a>}
                             avatar={
                                 <Avatar
-                                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                                    src="https://overwatch.nosdn.127.net/1/images/heroes/dva/icon-portrait.png"
                                     alt="Han Solo"
                                 />
                             }

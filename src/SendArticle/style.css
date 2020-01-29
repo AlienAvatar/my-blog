@@ -58,3 +58,11 @@
     justify-content: space-around;
     padding: 20px;
 }
+
+.friend-link-content{
+    background: #eeeeee;
+    border-left: 15px solid #001529;
+    font-size: 16px;
+    font-family: 微软雅黑, 'Hiragino Sans GB', 'Microsoft Yahei', 'Microsoft Sans Serif', sans-serif;
+    padding-left: 12px;
+}

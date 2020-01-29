@@ -40,7 +40,7 @@ class SendComment extends Component {
                 return;
             }
             const aritcleIdValue = this.props.aritcleId;
-            const commentCountValue = this.props.commentCount || 0;
+            const commentCountValue = 0;
             console.log("aritcleIdValue=" + aritcleIdValue);
             console.log("commentCountValue=" + commentCountValue);
 
@@ -51,7 +51,7 @@ class SendComment extends Component {
             }).then(res => {
                 return res.json();
             }).then(json => {
-                this.checkSendArticle(json)
+                this.checkSendArticle(json);
                 return json;
             }).catch(err => {
                 console.log('请求错误', err);
@@ -77,16 +77,25 @@ class SendComment extends Component {
                         {getFieldDecorator('author', {
                             rules: [{ required: true, message: 'Please input your author!' }],
                         })(
-                            <Input className="comment-input" placeholder="author" />
+                            <Input className="comment-input" placeholder="请输入你的名字" />
                         )}
                     </Form.Item>
 
                     <Text>电子邮箱:</Text>
                     <Form.Item style={{marginBottom:"0"}}>
                         {getFieldDecorator('email', {
-                            rules: [{ required: true, message: 'Please input your email!' }],
+                            rules: [
+                                {
+                                    type: 'email',
+                                    message: '请输入有效的Email！',
+                                },
+                                {
+                                    required: true,
+                                    message: '请输入Email！',
+                                },
+                            ],
                         })(
-                            <Input className="comment-input" placeholder="email" />
+                            <Input className="comment-input" placeholder="请输入email" />
                         )}
                     </Form.Item>
 

@@ -47,7 +47,7 @@ class Main extends Component{
                             <Route exact path="/">
                                 <Container />
                             </Route>
-                            <Route path="/aboutme">
+                            <Route path="/aboutMe">
                                 <AboutMeContainer />
                             </Route>
                             <Route path="/sendArticle">

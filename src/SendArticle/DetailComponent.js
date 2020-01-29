@@ -7,7 +7,7 @@ import Divider from "antd/lib/divider";
 
 const { Title,Text} = Typography;
 
-const pkid = "pkid=";
+const PKID = "pkid=";
 
 class DetailComponent extends Component {
     constructor(props){
@@ -23,10 +23,8 @@ class DetailComponent extends Component {
     }
 
     getArticleDetail(){
-        const hostname = window.location.hostname;
-        const port = 8081;
         const id = getQueryVariable("id");
-        const url = `http://${hostname}:${port}/api/queryArticleDetail?${pkid}${id}`;
+        const url = `${local.url}/queryArticleDetail?${PKID}${id}`;
         fetch(url,{
             method: 'GET',
             mode: 'cors',

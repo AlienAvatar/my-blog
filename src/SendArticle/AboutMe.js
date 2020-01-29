@@ -6,7 +6,6 @@ import {local} from "../Constant/loginConstant";
 import Divider from "antd/lib/divider";
 import SendComment from "../Comment/SendComment";
 import ArticleComment from "../Comment/ArticleComment";
-// import img from "../../public/image/avatar.jpg"
 
 const { Title,Text} = Typography;
 
@@ -24,7 +23,7 @@ class AboutMe extends Component{
     }
 
     getAboutMeArticle(){
-        fetch(local.url,{
+        fetch(`${local.url}/getAboutMe`,{
             method: 'GET',
             mode: 'cors',
         }).then(res => {
@@ -42,7 +41,7 @@ class AboutMe extends Component{
             return null;
         }
         let createDate = item.createDate.toString().substring(0,10);
-        const SendCommentForm = Form.create({ name: 'normal_login' })(SendComment);
+        const SendCommentForm = Form.create({ name: 'send_comment' })(SendComment);
         return(
             <div className="about-article">
                 <div className="about-container shadow-container">
