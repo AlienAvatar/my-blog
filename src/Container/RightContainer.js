@@ -35,7 +35,7 @@ function RightContainer() {
                     <Tag className="right-tag" color="magenta">杂谈</Tag>
                     <Tag className="right-tag" color="red">技术</Tag>
                     <Tag className="right-tag" color="volcano" onClick={openGithub}>GitHub</Tag>
-                    <Tag className="right-tag" color="orange">无问东西</Tag>
+                    <Tag className="right-tag" color="orange" onClick={openTencentVedio}>无问西东</Tag>
                     <Tag className="right-tag" color="gold">流浪远方</Tag>
                     <Tag className="right-tag" color="lime">镜花水月</Tag>
                 </div>
@@ -50,4 +50,9 @@ function RightContainer() {
 function openGithub() {
     window.open("https://github.com/AlienAvatar","github");
 }
+
+function openTencentVedio(){
+    window.open("https://v.qq.com/x/cover/wagzbx91asjomnu/z0026lwsaws.html","github");
+}
+
 export default RightContainer;

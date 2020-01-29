@@ -30,7 +30,7 @@ class ArticleList extends Component {
     onChange = page => {
         const valueTitle = document.getElementById("search-title").value;
         let items = null;
-        if(valueTitle !== "" && typeof valueTitle !== undefined){
+        if(valueTitle !== "" && valueTitle !== undefined){
              items = this.getArticle(page,valueTitle);
         }else {
             items = this.getArticle(page,"");
@@ -50,8 +50,11 @@ class ArticleList extends Component {
         this.getArticle(this.state.current,"");
     }
 
-    getPageSize(){
-        const valueTitle = "";
+    getPageSize(paramValueTitle){
+        let valueTitle = "";
+        if(paramValueTitle !== undefined){
+            valueTitle = paramValueTitle;
+        }
 
         const URL = `${PAGE_SIZE_URL}?${TITLE}${valueTitle}`;
         fetch(URL,{
@@ -83,9 +86,9 @@ class ArticleList extends Component {
     }
 
     searchArticleByTitle(){
-        this.getPageSize();
-        const valueTitle = document.getElementById("search-title").value || "";
 
+        const valueTitle = document.getElementById("search-title").value || "";
+        this.getPageSize(valueTitle);
         const valuePage = this.state.current;
         const URL = `${GET_ARTICLE_URL}?${PAGE}${valuePage}&${TITLE}${valueTitle}`;
         fetch(URL,{

@@ -166,7 +166,6 @@ class Head extends Component{
                                     <Menu.SubMenu title={avatar}></Menu.SubMenu>
                                     <Menu.SubMenu title={loginMsg.nickname}><Menu.Item onClick={openSendArticle}>发表文章</Menu.Item><Menu.Item onClick={openSetting}>设置</Menu.Item><Menu.Item onClick={this.logout}>退出</Menu.Item></Menu.SubMenu>
                                   </Menu>
-            // loginInMsgComponent = <Menu.SubMenu title={loginMsg.nickname}><Menu.Item onClick={openSendArticle}>发表文章</Menu.Item><Menu.Item onClick={openSetting}>设置</Menu.Item><Menu.Item onClick={this.logout}>退出</Menu.Item></Menu.SubMenu>
         }
 
         const MobileComponent = () => {
