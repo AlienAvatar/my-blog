@@ -1,13 +1,14 @@
 import { Form, Icon, Input, Button, Tooltip,Row,Col } from 'antd';
 import React, {Component} from 'react';
 import "./style.css"
-import {local} from "../Constant/loginConstant"
+import {local, thatgirl} from "../Constant/loginConstant"
+import MD5 from "crypto-js/md5";
 
 const addUserUrl = `${local.url}/addUser`;
-const username = "username=";
-const password = "password=";
-const nickname = "nickname=";
-const email = "email=";
+const USERNAME = "username=";
+const PASSWORD = "password=";
+const NICKNAME = "nickname=";
+const EMAIL = "email=";
 
 class RegisterForm extends React.Component{
     constructor(props){
@@ -30,10 +31,11 @@ class RegisterForm extends React.Component{
                 console.log('Received values of form: ', values);
                 return;
             }
-            const usernameParam = `${username}${values.username}`;
-            const nicknameParam = `${nickname}${values.nickname}`;
-            const passwordParam = `${password}${values.password}`;
-            const emailParam = `${email}${values.email}`;
+            const password = MD5(MD5(values.password+thatgirl)).toString();
+            const usernameParam = `${USERNAME}${values.username}`;
+            const nicknameParam = `${NICKNAME}${values.nickname}`;
+            const passwordParam = `${PASSWORD}${password}`;
+            const emailParam = `${EMAIL}${values.email}`;
             const url = `${addUserUrl}?${usernameParam}&${nicknameParam}&${passwordParam}&${emailParam}`;
             fetch(url,{
                 method: 'POST',

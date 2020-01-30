@@ -2,9 +2,10 @@ import { Form, Icon, Input, Button, Checkbox,Select, AutoComplete,Option,AutoCom
 import React, {Component} from 'react';
 import "./style.css"
 import {local} from "../Constant/loginConstant"
-
-const username = 'username=';
-const password = 'password=';
+import {thatgirl} from "../Constant/loginConstant"
+import MD5 from 'crypto-js/md5';
+const USERNAME = 'username=';
+const PASSWORD = 'password=';
 const isExistUserUrl = `${local.url}/isExistUser`;
 
 class LoginForm extends React.Component {
@@ -25,7 +26,10 @@ class LoginForm extends React.Component {
                 console.log('Received values of form: ', values);
                 return;
             }
-            const queryUrl = `${isExistUserUrl}?${username}${values.username}&${password}${values.password}`;
+
+            const password = MD5(MD5(values.password+thatgirl)).toString();
+
+            const queryUrl = `${isExistUserUrl}?${USERNAME}${values.username}&${PASSWORD}${password}`;
             fetch(queryUrl,{
                 method: "POST",
                 mode: 'cors',

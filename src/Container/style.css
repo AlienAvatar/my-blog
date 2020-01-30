@@ -96,11 +96,11 @@
 }
 
 .support-left{
-    background: url("../../public/image/paywx.png");
-    background-size: cover;
+    background: url("../../public/image/paywx.png")!important;
+    background-size: cover !important;
 }
 
 .support-right{
-    background: url("../../public/image/payzfb.jpg");
-    background-size: cover;
+    background: url("../../public/image/payzfb.jpg")!important;
+    background-size: cover!important;
 }
