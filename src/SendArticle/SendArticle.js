@@ -5,6 +5,7 @@ import {local} from "../Constant/loginConstant";
 import Divider from "antd/lib/divider";
 import { Layout } from 'antd';
 import "./style.css";
+import MyEditor from "./MyEditor";
 
 const { Option } = Select;
 const { Header, Footer, Sider, Content } = Layout;
@@ -23,10 +24,12 @@ class SendArticle extends Component {
         this.state= {
             loginMsg: null,
             selectValue:"tech",
+            title:null
         };
         this.addArticle = this.addArticle.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.checkSendArticle = this.checkSendArticle.bind(this);
+        this.changeTitle = this.changeTitle.bind(this);
     }
 
     componentWillMount() {
@@ -38,9 +41,11 @@ class SendArticle extends Component {
         }
     }
 
-    addArticle(e){
+    addArticle(e,contentValue){
         e.preventDefault();
-        let contentValue = document.getElementById("article-content").value;
+        // let contentValue = document.getElementById("article-content").value;
+        console.log(contentValue);
+        return;
         let titleValue = document.getElementById("send-article-title").value;
         if(contentValue.concat() === "" || titleValue.concat() === ""){
             message.warning('文章和标题不能为空');
@@ -63,12 +68,15 @@ class SendArticle extends Component {
 
     checkSendArticle(json){
         if(json.code === 200){
-            document.getElementById("article-content").value = "";
-            document.getElementById("send-article-title").value = "";
+            // document.getElementById("article-content").value = "";
+            // document.getElementById("send-article-title").value = "";
             this.setState({
                 selectValue:'tech'
             });
             message.success('文章发表成功');
+            const hostname = window.location.hostname;
+            const port = window.location.port;
+            window.location.href = `http://${hostname}:${port}`;
         }else{
             message.error('文章发表失败，请联系管理员');
         }
@@ -80,8 +88,14 @@ class SendArticle extends Component {
         });
     }
 
+    changeTitle(e){
+        this.setState({
+            title:e.target.value
+        })
+    }
+
     render() {
-        const {loginMsg,selectValue} = this.state;
+        const {loginMsg,selectValue,title} = this.state;
         let createDate = genCreateDate();
         return(
             <div className="send-article-container">
@@ -100,14 +114,14 @@ class SendArticle extends Component {
                             <Header style={{backgroundColor:'#fff',display:"flex",justifyContent:"center",alignItems:"center"}}>
                                 <Text>标题:</Text><Input id="send-article-title" style={{width:"70%",minWidth:"100px"}}/>
                             </Header>
-                            <Layout style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-                                <Content>
-                                    <TextArea id="article-content" rows={20}/>
-                                </Content>
-                            </Layout>
+                        </Layout>
+                        {/*Editor*/}
+                        {/*<ArticleEditor className="article-content"/>*/}
+                        <MyEditor className="article-content" title={title} selectValue={selectValue} checkSendArticle={this.checkSendArticle}/>
+                        {/*<TextArea id="article-content" rows={20}/>*/}
+                        <Layout>
                             <Footer>
                                 <Layout className="article-select">
-                                {/*<div className="article-button-send">*/}
                                     <Text>类型:</Text>
                                     <Select defaultValue={selectValue} style={{ width: 120 }} onChange={this.handleSelectChange}>
                                         <Option value="tech">技术</Option>
@@ -115,10 +129,9 @@ class SendArticle extends Component {
                                         <Option value="story">故事会</Option>
                                     </Select>
                                 </Layout>
-                                    <Button onClick={this.addArticle} type="primary" className="comment-button">发送文章</Button>
-                                {/*</div>*/}
+                                <Button onClick={this.addArticle} type="primary" className="comment-button">发送文章</Button>
                             </Footer>
-                        {/*<ArticleEditor className="article-content"/>*/}
+
                         </Layout>
                     </div>
                 </div>

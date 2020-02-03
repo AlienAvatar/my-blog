@@ -54,7 +54,6 @@ module.exports = {
             img:'./public/image/'
         }),
         new ExtractTextWebpackPlugin('css/style.css'),
-        new CleanWebpackPlugin(),
     ]
 };
 //        new CleanWebpackPlugin()

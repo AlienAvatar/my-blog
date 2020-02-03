@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component,Fragment } from 'react'
 import RightContainer from "../Container/RightContainer";
 
 const TestButton = ({onClick,className = 'test-btn',children}) =>{
@@ -31,23 +31,11 @@ class TestComponent extends Component {
 
     render() {
         return (
-            <div classname="send-article-container">
-                <div classname="about-article">
-                    <div classname="send-container shadow-container">
-                        <buttonwithloading
-                        >more</buttonwithloading>
-                        <rightcontainer/>
-                    </div>
-                </div>
-            </div>
+           <Fragment>
+
+           </Fragment>
         )
     }
 }
-
-
-/**
- * Test Function
- */
-function test(){}
 
 export default TestComponent;
