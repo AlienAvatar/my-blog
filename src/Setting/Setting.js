@@ -58,6 +58,8 @@ class Setting extends Component {
         if(key === "1"){
             Doc = <PersonDoc />;
         }else if(key === "2"){
+
+        }else if(key === "3"){
             Doc = <AvatarDoc />
         }
 
@@ -79,7 +81,8 @@ class Setting extends Component {
                                     title={<span><Icon type="user" />个人信息</span>}
                                 >
                                     <Menu.Item key="1" >个人资料</Menu.Item>
-                                    <Menu.Item key="2" >更改头像</Menu.Item>
+                                    <Menu.Item key="2">文章管理</Menu.Item>
+                                    <Menu.Item key="3" >更改头像</Menu.Item>
                                     {/*<Menu.Item key="3">option3</Menu.Item>*/}
                                     {/*<Menu.Item key="4">option4</Menu.Item>*/}
                                 </SubMenu>
