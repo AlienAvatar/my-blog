@@ -110,9 +110,9 @@ class ArticleList extends Component {
         const {items} = this.state;
         for(let i = 0; i < 5; i++) {
             let detailElement = document.getElementById("cell-detail-content-" + i);
-
             if (detailElement !== null) {
-                detailElement.innerHTML = items[i].content;
+                let contentValue = JSON.parse(items[i].content);
+                detailElement.innerHTML = contentValue;
             }
         }
     }

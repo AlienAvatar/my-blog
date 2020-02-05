@@ -29,9 +29,9 @@ const ToolBar = props => {
     <BarBox>
       {/*<Button onClick={props.onBoldClick}><Icons.bold /></Button>*/}
       <Button onClick={props.onLinkClick}><Icons.link /></Button>
-      <Button>
-        <ImageUploader insertImage={props.onImageClick} />
-      </Button>
+      {/*<Button>*/}
+      {/*  <ImageUploader insertImage={props.onImageClick} />*/}
+      {/*</Button>*/}
     </BarBox>
   );
 };
@@ -40,7 +40,7 @@ const ToolBar = props => {
 ToolBar.propTypes = {
   // onBoldClick: PropTypes.func.isRequired,
   onLinkClick: PropTypes.func.isRequired,
-  onImageClick: PropTypes.func.isRequired,
+  // onImageClick: PropTypes.func.isRequired,
 };
 
 export default ToolBar;

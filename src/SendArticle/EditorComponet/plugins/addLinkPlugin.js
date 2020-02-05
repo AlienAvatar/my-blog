@@ -23,7 +23,7 @@ export const Link = props => {
 
 export const linkStrategy = (contentBlock, callback, contentState) => {
   contentBlock.findEntityRanges(character => {
-    // console.log(character);
+    // thatgirl(character);
     const entityKey = character.getEntity();
     return (
       entityKey !== null &&

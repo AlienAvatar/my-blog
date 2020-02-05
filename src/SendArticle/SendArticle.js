@@ -72,9 +72,9 @@ class SendArticle extends Component {
                 selectValue:'tech'
             });
             message.success('文章发表成功');
-            const hostname = window.location.hostname;
-            const port = window.location.port;
-            window.location.href = `http://${hostname}:${port}`;
+            // const hostname = window.location.hostname;
+            // const port = window.location.port;
+            // window.location.href = `http://${hostname}:${port}`;
         }else{
             message.error('文章发表失败，请联系管理员');
         }

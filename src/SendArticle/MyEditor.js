@@ -112,9 +112,6 @@ let options = {
         attributes: {
           src: data.src,
         },
-        style: {
-          // Put styles here...
-        },
       };
     }
   },
@@ -169,14 +166,16 @@ class MyEditor extends React.PureComponent {
             return;
         }
         let titleValue = document.getElementById("send-article-title").value;
-        if(contentValue.trim() === "" || titleValue.trim() === ""){
+        if(contentValue === "" || titleValue === ""){
             message.warning('文章和标题不能为空');
             return;
         }
         const {loginMsg} = this.state;
         const {selectValue,checkSendArticle} = this.props;
-        let queryUrl = `${addArticleUrl}?${CONTENT}`+ contentValue +`&${TITLE}${titleValue}&${TYPE}${selectValue}&${USERNAME}${loginMsg.username}`;
-        console.log(queryUrl)
+        contentValue = contentValue.replace(/&nbsp;/ig, " ").toString();
+        contentValue = JSON.stringify(contentValue);
+        let queryUrl = `${addArticleUrl}?${CONTENT}${contentValue}&${TITLE}${titleValue}&${TYPE}${selectValue}&${USERNAME}${loginMsg.username}`;
+        console.log(queryUrl);
         fetch(queryUrl,{
           method: 'POST',
           mode:'cors'
@@ -193,6 +192,7 @@ class MyEditor extends React.PureComponent {
     convertToHtml(){
         const {editorState} = this.state;
         let html = stateToHTML(editorState.getCurrentContent(),options);
+
         this.setState({
            htmlEditor:html
         });
@@ -323,7 +323,7 @@ class MyEditor extends React.PureComponent {
     const blockItems = BLOCK_TYPES;
     const fontItems = FONT_SIZE;
     const colorItems = COLORS;
-    const defaultFont = 14;
+    const defaultFont = 24;
     return (
         <Fragment>
           <Container>
@@ -343,7 +343,7 @@ class MyEditor extends React.PureComponent {
             {/*</Select>*/}
 
 
-            <Select defaultValue={defaultFont} style={{ width: 80 }} onChange={this.onFontSizeStyle}>
+            <Select className="editor-btn" defaultValue={defaultFont} style={{ width: 80 }} onChange={this.onFontSizeStyle}>
               {
                 fontItems.map((item)=>{
                   return(
@@ -353,7 +353,7 @@ class MyEditor extends React.PureComponent {
               }
             </Select>
 
-            <Select defaultValue="Red" style={{ width: 80 }} onChange={this.onColorFontStyle}>
+            <Select className="editor-btn" defaultValue="Red" style={{ width: 80 }} onChange={this.onColorFontStyle}>
               {
                 colorItems.map((item,index)=>{
                   return(
@@ -365,7 +365,7 @@ class MyEditor extends React.PureComponent {
             <ToolBar
               // onBoldClick={this._onBoldClick}
               onLinkClick={this.addLink}
-              onImageClick={this.addImage}
+              // onImageClick={this.addImage}
             />
 
             <EditorBox>

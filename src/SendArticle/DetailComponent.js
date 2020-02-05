@@ -28,7 +28,7 @@ class DetailComponent extends Component {
         let detailElement = document.getElementById("detail-content");
 
         if(detailElement !== null){
-            detailElement.innerHTML = this.state.detailContent;
+            detailElement.innerHTML = JSON.parse(this.state.detailContent);
         }
     }
 
