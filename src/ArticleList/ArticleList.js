@@ -100,12 +100,22 @@ class ArticleList extends Component {
             this.setState({
                 items:result,
             });
+
         }).catch(err => {
             console.log('请求错误', err);
         })
     }
 
+    componentDidUpdate(){
+        const {items} = this.state;
+        for(let i = 0; i < 5; i++) {
+            let detailElement = document.getElementById("cell-detail-content-" + i);
 
+            if (detailElement !== null) {
+                detailElement.innerHTML = items[i].content;
+            }
+        }
+    }
 
     render() {
         const items = this.state.items;
@@ -125,9 +135,9 @@ class ArticleList extends Component {
                     />
                 </div>
                 {
-                    items.map((item) => (
+                    items.map((item,index) => (
                         <div className="article-container" key={item.pkid}>
-                            <ArticleListCell data={item} />
+                            <ArticleListCell data={item} index={index}/>
                         </div>
                     ))
                 }

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import {Form, Icon, Typography} from "antd";
+import {Form, Icon, Typography,Layout} from "antd";
 import ArticleComment from "../Comment/ArticleComment";
 import SendComment from "../Comment/SendComment";
 import {local} from "../Constant/loginConstant";
 import Divider from "antd/lib/divider";
+import $ from  'jquery'
 
 const { Title,Text} = Typography;
 
@@ -14,12 +15,21 @@ class DetailComponent extends Component {
         super(props);
         this.getArticleDetail = this.getArticleDetail.bind(this);
         this.state = {
-            item: null
+            item: null,
+            detailContent:null
         }
     }
 
-    componentWillMount(){
+    componentDidMount(){
         this.getArticleDetail();
+    }
+
+    componentDidUpdate(){
+        let detailElement = document.getElementById("detail-content");
+
+        if(detailElement !== null){
+            detailElement.innerHTML = this.state.detailContent;
+        }
     }
 
     getArticleDetail(){
@@ -32,19 +42,25 @@ class DetailComponent extends Component {
             return res.json();
         }).then((result) => {
             console.log(result);
-            this.setState({item:result.data[0]});
+            this.setState({
+                item:result.data[0],
+                detailContent:result.data[0].content,
+            });
         }).catch(err => {
             console.log('请求错误', err);
         })
     }
 
     render() {
-        let item = this.state.item;
+        let {item,detailContent} = this.state;
         if(!item){
             return null;
         }
         let createDate = item.createDate.toString().substring(0,10);
         const SendCommentForm = Form.create({ name: 'send_comment' })(SendComment);
+        // if(item.content !== null) {
+        //     const content = document.getElementById("detail-content").innerHTML = item.content;
+        // }
         return(
             <div className="send-article-container">
                 <div className="about-article">
@@ -60,10 +76,8 @@ class DetailComponent extends Component {
                             </div>
                         </div>
                         <Divider />
-                        <div className="about-content">
-                            <Text>
-                                {item.content}
-                            </Text>
+                        <div id="detail-content" className="about-content">
+                            {/*{detailContent}*/}
                         </div>
                     </div>
 
@@ -79,6 +93,7 @@ class DetailComponent extends Component {
         )
     }
 }
+
 
 function getQueryVariable(variable)
 {

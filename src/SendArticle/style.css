@@ -66,3 +66,8 @@
     font-family: 微软雅黑, 'Hiragino Sans GB', 'Microsoft Yahei', 'Microsoft Sans Serif', sans-serif;
     padding-left: 12px;
 }
+
+.editor-btn{
+    margin-bottom: 20px;
+    margin-right: 5px;
+}

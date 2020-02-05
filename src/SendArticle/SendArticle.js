@@ -68,8 +68,6 @@ class SendArticle extends Component {
 
     checkSendArticle(json){
         if(json.code === 200){
-            // document.getElementById("article-content").value = "";
-            // document.getElementById("send-article-title").value = "";
             this.setState({
                 selectValue:'tech'
             });
