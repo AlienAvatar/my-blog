@@ -3,6 +3,7 @@ import {Layout, Menu, Breadcrumb, Icon, Form, Input, Button} from "antd";
 import {} from 'antd';
 import "./style.css";
 import PersonSettingForm from "./PersonSettingForm";
+import ArticleSetting from "./ArticleSetting";
 import Divider from "antd/lib/divider";
 import UploadAvatar from "./UploadAvatar";
 
@@ -13,7 +14,7 @@ class Setting extends Component {
     constructor(props){
         super(props);
         this.state ={
-            key : "1",
+            key : "2",
             title : "个人资料"
         };
         this.handleChange = this.handleChange.bind(this);
@@ -55,9 +56,22 @@ class Setting extends Component {
             )
         };
 
+        const ArticleDoc = () =>{
+            return (
+                <Content style={{ padding: '0 24px', minHeight: 1152 }}>
+                    <Header style={{backgroundColor:'#fff'}}>{title}</Header>
+                    <Divider/>
+                    <Content>
+                        <ArticleSetting />
+                    </Content>
+                </Content>
+            )
+        };
+
         if(key === "1"){
             Doc = <PersonDoc />;
         }else if(key === "2"){
+            Doc = <ArticleDoc />;
 
         }else if(key === "3"){
             Doc = <AvatarDoc />
@@ -67,7 +81,7 @@ class Setting extends Component {
         return(
             <Layout style={{display:'flex', flexDirection:'column-reverse',alignItems:'center'}}>
                 <Content style={{ padding: '25px 50px',marginBottom:"30px" }}>
-                    <Layout width={500} style={{ padding: '24px 0', background: '#fff' }}>
+                    <Layout width={500} style={{ padding: '24px 0', background: '#fff',height:'1200px' }}>
                         <Sider width={200} style={{ background: '#fff' }}>
                             <Menu
                                 mode="inline"

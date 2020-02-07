@@ -26,7 +26,6 @@ class SendArticle extends Component {
             selectValue:"tech",
             title:null
         };
-        this.addArticle = this.addArticle.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.checkSendArticle = this.checkSendArticle.bind(this);
         this.changeTitle = this.changeTitle.bind(this);
@@ -41,40 +40,15 @@ class SendArticle extends Component {
         }
     }
 
-    addArticle(e,contentValue){
-        e.preventDefault();
-        // let contentValue = document.getElementById("article-content").value;
-        console.log(contentValue);
-        return;
-        let titleValue = document.getElementById("send-article-title").value;
-        if(contentValue.concat() === "" || titleValue.concat() === ""){
-            message.warning('文章和标题不能为空');
-            return;
-        }
-        const {loginMsg,selectValue} = this.state;
-        let queryUrl = `${addArticleUrl}?${CONTENT}${contentValue}&${TITLE}${titleValue}&${TYPE}${selectValue}&${USERNAME}${loginMsg.username}`;
-        fetch(queryUrl,{
-            method: 'POST',
-            mode:'cors'
-        }).then(res => {
-            return res.json();
-        }).then(json => {
-            this.checkSendArticle(json);
-            return json;
-        }).catch(err => {
-            console.log('请求错误', err);
-        })
-    }
-
     checkSendArticle(json){
         if(json.code === 200){
             this.setState({
                 selectValue:'tech'
             });
             message.success('文章发表成功');
-            // const hostname = window.location.hostname;
-            // const port = window.location.port;
-            // window.location.href = `http://${hostname}:${port}`;
+            const hostname = window.location.hostname;
+            const port = window.location.port;
+            window.location.href = `http://${hostname}:${port}`;
         }else{
             message.error('文章发表失败，请联系管理员');
         }
@@ -127,7 +101,7 @@ class SendArticle extends Component {
                                         <Option value="story">故事会</Option>
                                     </Select>
                                 </Layout>
-                                <Button onClick={this.addArticle} type="primary" className="comment-button">发送文章</Button>
+                                {/*<Button onClick={this.addArticle} type="primary" className="comment-button">发送文章</Button>*/}
                             </Footer>
 
                         </Layout>
