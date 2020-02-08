@@ -10,7 +10,9 @@
     width: 72px;
 }
 
-
+.search-title{
+    width: 20%;
+}
 /*ArticleListCell*/
 .ant-pagination{
     display: flex;

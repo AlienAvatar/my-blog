@@ -107,7 +107,7 @@ class ArticleSetting extends Component {
                         onChange: page => {
                             this.addStyle();
                         },
-                        pageSize: 4,
+                        pageSize: 3,
                     }}
                     position="bottom"
                     renderItem={(item,index) => (

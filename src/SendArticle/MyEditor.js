@@ -386,7 +386,7 @@ class MyEditor extends React.PureComponent {
 
           </Container>
 
-          <Button onClick={this.convertToHtml}>获取Html</Button>
+          <Button onClick={this.convertToHtml}>发送文章</Button>
           {/*<Button onClick={this.convertToHtml} type="primary" className="comment-button">发送文章</Button>*/}
         </Fragment>
     );

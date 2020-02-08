@@ -24862,7 +24862,9 @@ div.ant-typography-edit-content {
     width: 72px;
 }
 
-
+.search-title{
+    width: 20%;
+}
 /*ArticleListCell*/
 .ant-pagination{
     display: flex;
@@ -25414,6 +25416,6 @@ div.troll__right-hand, div.troll__left-hand {
 .article-comment{
     margin-top: 30px;
     padding: 20px;
-}.personal-text{
-
+}.setting-article-content{
+    max-width: 800px;
 }

@@ -4,14 +4,11 @@ import { Button,notification,Tooltip } from 'antd';
 import LoginForm from  "../Login/LoginForm";
 import "./style.css";
 import RegisterForm from "../Login/RegisterForm";
-import { Link } from 'react-router-dom';
 import {openLoginNotificationWithIcon} from "../Constant/loginConstant"
-import {isMobileOrPc} from "../Utils/Utils";
+import {isMobileOrPc,openSendArticle,openSetting,openSupport,openFriendLink,openAboutMe,openMain,openGithub} from "../Utils/Utils";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
-const css_ShadowWindow = 'position: fixed; top:0;right:0;bottom:0;left:0;background: rgba(0,0,0,0.8)';
-const css_closeLoginWindow = 'position: fixed; top:0;right:0;bottom:0;left:0;background: rgba(0,0,0,0)';
 notification.config({
     placement: 'topRight',
     top:60,
@@ -191,12 +188,13 @@ class Head extends Component{
                     </div>
                 )};
 
-        let RightLoginCompoent;
-        if(isMobile){
-            RightLoginCompoent = <MobileComponent />
-        }else{
-            RightLoginCompoent = <PCComponent/>
-        }
+        let RightLoginCompoent = <PCComponent/>;
+        // 可以做个可扩展按钮的伸缩
+        // if(isMobile){
+        //     RightLoginCompoent = <MobileComponent />
+        // }else{
+        //     RightLoginCompoent = <PCComponent/>
+        // }
         return (
             <div className="header">
                 <div className="headOverlay">
@@ -236,58 +234,12 @@ class Head extends Component{
     }
 }
 
-function openSendArticle(){
-    const hostname = window.location.hostname;
-    const port = window.location.port;
-    window.location.href = `http://${hostname}:${port}/sendArticle`;
-}
 
-function openMain(){
-    const hostname = window.location.hostname;
-    const port = window.location.port;
-    window.location.href = `http://${hostname}:${port}/`;
-}
-
-function openGithub() {
-    window.open("https://github.com/AlienAvatar","github");
-}
-
-function openAboutMe() {
-    const hostname = window.location.hostname;
-    const port = window.location.port;
-    window.location.href = `http://${hostname}:${port}/aboutme`;
-}
-
-function openFriendLink() {
-    const hostname = window.location.hostname;
-    const port = window.location.port;
-    window.location.href = `http://${hostname}:${port}/friendLink`;
-}
-
-function openSetting() {
-    const hostname = window.location.hostname;
-    const port = window.location.port;
-    window.location.href = `http://${hostname}:${port}/setting`;
-}
-
-function openSupport() {
-    const hostname = window.location.hostname;
-    const port = window.location.port;
-    window.location.href = `http://${hostname}:${port}/support`;
-}
 
 const css_bannerLine = {
     borderLeft:'202px solid #666',
     height:'4px',
     background: "#1890ff",
-};
-
-const css_headOverlay = {
-    position:'fixed',
-    left:0,
-    top:0,
-    width:'100%',
-    height: '100%'
 };
 
 const css_container ={
@@ -296,9 +248,5 @@ const css_container ={
     justifyContent: "space-between",
     alignItems: "center"
 };
-
-// const css_logo ={
-//     backgroundImage: "../../public/image/avatar.jpg"
-// };
 
 export default Head;

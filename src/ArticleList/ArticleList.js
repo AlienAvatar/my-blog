@@ -4,6 +4,7 @@ import "./style.css";
 import Pagination from "antd/es/pagination";
 import { Input } from 'antd';
 import {local} from "../Constant/loginConstant"
+import {isMobileOrPc} from "../Utils/Utils";
 
 const { Search } = Input;
 const TITLE = 'title=';
@@ -48,6 +49,7 @@ class ArticleList extends Component {
     componentDidMount() {
         this.getPageSize();
         this.getArticle(this.state.current,"");
+
     }
 
     getPageSize(paramValueTitle){
@@ -127,7 +129,7 @@ class ArticleList extends Component {
                 <div className="input-container">
                     <Search
                         id="search-title"
-                        style={{ width: 500 }}
+
                         placeholder="请输入要查找的标题"
                         enterButton="Search"
                         size="large"
@@ -151,4 +153,14 @@ class ArticleList extends Component {
 }
 
 
+//为什么没作用？
+window.onload = function(){
+    const isMobile = isMobileOrPc();
+    debugger;
+    if(isMobile) {
+        document.querySelectorAll(".article-page")[0].setAttribute("style", "width: 100%");
+    }else{
+        document.querySelectorAll(".article-page")[0].setAttribute("style", "width: 50%");
+    }
+};
 export default ArticleList
