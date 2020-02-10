@@ -1,10 +1,11 @@
-import { Form, Icon, Input, Button,message} from 'antd';
+import {Form, Icon, Input, Button, message, Layout} from 'antd';
 import React, { Component } from 'react'
 import "./style.css";
-import Setting from "./Setting";
 import Text from "antd/lib/typography/Text";
 import Divider from "antd/lib/divider";
 import {local} from "../Constant/loginConstant"
+const { Header, Content, Footer, Sider } = Layout;
+
 const MODIFY_URL = `${local.url}/modifyUserInfo`;
 const NICKNAME = "nickname=";
 const EMAIL= "email=";
@@ -99,43 +100,48 @@ class PersonSettingForm extends React.Component {
     render() {
         const {loginMsg} = this.state;
         const {getFieldDecorator} = this.props.form;
-
+        const {title} = this.props;
         return (
-            <Form onSubmit={this.handleSubmit}>
-                <Form.Item>
-                    <Text className="personal-text">昵称:</Text>
-                    {getFieldDecorator('nickname', {
-                        rules: [
-                            {
-                                required: true,
-                                message: '请输入昵称',
-                            },
-                        ],
-                    })(<Input style={{width: "30%",minWidth:"100px"}}/>)}
-                </Form.Item>
-                <Form.Item>
-                    <Text>电子邮箱:</Text>
-                    {getFieldDecorator('email', {
-                        rules: [
-                            {
-                                type: 'email',
-                                message: '请输入正确的电子邮箱！',
-                            },
-                            {
-                                required: true,
-                                message: '请输入电子邮箱',
-                            },
-                        ],
-                    })(<Input style={{width: "30%",minWidth:"100px"}}/>)}
-                </Form.Item>
-                <Text>用户名:</Text>
-                <Text>{loginMsg.username}</Text>
+            <Content style={{ padding: '0 24px', minHeight: 600 }}>
+                <Header style={{backgroundColor:'#fff'}}>{title}</Header>
                 <Divider/>
-                <Button type="primary" htmlType="submit">
-                    保存
-                </Button>
-                {/*Or <a href=""  onClick={this.openRegister}>注册</a>*/}
-            </Form>
+                <Form onSubmit={this.handleSubmit}>
+                    <Form.Item>
+                        <Text className="personal-text">昵称:</Text>
+                        {getFieldDecorator('nickname', {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: '请输入昵称',
+                                },
+                            ],
+                        })(<Input style={{width: "30%",minWidth:"100px"}}/>)}
+                    </Form.Item>
+                    <Form.Item>
+                        <Text>电子邮箱:</Text>
+                        {getFieldDecorator('email', {
+                            rules: [
+                                {
+                                    type: 'email',
+                                    message: '请输入正确的电子邮箱！',
+                                },
+                                {
+                                    required: true,
+                                    message: '请输入电子邮箱',
+                                },
+                            ],
+                        })(<Input style={{width: "30%",minWidth:"100px"}}/>)}
+                    </Form.Item>
+                    <Text>用户名:</Text>
+                    <Text>{loginMsg.username}</Text>
+                    <Divider/>
+                    <Button type="primary" htmlType="submit">
+                        保存
+                    </Button>
+                    {/*Or <a href=""  onClick={this.openRegister}>注册</a>*/}
+                </Form>
+
+            </Content>
         );
     }
 }

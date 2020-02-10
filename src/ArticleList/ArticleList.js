@@ -154,13 +154,12 @@ class ArticleList extends Component {
 
 
 //为什么没作用？
-window.onload = function(){
-    const isMobile = isMobileOrPc();
-    debugger;
-    if(isMobile) {
-        document.querySelectorAll(".article-page")[0].setAttribute("style", "width: 100%");
-    }else{
-        document.querySelectorAll(".article-page")[0].setAttribute("style", "width: 50%");
-    }
-};
+// window.onload = function(){
+//     const isMobile = isMobileOrPc();
+//     if(isMobile) {
+//         document.querySelectorAll(".article-page")[0].setAttribute("style", "width: 100%");
+//     }else{
+//         document.querySelectorAll(".article-page")[0].setAttribute("style", "width: 50%");
+//     }
+// };
 export default ArticleList

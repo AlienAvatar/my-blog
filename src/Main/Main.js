@@ -13,7 +13,6 @@ import TestComponent from "../TestCompoent/TestComponent";
 import ArticleDetailContainer from "../Container/ArticleDetailContainer";
 import SettingContainer from "../Container/SettingContainer";
 import SupportContainer from "../Container/SupportContainer";
-import MobileHead from "../Mobile/MobileHead";
 import {isMobileOrPc,scaleScreen} from "../Utils/Utils";
 
 const { SubMenu } = Menu;

@@ -6,7 +6,7 @@ import PersonSettingForm from "./PersonSettingForm";
 import ArticleSetting from "./ArticleSetting";
 import Divider from "antd/lib/divider";
 import UploadAvatar from "./UploadAvatar";
-
+import CommentSetting from "./CommentSetting";
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -32,49 +32,15 @@ class Setting extends Component {
         const PersonForm = Form.create({ name: 'normal_setting' })(PersonSettingForm);
         const {key,title} = this.state;
         let Doc = null;
-        const PersonDoc = () =>{
-            return(
-                <Content style={{ padding: '0 24px', minHeight: 600 }}>
-                    <Header style={{backgroundColor:'#fff'}}>{title}</Header>
-                    <Divider/>
-                    <Content>
-                        <PersonForm />
-                    </Content>
-                </Content>
-            )
-        };
-
-        const AvatarDoc = () =>{
-            return (
-                <Content style={{ padding: '0 24px', minHeight: 600 }}>
-                    <Header style={{backgroundColor:'#fff'}}>{title}</Header>
-                    <Divider/>
-                    <Content>
-                        <UploadAvatar />
-                    </Content>
-                </Content>
-            )
-        };
-
-        const ArticleDoc = () =>{
-            return (
-                <Content style={{ padding: '0 24px', minHeight: 1152 }}>
-                    <Header style={{backgroundColor:'#fff'}}>{title}</Header>
-                    <Divider/>
-                    <Content>
-                        <ArticleSetting />
-                    </Content>
-                </Content>
-            )
-        };
 
         if(key === "1"){
-            Doc = <PersonDoc />;
+            Doc = <PersonForm  title={title}/>;
         }else if(key === "2"){
-            Doc = <ArticleDoc />;
-
+            Doc = <UploadAvatar title={title}/>;
         }else if(key === "3"){
-            Doc = <AvatarDoc />
+            Doc = <ArticleSetting title={title}/>;
+        }else if(key === "4"){
+            Doc = <CommentSetting title={title}/>
         }
 
 
@@ -95,10 +61,14 @@ class Setting extends Component {
                                     title={<span><Icon type="user" />个人信息</span>}
                                 >
                                     <Menu.Item key="1" >个人资料</Menu.Item>
-                                    <Menu.Item key="2">文章管理</Menu.Item>
-                                    <Menu.Item key="3" >更改头像</Menu.Item>
-                                    {/*<Menu.Item key="3">option3</Menu.Item>*/}
-                                    {/*<Menu.Item key="4">option4</Menu.Item>*/}
+                                    <Menu.Item key="2" >更改头像</Menu.Item>
+                                </SubMenu>
+                                <SubMenu
+                                    key="sub2"
+                                    title={<span><Icon type="file" />文章信息</span>}
+                                >
+                                    <Menu.Item key="3" >文章管理</Menu.Item>
+                                    <Menu.Item key="4">评论管理</Menu.Item>
                                 </SubMenu>
                             </Menu>
                         </Sider>

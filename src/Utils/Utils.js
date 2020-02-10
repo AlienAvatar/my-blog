@@ -65,4 +65,4 @@ export const scaleScreen = ()=>{
     } else {
         document.write('<meta name="viewport" content="width=device-width, initial-scale='+phoneScale+',minimum-scale='+phoneScale+',maximum-scale ='+phoneScale +',user-scalable=no,">');
     }
-}
+};

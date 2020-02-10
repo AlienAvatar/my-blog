@@ -1,3 +1,31 @@
 .setting-article-content{
     max-width: 800px;
 }
+
+/*头像管理*/
+.setting-avatar{
+    display: flex;
+    flex-direction: row;
+}
+
+.setting-avatar-content{
+    margin:25px;
+}
+.setting-avatar-body{
+    display: flex;
+    flex-direction: row;
+}
+
+.setting-avatar-footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.setting-avatar-content:hover{
+    background: orange;
+}
+.avatar-active{
+    background: orange;
+}
+
