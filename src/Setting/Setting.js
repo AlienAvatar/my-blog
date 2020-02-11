@@ -14,7 +14,7 @@ class Setting extends Component {
     constructor(props){
         super(props);
         this.state ={
-            key : "2",
+            key : "1",
             title : "个人资料"
         };
         this.handleChange = this.handleChange.bind(this);
@@ -61,14 +61,14 @@ class Setting extends Component {
                                     title={<span><Icon type="user" />个人信息</span>}
                                 >
                                     <Menu.Item key="1" >个人资料</Menu.Item>
-                                    <Menu.Item key="2" >更改头像</Menu.Item>
+                                    {/*<Menu.Item key="2" >更改头像</Menu.Item>*/}
                                 </SubMenu>
                                 <SubMenu
                                     key="sub2"
                                     title={<span><Icon type="file" />文章信息</span>}
                                 >
                                     <Menu.Item key="3" >文章管理</Menu.Item>
-                                    <Menu.Item key="4">评论管理</Menu.Item>
+                                    {/*<Menu.Item key="4">评论管理</Menu.Item>*/}
                                 </SubMenu>
                             </Menu>
                         </Sider>

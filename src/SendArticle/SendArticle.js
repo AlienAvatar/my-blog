@@ -24,11 +24,14 @@ class SendArticle extends Component {
         this.state= {
             loginMsg: null,
             selectValue:"tech",
-            title:null
+            title:null,
+            desc:null,
         };
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.checkSendArticle = this.checkSendArticle.bind(this);
         this.changeTitle = this.changeTitle.bind(this);
+        this.changeDescription = this.changeDescription.bind(this);
+        this.updateTitleAndDescription = this.updateTitleAndDescription.bind(this);
     }
 
     componentWillMount() {
@@ -66,8 +69,26 @@ class SendArticle extends Component {
         })
     }
 
+    changeDescription(e){
+        this.setState({
+            desc:e.target.value
+        })
+    }
+
+    updateTitleAndDescription(title,desc,type){
+        this.setState({
+            title:title,
+            desc:desc,
+            selectValue:type
+        });
+        document.getElementById("send-article-title").value = title;
+        document.getElementById("send-article-description").value = desc;
+        document.getElementById("send-article-type").value = type;
+
+    }
+
     render() {
-        const {loginMsg,selectValue,title} = this.state;
+        const {loginMsg,selectValue,title,desc} = this.state;
         let createDate = genCreateDate();
         return(
             <div className="send-article-container">
@@ -84,27 +105,24 @@ class SendArticle extends Component {
                         <Divider/>
                         <Layout>
                             <Header style={{backgroundColor:'#fff',display:"flex",justifyContent:"center",alignItems:"center"}}>
-                                <Text>标题:</Text><Input id="send-article-title" style={{width:"70%",minWidth:"100px"}}/>
+                                <Text>标题:</Text><Input onChange={this.changeTitle} id="send-article-title" style={{width:"70%",minWidth:"100px"}}/>
+                            </Header>
+                            <Header style={{backgroundColor:'#fff',display:"flex",justifyContent:"center",alignItems:"center"}}>
+                                <Text>描述:</Text><Input onChange={this.changeDescription} id="send-article-description" style={{width:"70%",minWidth:"100px"}}/>
+                            </Header>
+                            <Header className="article-select" style={{backgroundColor:'#fff'}}>
+                                <Text>类型:</Text>
+                                <Select id="send-article-type" defaultValue={selectValue} style={{ width: 120 }} onChange={this.handleSelectChange}>
+                                    <Option value="tech">技术</Option>
+                                    <Option value="tattle">杂谈</Option>
+                                    <Option value="story">故事会</Option>
+                                </Select>
                             </Header>
                         </Layout>
                         {/*Editor*/}
                         {/*<ArticleEditor className="article-content"/>*/}
-                        <MyEditor className="article-content" title={title} selectValue={selectValue} checkSendArticle={this.checkSendArticle}/>
+                        <MyEditor className="article-content" desc={desc} title={title} selectValue={selectValue} checkSendArticle={this.checkSendArticle} updateTitleAndDescription={this.updateTitleAndDescription}/>
                         {/*<TextArea id="article-content" rows={20}/>*/}
-                        <Layout>
-                            <Footer>
-                                <Layout className="article-select">
-                                    <Text>类型:</Text>
-                                    <Select defaultValue={selectValue} style={{ width: 120 }} onChange={this.handleSelectChange}>
-                                        <Option value="tech">技术</Option>
-                                        <Option value="tattle">杂谈</Option>
-                                        <Option value="story">故事会</Option>
-                                    </Select>
-                                </Layout>
-                                {/*<Button onClick={this.addArticle} type="primary" className="comment-button">发送文章</Button>*/}
-                            </Footer>
-
-                        </Layout>
                     </div>
                 </div>
             </div>

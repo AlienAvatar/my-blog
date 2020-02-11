@@ -97,7 +97,7 @@ class AboutMe extends Component{
                         <Divider />
 
                         <Title level={3}>如何联系我</Title>
-                        <Text>767808421@qq.com</Text>
+                        <Text>767808421<Icon type="dribbble-square" />qq.com</Text>
                     </div>
                 </div>
                 <ArticleComment aritcleId={item.pkid}/>

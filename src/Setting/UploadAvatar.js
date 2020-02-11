@@ -1,8 +1,11 @@
 import React, { Component,Fragment } from 'react'
-import RightContainer from "../Container/RightContainer";
-import { Upload, Icon, message,Button } from 'antd';
+import {Upload, Icon, message, Button, Layout} from 'antd';
 import {local} from "../Constant/loginConstant";
+import {AvatarArr} from "../Constant/SettingConstant";
+import $ from  'jquery';
+import Divider from "antd/lib/divider";
 
+const { Header, Content, Footer, Sider } = Layout;
 const uploadURL = `${local.url}/public/image`;
 
 function getBase64(img, callback) {
@@ -47,40 +50,45 @@ class UploadAvatar extends Component {
         this.state = {
             loading: false,
         };
+        this.handleHover = this.handleHover.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
-    handleChange = info => {
-        console.log(info);
-        debugger;
-        if (info.file.status === 'uploading') {
-            this.setState({ loading: true });
-            return;
-        }
-        if (info.file.status === 'done') {
-            // Get this url from response in real world.
-            getBase64(info.file.originFileObj, imageUrl =>
-                this.setState({
-                    imageUrl,
-                    loading: false,
-                }),
-            );
-        }
-    };
 
+
+    handleHover(){
+        debugger;
+        $(".setting-avatar-content").addClass("avatar-active");
+    }
+
+    handleClick(){
+        console.log(1);
+        // event.target.style.border = ""
+    }
     render() {
-        const uploadButton = (
-            <div>
-                <Icon type={this.state.loading ? 'loading' : 'plus'} />
-                <div className="ant-upload-text">Upload</div>
-            </div>
-        );
-        const { imageUrl } = this.state;
-        return (
-            <Upload {...props}>
-                <Button>
-                    <Icon type="upload" /> Click to Upload
-                </Button>
-            </Upload>
+        const items = AvatarArr;
+        const {title} = this.props;
+        return(
+            <Content style={{ padding: '0 24px', minHeight: 1152 }}>
+                <Header style={{backgroundColor:'#fff'}}>{title}</Header>
+                <Divider/>
+                <div className = "setting-avatar-container">
+                    <div className="setting-avatar-body">
+                        {
+                            items.map((item,index) => {
+                                return(
+                                    <div className="setting-avatar-content" key={index} onClick={this.handleClick}>
+                                        <img onMouseOver={()=>this.handleHover} className="setting-avatar-img" src={item} />
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                    <div className="setting-avatar-footer">
+                        <Button type="primary">更改头像</Button>
+                    </div>
+                </div>
+            </Content>
         )
     }
 }
