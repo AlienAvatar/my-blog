@@ -28,6 +28,10 @@ class PersonSettingForm extends React.Component {
             this.setState({
                 loginMsg: JSON.parse(userInfo),
             });
+        }else{
+            const hostname = window.location.hostname;
+            const port = window.location.port;
+            window.location.href = `http://${hostname}:${port}/noLogin`;
         }
     }
 

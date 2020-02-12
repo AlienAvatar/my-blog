@@ -47,6 +47,10 @@ export function openSupport() {
     window.location.href = `http://${hostname}:${port}/support`;
 }
 
+export function openTencentVedio(){
+    window.open("https://v.qq.com/x/cover/wagzbx91asjomnu/z0026lwsaws.html","github");
+}
+
 export const scaleScreen = ()=>{
     var phoneWidth = parseInt(window.screen.width);
     var phoneHeight = parseInt(window.screen.height);

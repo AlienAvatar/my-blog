@@ -7,8 +7,6 @@ import DetailComponent from  "../SendArticle/DetailComponent"
 class ArticleDetailContainer extends Component{
 
     render() {
-        // let { id } = useParams();
-        // console.log(id);
         return(
             <div className="container">
                 <div className="left-container">

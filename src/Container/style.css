@@ -104,3 +104,10 @@
     background: url("../../public/image/payzfb.jpg")!important;
     background-size: cover!important;
 }
+
+
+/*没有登录*/
+.no-login-container{
+    padding: 25px;
+    text-align: center;
+}

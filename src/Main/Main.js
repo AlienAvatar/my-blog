@@ -13,6 +13,7 @@ import TestComponent from "../TestCompoent/TestComponent";
 import ArticleDetailContainer from "../Container/ArticleDetailContainer";
 import SettingContainer from "../Container/SettingContainer";
 import SupportContainer from "../Container/SupportContainer";
+import NoLoginContainer from "../Container/NoLoginContainer";
 import {isMobileOrPc,scaleScreen} from "../Utils/Utils";
 
 const { SubMenu } = Menu;
@@ -64,6 +65,9 @@ class Main extends Component{
                             </Route>
                             <Route path="/support">
                                 <SupportContainer />
+                            </Route>
+                            <Route path="/noLogin">
+                                <NoLoginContainer />
                             </Route>
                             <Route path="/test">
                                 <TestComponent />
