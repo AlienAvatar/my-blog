@@ -131,6 +131,7 @@ class MyEditor extends React.PureComponent {
             editorState: EditorState.createEmpty(),
             contentValue:null,
             loginMsg: null,
+            checkIsExtArt:false,
         };
 
         this.plugins = [
@@ -147,6 +148,7 @@ class MyEditor extends React.PureComponent {
         this.convertToHtml = this.convertToHtml.bind(this);
         this.addArticle = this.addArticle.bind(this);
         this.getData = this.getData.bind(this);
+        this.updateArticle = this.updateArticle.bind(this);
     }
 
     componentDidMount() {
@@ -167,28 +169,29 @@ class MyEditor extends React.PureComponent {
     };
 
     getData(){
-        const {editorState} = this.state;
         const pkid = getQueryVariable("id");
         if(pkid === false || pkid === undefined){
             return;
         }
         const url = `${local.url}/queryArticleDetail?${PKID}${pkid}`;
         fetch(url,{
-          method: 'GET',
-          mode: 'cors',
+            method: 'GET',
+            mode: 'cors',
         }).then(res => {
-          return res.json();
+            return res.json();
         }).then((result) => {
           //获取到content result.data[0]，更新editior的状态
-        const blocksFromHTML = convertFromHTML(JSON.parse(result.data[0].content));
-        const state = ContentState.createFromBlockArray(
-            blocksFromHTML.contentBlocks,
-            blocksFromHTML.entityMap,
-        );
-        this.setState( {
-            editorState: EditorState.createWithContent(state),
-        });
-        this.props.updateTitleAndDescription(result.data[0].title,result.data[0].description,result.data[0].type);
+            const blocksFromHTML = convertFromHTML(JSON.parse(result.data[0].content));
+            const state = ContentState.createFromBlockArray(
+                blocksFromHTML.contentBlocks,
+                blocksFromHTML.entityMap,
+            );
+            this.setState( {
+                editorState: EditorState.createWithContent(state),
+                checkIsExtArt:true,
+            });
+            this.props.updateTitleAndDescription(result.data[0].title,result.data[0].description,result.data[0].type);
+
         }).catch(err => {
           console.log('请求错误', err);
         })
@@ -216,7 +219,6 @@ class MyEditor extends React.PureComponent {
         contentValue = contentValue.replace(/&nbsp;/ig, " ").toString();
         contentValue = JSON.stringify(contentValue);
         let queryUrl = `${addArticleUrl}?${CONTENT}${contentValue}&${TITLE}${title}&${DESC}${desc}&${TYPE}${selectValue}&${USERNAME}${loginMsg.username}`;
-        console.log(queryUrl);
         fetch(queryUrl,{
           method: 'POST',
           mode:'cors'
@@ -231,16 +233,66 @@ class MyEditor extends React.PureComponent {
     }
 
     convertToHtml(){
-        const {editorState} = this.state;
+        const {editorState,checkIsExtArt} = this.state;
         let html = stateToHTML(editorState.getCurrentContent(),options);
 
         this.setState({
            htmlEditor:html
         });
-        this.addArticle(html);
-
+        if(checkIsExtArt){
+            this.updateArticle(html);
+        }else{
+            this.addArticle(html);
+        }
     }
 
+
+
+    updateArticle(html){
+        const pkid = getQueryVariable("id");
+        if(pkid === false || pkid === undefined){
+            return;
+        }
+        let contentValue = html;
+        if(contentValue === null) {
+            return;
+        }
+        const {title,desc} = this.props;
+        if(contentValue === "" || title === ""){
+            message.warning('文章和标题不能为空');
+            return;
+        }else if(desc === ""){
+            message.warning('描述不能为空');
+            return;
+        }else if(desc.length > 140){
+            message.warning('描述不能超过140个字');
+            return;
+        }
+        const {loginMsg} = this.state;
+        const {selectValue} = this.props;
+        contentValue = contentValue.replace(/&nbsp;/ig, " ").toString();
+        contentValue = JSON.stringify(contentValue);
+        const url = `${local.url}/updateArticleByPkid?${PKID}${pkid}&${CONTENT}${contentValue}&${TITLE}${title}&${DESC}${desc}&${TYPE}${selectValue}&${USERNAME}${loginMsg.username}`;
+        fetch(url,{
+            method: 'POST',
+            mode:'cors'
+        }).then(res => {
+            return res.json();
+        }).then(json => {
+            if(json.code === 200) {
+                //this.props.updateTitleAndDescription(title,desc,selectValue);
+                message.success('更改成功');
+                const hostname = window.location.hostname;
+                const port = window.location.port;
+                window.location.href = `http://${hostname}:${port}`;
+            }else{
+                message.error('更改失败');
+            }
+            return json;
+        }).catch(err => {
+            console.log('请求错误', err);
+        })
+    }
       onBoldLineStyle(){
         this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, "BOLD"));
       }
@@ -317,7 +369,7 @@ class MyEditor extends React.PureComponent {
         }, () => {
           setTimeout(this.focus, 0);
         });
-      }
+      };
 
       deleteImage = (block) => {
         const editorState = this.state.editorState;
@@ -365,6 +417,16 @@ class MyEditor extends React.PureComponent {
         const fontItems = FONT_SIZE;
         const colorItems = COLORS;
         const defaultFont = 24;
+        const {checkIsExtArt} = this.state;
+        let btn = <div className="editor-btn-send">
+                        <Button onClick={this.convertToHtml}>发送文章</Button>
+                    </div>;
+        if(checkIsExtArt){
+            btn = <div className="editor-btn-send">
+                        <Button onClick={this.convertToHtml}>更改文章</Button>
+                    </div>;
+        }
+
         return (
             <Fragment>
               <Container>
@@ -426,9 +488,10 @@ class MyEditor extends React.PureComponent {
 
 
               </Container>
-                <div className="editor-btn-send">
-                    <Button onClick={this.convertToHtml}>发送文章</Button>
-                </div>
+                {btn}
+                {/*<div className="editor-btn-send">*/}
+                {/*    <Button onClick={this.convertToHtml}>发送文章</Button>*/}
+                {/*</div>*/}
             </Fragment>
         );
       }
