@@ -1,11 +1,8 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import "./style.css";
-import { Input,Tabs } from 'antd';
 import RightContainer from "./RightContainer";
 import AboutMe from "../SendArticle/AboutMe";
 
-const { Search } = Input;
-const { TabPane } = Tabs;
 class AboutMeContainer extends Component{
     render() {
         return(

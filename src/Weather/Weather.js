@@ -1,5 +1,5 @@
 import React, { Component,Fragment } from 'react';
-import {APPID,APPSECRET,fetchWeatherData} from "../Constant/WeatherConstant";
+import {APPID,APPSECRET} from "../Constant/WeatherConstant";
 import { Typography } from 'antd';
 
 const { Text } = Typography;

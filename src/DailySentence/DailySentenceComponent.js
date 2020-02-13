@@ -1,5 +1,4 @@
 import React, { Component,Fragment } from 'react';
-import {APPID,APPSECRET,fetchWeatherData} from "../Constant/WeatherConstant";
 import { Typography } from 'antd';
 
 const { Text } = Typography;
@@ -36,8 +35,6 @@ class DailySentenceComponent extends Component {
             console.log('请求错误', err);
         })
     }
-
-
 
     render() {
         return(

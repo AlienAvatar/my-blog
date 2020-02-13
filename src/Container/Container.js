@@ -1,11 +1,8 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import "./style.css";
-import { Input,Tabs } from 'antd';
 import ArticleList from "../ArticleList/ArticleList";
 import RightContainer from "./RightContainer";
 
-const { Search } = Input;
-const { TabPane } = Tabs;
 class Container extends Component{
     render() {
         return(
@@ -18,6 +15,5 @@ class Container extends Component{
         )
     }
 }
-
 
 export default Container;

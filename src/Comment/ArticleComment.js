@@ -1,8 +1,9 @@
-import {Comment, Tooltip, List, Typography, Input,Avatar,Icon } from 'antd';
+import {Comment, Tooltip,Avatar} from 'antd';
 import moment from 'moment';
 import React, {Component, Fragment} from 'react'
 import "./style.css";
 import {local} from "../Constant/loginConstant";
+
 const imageArr = [
     "https://overwatch.nosdn.127.net/1/images/heroes/dva/icon-portrait.png",
     "https://overwatch.nosdn.127.net/1/images/heroes/mercy/icon-portrait.png",

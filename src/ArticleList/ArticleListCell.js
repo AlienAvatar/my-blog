@@ -10,19 +10,6 @@ class ArticleListCell extends Component{
         this.openArticle = this.openArticle.bind(this);
     }
 
-    componentDidMount() {
-
-    }
-
-    // componentDidUpdate(){
-    //     debugger;
-    //     let detailElement = document.getElementById("cell-detail-content");
-    //
-    //     if(detailElement !== null){
-    //         detailElement.innerHTML = this.props.data.content;
-    //     }
-    // }
-
     openArticle(){
         let item = this.props.data;
         const hostname = window.location.hostname;

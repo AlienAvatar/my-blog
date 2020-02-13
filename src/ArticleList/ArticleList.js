@@ -4,14 +4,13 @@ import "./style.css";
 import Pagination from "antd/es/pagination";
 import { Input } from 'antd';
 import {local} from "../Constant/loginConstant"
-import {isMobileOrPc} from "../Utils/Utils";
 
 const { Search } = Input;
 const TITLE = 'title=';
 const PAGE = 'page=';
-
 const GET_ARTICLE_URL = `${local.url}/getArticle`;
 const PAGE_SIZE_URL = `${local.url}/getPageSize`;
+
 class ArticleList extends Component {
     constructor(props) {
         super(props);

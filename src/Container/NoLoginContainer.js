@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import "./style.css";
 import Text from "antd/lib/typography/Text";
 

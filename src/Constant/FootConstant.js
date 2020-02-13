@@ -9,4 +9,4 @@ export const contactMe = () => {
 export const param = {
     FEEDBACKTEXT : "feedback=",
     CONTACTTYPE : "contactType=",
-}
+};

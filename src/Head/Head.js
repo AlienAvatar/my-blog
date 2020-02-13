@@ -15,7 +15,8 @@ notification.config({
     duration: 3,
 });
 
-const avatar = <Tooltip placement="bottom" title="玩游戏就是要赢！"><Avatar
+const avatar = <Tooltip placement="bottom" title="玩游戏就是要赢！">
+    <Avatar
     src="https://overwatch.nosdn.127.net/1/images/heroes/dva/icon-portrait.png"
     alt="Dva"
 /></Tooltip>;

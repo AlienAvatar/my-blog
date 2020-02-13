@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import 'antd/dist/antd.css';
-import {Layout, Menu, Breadcrumb, Ico, Form} from 'antd';
 import Head from '../Head/Head';
 import Foot from '../Foot/Foot';
 import Container from "../Container/Container";
@@ -16,24 +15,12 @@ import SupportContainer from "../Container/SupportContainer";
 import NoLoginContainer from "../Container/NoLoginContainer";
 import {isMobileOrPc,scaleScreen} from "../Utils/Utils";
 
-const { SubMenu } = Menu;
-const { Header, Content, Sider , Link} = Layout;
-
 class Main extends Component{
     constructor(props){
         super(props);
         this.state = {
             userInfo:""
         };
-    }
-
-    componentDidMount() {
-        // List list = (List)session.getAttribute("userInfo");
-        // let userInfo = window.sessionStorage.userInfo;
-        // this.setState({
-        //     userInfo:userInfo
-        // });
-
     }
 
     render() {

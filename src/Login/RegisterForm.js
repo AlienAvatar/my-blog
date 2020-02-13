@@ -10,7 +10,7 @@ const PASSWORD = "password=";
 const NICKNAME = "nickname=";
 const EMAIL = "email=";
 
-class RegisterForm extends React.Component{
+class RegisterForm extends Component{
     constructor(props){
         super(props);
         this.state = {

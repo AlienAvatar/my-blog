@@ -4,7 +4,6 @@ import ArticleComment from "../Comment/ArticleComment";
 import SendComment from "../Comment/SendComment";
 import {local} from "../Constant/loginConstant";
 import Divider from "antd/lib/divider";
-import $ from  'jquery'
 
 const { Title,Text} = Typography;
 

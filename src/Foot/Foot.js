@@ -1,7 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import "./style.css";
-import {Footer, Layout, Menu,Divider,Icon,BackTop,Form,message} from "antd";
-import { Modal,Affix, Button,Input } from 'antd';
+import {Divider,Icon,BackTop,Form,message, Button,Input,Modal,Affix } from "antd";
 import {contactMe,param} from "../Constant/FootConstant";
 import {local} from "../Constant/loginConstant"
 
@@ -105,10 +104,8 @@ class Foot extends Component{
                         footer={null}
                     >
                         如需帮助，请<a href="#" onClick={contactMe}>联系我们</a>
-
                         <Feedback />
                     </Modal>
-
                 </div>
             </div>
         )

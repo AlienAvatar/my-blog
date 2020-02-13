@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import "./style.css";
 import {Form, Icon, Input, Button, Checkbox, Typography, message} from 'antd';
-import ArticleEditor from "../SendArticle/ArticleEditor";
 import {local} from "../Constant/loginConstant";
 
 const { Title,Text} = Typography;
@@ -68,7 +67,6 @@ class SendComment extends Component {
                         rules: [{ required: true, message: 'Please input your content!' }],
                     })(
                         <TextArea row={3}/>
-                        // <ArticleEditor />
                     )}
                 </Form.Item>
                 <div className="comment-input-group">

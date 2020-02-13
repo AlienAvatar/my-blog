@@ -51,6 +51,7 @@ class LoginForm extends React.Component {
             <div id="login" className="login" style={loginStyle}>
                 <div className="login-container">
                     <div className="close-login">
+                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                         <a href="#" onClick={this.props.closeLoginWindow}>X</a>
                     </div>
                     <Form onSubmit={this.handleSubmit}  style={{padding : "41px 48px"}}>
@@ -81,7 +82,7 @@ class LoginForm extends React.Component {
                                 valuePropName: 'checked',
                                 initialValue: true,
                             })(<Checkbox>Remember me</Checkbox>)}
-                            <a className="login-form-forgot" href="">
+                            <a className="login-form-forgot" href="#">
                                 Forgot password
                             </a>
                             <Button type="primary" htmlType="submit" className="login-form-button">

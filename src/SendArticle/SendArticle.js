@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import {Button, Icon, Input, Select, Typography,message} from "antd";
-import ArticleEditor from "./ArticleEditor"
+import {Icon, Input, Select, Typography,message} from "antd";
 import {local} from "../Constant/loginConstant";
 import Divider from "antd/lib/divider";
 import { Layout } from 'antd';
@@ -124,7 +123,6 @@ class SendArticle extends Component {
                             </Header>
                         </Layout>
                         {/*Editor*/}
-                        {/*<ArticleEditor className="article-content"/>*/}
                         <MyEditor className="article-content" desc={desc} title={title} selectValue={selectValue} checkSendArticle={this.checkSendArticle} updateTitleAndDescription={this.updateTitleAndDescription}/>
                         {/*<TextArea id="article-content" rows={20}/>*/}
                     </div>
