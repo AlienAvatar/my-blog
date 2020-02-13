@@ -104,7 +104,7 @@ class Foot extends Component{
                         footer={null}
                     >
                         如需帮助，请<a href="#" onClick={contactMe}>联系我们</a>
-                        <Feedback />
+                        <Feedback handleCancelFeedBack={this.handleCancelFeedBack}/>
                     </Modal>
                 </div>
             </div>
@@ -122,7 +122,7 @@ class FeedbackForm extends Component {
             }
             const valueContactType = values.contactType;
             const valueFeedback = values.feedback;
-            const URL = `${local.url}/addFeedback${param.CONTACTTYPE}${valueContactType}&${param.FEEDBACKTEXT}${valueFeedback}`;
+            const URL = `${local.url}/addFeedback?${param.CONTACTTYPE}${valueContactType}&${param.FEEDBACKTEXT}${valueFeedback}`;
             fetch(URL,{
                 method: 'POST',
                 mode: 'cors',
@@ -131,12 +131,10 @@ class FeedbackForm extends Component {
             }).then((result) => {
                 if(result.code === 200){
                     message.success("谢谢你的提议");
-
-                    return;
                 }else{
                     message.error("提议失败，请联系管理员");
-                    return;
                 }
+                this.props.handleCancelFeedBack();
             }).catch(err => {
                 console.log('请求错误', err);
             })
@@ -157,12 +155,12 @@ class FeedbackForm extends Component {
                         ],
                     })(<Input />)}
                 </Form.Item>
-                <Form.Item label="联系我们">
+                <Form.Item label="留下您的联系方式">
                     {getFieldDecorator('contactType', {
                         rules: [
                             {
                                 required: true,
-                                message: '请留下您的联系方式',
+                                message: '您的联系方式不能为空',
                             },
                         ],
                     })(<Input />)}

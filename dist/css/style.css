@@ -170,7 +170,6 @@ code {
     padding:20px;
 }
 
-
 .close-login{
     display: flex;
     flex-direction: row;
@@ -286,6 +285,10 @@ code {
     bottom: 180px;
 }
 
+.foot-feed-btn{
+    display: flex;
+    justify-content: flex-end;
+}
 /*.btn-group{*/
 /*    position: relative;*/
 /*    display: flex;*/
