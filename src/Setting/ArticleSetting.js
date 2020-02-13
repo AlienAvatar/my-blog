@@ -2,7 +2,6 @@ import React, { Component,Fragment } from 'react'
 import {List, Avatar, Typography, Divider, Skeleton, Layout} from 'antd';
 import {local} from "../Constant/loginConstant";
 import "./style.css";
-import ArticleListCell from "../ArticleList/ArticleListCell";
 
 const { Header, Content, Footer, Sider } = Layout;
 const QUERY_URL = `${local.url}/getArticleByUserName`;

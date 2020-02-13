@@ -4,7 +4,6 @@ import {} from 'antd';
 import "./style.css";
 import PersonSettingForm from "./PersonSettingForm";
 import ArticleSetting from "./ArticleSetting";
-import Divider from "antd/lib/divider";
 import UploadAvatar from "./UploadAvatar";
 import CommentSetting from "./CommentSetting";
 const { SubMenu } = Menu;
