@@ -1,4 +1,4 @@
-import { Form, Icon, Input, Button, Checkbox,Select, AutoComplete,Option,AutoCompleteOption,Cascader,Tooltip,Row,Col } from 'antd';
+import { Form, Icon, Input, Button, Checkbox} from 'antd';
 import React, {Component} from 'react';
 import "./style.css"
 import {local} from "../Constant/loginConstant"

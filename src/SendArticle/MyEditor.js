@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {
-  EditorState, RichUtils, convertToRaw, AtomicBlockUtils, Modifier,convertFromRaw,ContentState,convertFromHTML
+  EditorState, RichUtils, convertToRaw, AtomicBlockUtils, Modifier,ContentState,convertFromHTML
 } from 'draft-js';
 import Editor from "draft-js-plugins-editor";
 import styled from 'styled-components';

@@ -53,6 +53,10 @@
     bottom: 180px;
 }
 
+.foot-feed-btn{
+    display: flex;
+    justify-content: flex-end;
+}
 /*.btn-group{*/
 /*    position: relative;*/
 /*    display: flex;*/
