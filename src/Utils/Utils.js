@@ -47,6 +47,13 @@ export function openSupport() {
     window.location.href = `http://${hostname}:${port}/support`;
 }
 
+export function openMusic() {
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    window.location.href = `http://${hostname}:${port}/music`;
+}
+
+
 export function openTencentVedio(){
     window.open("https://v.qq.com/x/cover/wagzbx91asjomnu/z0026lwsaws.html","github");
 }

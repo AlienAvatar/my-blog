@@ -5,7 +5,7 @@ import LoginForm from  "../Login/LoginForm";
 import "./style.css";
 import RegisterForm from "../Login/RegisterForm";
 import {openLoginNotificationWithIcon} from "../Constant/loginConstant"
-import {isMobileOrPc,openSendArticle,openSetting,openSupport,openFriendLink,openAboutMe,openMain,openGithub} from "../Utils/Utils";
+import {isMobileOrPc,openSendArticle,openSetting,openSupport,openFriendLink,openAboutMe,openMain,openGithub,openMusic} from "../Utils/Utils";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -216,7 +216,7 @@ class Head extends Component{
                                     >
                                             <Menu.SubMenu title="菜单">
                                                 <Menu.Item onClick={openSupport}>支持</Menu.Item>
-                                                {/*<Menu.Item>随笔</Menu.Item>*/}
+                                                <Menu.Item onClick={openMusic}>听一听</Menu.Item>
                                             </Menu.SubMenu>
                                             <Menu.SubMenu title="友情链接" onTitleClick={openFriendLink}>{null}</Menu.SubMenu>
                                             <Menu.SubMenu title="关于我">

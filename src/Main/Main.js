@@ -13,6 +13,7 @@ import ArticleDetailContainer from "../Container/ArticleDetailContainer";
 import SettingContainer from "../Container/SettingContainer";
 import SupportContainer from "../Container/SupportContainer";
 import NoLoginContainer from "../Container/NoLoginContainer";
+import MusicContainer from "../Container/MusicContainer";
 import {isMobileOrPc,scaleScreen} from "../Utils/Utils";
 
 class Main extends Component{
@@ -56,9 +57,13 @@ class Main extends Component{
                             <Route path="/noLogin">
                                 <NoLoginContainer />
                             </Route>
+                            <Route path="/music">
+                                <MusicContainer />
+                            </Route>
                             <Route path="/test">
                                 <TestComponent />
                             </Route>
+
                         </Switch>
                     </Router>
                 </div>
