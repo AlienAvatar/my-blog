@@ -230,7 +230,7 @@ class MusicPlayer extends React.Component {
         const item = items[index];
         return(
             <div className="music-container">
-                <div className="music-headOverlay"></div>
+                <div style={{backgroundImage:'url('+item.cover+')'}} className="music-headOverlay"></div>
                 <Layout id="music-container">
                     <Header className="music-title" style={{maxWidth:930,color:"rgba(0, 0, 0, 0.85)",backgroundColor:"hsla(0,0%,100%,.3)",zIndex:999}}>
                         <Title>阿凡达的音乐播放器</Title>

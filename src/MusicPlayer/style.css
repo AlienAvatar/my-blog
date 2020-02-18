@@ -5,14 +5,14 @@
 }
 
 .music-headOverlay{
-    /*position: fixed;*/
-    /*width: 100%;*/
-    /*height: 600px;*/
+    position: fixed;
+    width: 100%;
+    height: 600px;
     /*background: url("http://singerimg.kugou.com/uploadpic/softhead/400/20140527/20140527095042283066.jpg");*/
-    /*background-repeat: no-repeat;*/
-    /*background-size: cover;*/
-    /*background-position: center;*/
-    /*filter:blur(20px);*/
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    filter:blur(20px);
 }
 #music-container{
     padding-top: 16px;
