@@ -60,7 +60,7 @@ class FriendLink extends Component {
                         <Text>友人A</Text>
                         <br/>
                         <div className="friend-link-content">
-                            <Text>Chow 哥:</Text>
+                            <Text>云哥:</Text>
                             <Paragraph>赛轮赛斯特格洛斯特村村霸，工作狂人，牛逼</Paragraph>
                         </div>
 
