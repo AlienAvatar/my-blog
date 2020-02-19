@@ -2,7 +2,7 @@ import React from "react";
 import {Button, Col, Icon, Row, Typography,Slider,Layout,List,Table,Tooltip,Popover} from "antd";
 import Player from "./Player/Player";
 import ReactPlayer from "react-player";
-import {RepeatOnce,Shuffle,AllRepeat,columns} from "../Constant/MusicConstant";
+import {RepeatOnce,Shuffle,AllRepeat,columns,shuffle} from "../Constant/MusicConstant";
 import Duration from  "./Duration";
 import {MusicList} from "./Config/MusicList";
 import Lyric from "./Lyric/Lyric";
@@ -34,10 +34,6 @@ class MusicPlayer extends React.Component {
     ref = player => {
         this.player = player
     };
-
-    componentDidMount() {
-
-    }
 
     componentWillMount() {
         const {playing} = this.state;
@@ -83,6 +79,24 @@ class MusicPlayer extends React.Component {
         this.setState({
             index:index
         })
+    };
+
+    handleEnded = () => {
+        const {playType} = this.state;
+        if(playType === 2){
+            this.handlePervious(1);
+            this.setState({
+                currentTime:0,
+                playing:true
+            })
+        }else if(playType === 3){
+            let randomIndex = Math.floor((Math.random()*data.length));
+            this.setState({
+                index:randomIndex,
+                currentTime:0,
+                playing:true
+            })
+        }
     };
 
     handleVolumeChange = e => {
@@ -144,6 +158,7 @@ class MusicPlayer extends React.Component {
         }else{
             valuePlay = 1;
         }
+
         this.setState({
             playType:valuePlay
         })
@@ -213,7 +228,7 @@ class MusicPlayer extends React.Component {
         }else if(playType === Shuffle){
             btnPlayType = <Button type="primary" value={2} onClick={this.handlePlayType}>循环播放</Button>
         }else{
-            btnPlayType = <Button type="primary" value={3} onClick={this.handlePlayType}>重复播放</Button>
+            btnPlayType = <Button type="primary" value={3} onClick={this.handlePlayType}>随机播放</Button>
         }
 
         const volumeContent = (
@@ -292,6 +307,7 @@ class MusicPlayer extends React.Component {
                             width={0}
                             height={0}
                             url={item.url}
+                            loop={playType === RepeatOnce}
                             volume={volume}
                             playing={playing}
                             onPlay={this.handlePlay}
@@ -300,7 +316,7 @@ class MusicPlayer extends React.Component {
                             ref={this.ref}
                             muted={muted}
                             onDuration={this.handleDuration}
-                            onEnded={()=>this.handlePervious(1)}
+                            onEnded={()=>this.handleEnded()}
                             onError={e => console.log('onError', e)}
                         />
 
@@ -336,15 +352,6 @@ class MusicPlayer extends React.Component {
                                </Col>
                                 {/*progress*/}
                                 <Col span={8}>
-                                    {/*<Slider*/}
-                                    {/*    min={0}*/}
-                                    {/*    max={1}*/}
-                                    {/*    onMouseDown={this.handleSeekMouseDown}*/}
-                                    {/*    onChange={this.handleSeekChange}*/}
-                                    {/*    onMouseUp={this.handleSeekMouseUp}*/}
-                                    {/*    step={0.01}*/}
-                                    {/*    value={played}*/}
-                                    {/*/>*/}
                                     <Slider
                                         min={0}
                                         step={1}
