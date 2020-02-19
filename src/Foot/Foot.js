@@ -12,12 +12,15 @@ class Foot extends Component{
             bottom: 10,
             visible: false,
             confirmLoading:false,
-            visibleFeed:false
+            visibleFeed:false,
+            visibleVersion:false,
         };
         this.showService = this.showService.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
         this.showFeedBack = this.showFeedBack.bind(this);
         this.handleCancelFeedBack = this.handleCancelFeedBack.bind(this);
+        this.showVersion = this.showVersion.bind(this);
+        this.handleCancelVersion = this.handleCancelVersion.bind(this);
     }
 
     showService(){
@@ -37,7 +40,16 @@ class Foot extends Component{
             visibleFeed: true,
         });
     }
-
+    showVersion(){
+        this.setState({
+            visibleVersion:true,
+        })
+    }
+    handleCancelVersion(){
+        this.setState({
+            visibleFeed: false,
+        });
+    }
     handleCancelFeedBack(){
         this.setState({
             visibleFeed: false,
@@ -54,6 +66,7 @@ class Foot extends Component{
                         <a href="#" className="term-item" onClick={contactMe}>联系我们</a>
                         <a href="#" className="term-item" onClick={this.showFeedBack}>帮助与反馈</a>
                         <a href="#" className="last-term-item" onClick={this.showService}>服务条款</a>
+                        <a href="#" className="last-term-item" onClick={this.showVersion}>博客版本</a>
                     </div>
                     <span>好好学习，努力投身于社会主义建设，早日实现伟大复兴中国梦</span>
                     <Divider />
@@ -105,6 +118,20 @@ class Foot extends Component{
                     >
                         如需帮助，请<a href="#" onClick={contactMe}>联系我们</a>
                         <Feedback handleCancelFeedBack={this.handleCancelFeedBack}/>
+                    </Modal>
+
+                    <Modal
+                        title="博客版本"
+                        visible={visible}
+                        confirmLoading={confirmLoading}
+                        onCancel={this.handleCancelVersion}
+                        footer={[
+                            <Button key="back" htmlType="submit" type="primary"  onClick={this.handleCancelVersion}>
+                                好的
+                            </Button>,
+                        ]}
+                    >
+
                     </Modal>
                 </div>
             </div>

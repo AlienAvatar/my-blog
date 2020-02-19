@@ -1,14 +1,13 @@
 import React from "react";
-import {Button, Col, Icon, Row, Typography,Slider,Layout,List,Table,Tooltip,Popover} from "antd";
-import Player from "./Player/Player";
+import {Button, Col, Icon, Row, Typography,Slider,Layout,Table,Popover} from "antd";
 import ReactPlayer from "react-player";
-import {RepeatOnce,Shuffle,AllRepeat,columns,shuffle} from "../Constant/MusicConstant";
+import {RepeatOnce,Shuffle,SortRepeat,columns,shuffle} from "../Constant/MusicConstant";
 import Duration from  "./Duration";
 import {MusicList} from "./Config/MusicList";
 import Lyric from "./Lyric/Lyric";
 import "./style.css";
 
-const {Text,Title } = Typography;
+const {Title} = Typography;
 const {Header,Footer, Content} = Layout;
 
 const data = [];
@@ -17,32 +16,44 @@ class MusicPlayer extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            url:"https://raw.githubusercontent.com/Shurlormes/Resource/master/Music/yydt.mp3",
+            //音量
             volume: 0.8,
+            //当playing为true时，自动播放，false，代表暂停
             playing: false,
-            played: 0,
+            //总共时长
             duration: 0,
+            //当前播放时间
             currentTime: 0,
+            //静音状态 true时为静音
             muted:false,
+            //播放类型
+            // 1 代表单次循环
+            // 2 代表循环播放
+            // 3 代表随机播放
             playType:1,
+            //Table 中选择row，现在还没用到
             selectedRowKeys: [],
+            //当前播放歌曲的索引
             index:0,
-            seeking:true,
         }
     }
 
+    //把ReactPlayer绑定到类上，类以player来代替ReactPlayer对象
     ref = player => {
         this.player = player
     };
 
     componentWillMount() {
         const {playing} = this.state;
+        //播放时，显示播放Icon，暂停时，显示暂停Icon，现在无法显示
         let playIcon;
         if(playing){
             playIcon = <Icon onClick={(e)=>this.onClickPlay(e)} className="play-inactive" width="1em" height="1em" type="play-circle" />
         }else {
             playIcon = <Icon onClick={(e)=>this.onClickPause(e)} className="play-inactive" width="1em" height="1em" type="pause-circle" />
         }
+
+        //取MusicList填充data数组，供Table使用，因为MusicList没有play这个选项，MusicList可能从远程拿，data用来当作本地处理一个数据集
         for (let i = 0; i < MusicList.length; i++) {
             data.push({
                 key: MusicList[i].id,
@@ -69,6 +80,7 @@ class MusicPlayer extends React.Component {
     handlePervious = (operator) =>{
         let {index} = this.state;
         index = Number(index) + operator;
+
         if(index < 0) {
             index = MusicList.length - 1
         }
@@ -81,15 +93,16 @@ class MusicPlayer extends React.Component {
         })
     };
 
+    //播放器结束时，进行playType操作
     handleEnded = () => {
         const {playType} = this.state;
-        if(playType === 2){
+        if(playType === SortRepeat){
             this.handlePervious(1);
             this.setState({
                 currentTime:0,
                 playing:true
             })
-        }else if(playType === 3){
+        }else if(playType === Shuffle){
             let randomIndex = Math.floor((Math.random()*data.length));
             this.setState({
                 index:randomIndex,
@@ -99,57 +112,62 @@ class MusicPlayer extends React.Component {
         }
     };
 
+    //进行音量调节 e为当前Slider 固定到的音乐量
     handleVolumeChange = e => {
         this.setState({ volume: e})
     };
 
+    //暂停按钮操作
     handlePlayPause = () => {
         this.setState({ playing: !this.state.playing })
     };
 
-    handlePlay = () => {
-        console.log('onPlay');
-        this.setState({
-            playing: true
-        })
-    };
+    //播放器本身的播放
+    // handlePlay = () => {
+    //     console.log('onPlay');
+    //     this.setState({
+    //         playing: true
+    //     })
+    // };
 
-    handlePause = () => {
-        console.log('onPause');
-        this.setState({ playing: false })
-    };
+    //播放器本身的暂停，如点击视频的暂停，在这暂时不需要
+    // handlePause = () => {
+    //     console.log('onPause');
+    //     this.setState({ playing: false })
+    // };
 
-    handleSeekMouseDown = e => {
-        this.setState({ seeking: true })
-    };
-
+    //手动更改Slider，播放器进度条
     handleSeekChange = e => {
+        //  seekTo(amout,type)
+        //   Seek to the given number of seconds, or fraction if amount is between 0 and 1
+        //   ◦  type parameter lets you specify 'seconds' or 'fraction' to override default behaviour
+        //取到e，当前秒，给播放器
         this.player.seekTo(e);
 
+        //更新当前播放的时间
         this.setState({
             currentTime: this.player.getCurrentTime()
         })
     };
 
-    handleSeekMouseUp = e => {
-        this.setState({ seeking: false });
-    };
+    //播放器本身的进度条
+    // handleProgress = state => {
+    //     console.log('onProgress', state);
+    //     const {player} = this.player;
+    //
+    //     this.setState({
+    //         currentTime:player.getCurrentTime()
+    //     })
+    // };
 
-    handleProgress = state => {
-        console.log('onProgress', state);
-        const {player} = this.player;
-
-        this.setState({
-            currentTime:player.getCurrentTime()
-        })
-
-    };
-
+    //Callback containing duration of the media, in seconds
+    //player每次读取新的歌曲的duration，当切歌时就调用，计算总共时长（秒）
     handleDuration = (duration) => {
         console.log('onDuration', duration);
         this.setState({ duration })
     };
 
+    //选择播放类型
     handlePlayType = (e) =>{
         console.log(e.target.value);
         let valuePlay = e.target.value;
@@ -164,11 +182,13 @@ class MusicPlayer extends React.Component {
         })
     };
 
+    //Table中选择的行数
     onSelectChange = selectedRowKeys => {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
         this.setState({ selectedRowKeys });
     };
 
+    //Table 单击icon时，进行播放
     onClickPlay = (e) =>{
         this.setState({
             index:e.currentTarget.parentElement.parentElement.dataset.rowKey,
@@ -177,12 +197,14 @@ class MusicPlayer extends React.Component {
         })
     };
 
+    //Table 单击icon时，进行暂停
     onClickPause = (e) =>{
         this.setState({
             playing: false
         })
     };
 
+    //Table 双击时，进行播放
     doubleClickPlay = (e) =>{
         this.setState({
             index:e.currentTarget.dataset.rowKey,
@@ -191,18 +213,20 @@ class MusicPlayer extends React.Component {
         })
     };
 
+    //Table 当hover row，展示Icon
     showOnPlay = (e) =>{
         const len = e.currentTarget.cells.length-1;
         e.currentTarget.cells[len].children[0].classList.remove("play-inactive");
         e.currentTarget.cells[len].children[0].classList.add("play-active");
     };
-
+    //Table 当hover row，隐藏Icon
     hideOnPlay = (e) =>{
         const len = e.currentTarget.cells.length-1;
         e.currentTarget.cells[len].children[0].classList.remove("play-active");
         e.currentTarget.cells[len].children[0].classList.add("play-inactive");
     };
 
+    //全部选择，可以用来下载
     start = () => {
         this.setState({ loading: true });
         // ajax request after empty completing
@@ -215,7 +239,8 @@ class MusicPlayer extends React.Component {
     };
 
     render() {
-        const {url,volume,playing,played,muted,duration,playType, loading, selectedRowKeys,index,currentTime} = this.state;
+        const {volume,playing,muted,duration,playType, loading, selectedRowKeys,index,currentTime} = this.state;
+        //Table
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
@@ -310,9 +335,6 @@ class MusicPlayer extends React.Component {
                             loop={playType === RepeatOnce}
                             volume={volume}
                             playing={playing}
-                            onPlay={this.handlePlay}
-                            onPause={this.handlePause}
-                            onProgress={this.handleProgress}
                             ref={this.ref}
                             muted={muted}
                             onDuration={this.handleDuration}
@@ -357,9 +379,7 @@ class MusicPlayer extends React.Component {
                                         step={1}
                                         max={duration}
                                         value={currentTime}
-                                        onMouseDown={this.handleSeekMouseDown}
                                         onChange={this.handleSeekChange}
-                                        onMouseUp={this.handleSeekMouseUp}
                                         tipFormatter={this.tipFormatter}
                                     />
                                 </Col>
