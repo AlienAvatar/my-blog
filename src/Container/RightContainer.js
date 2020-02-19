@@ -7,7 +7,7 @@ import Divider from "antd/lib/divider";
 import WeatherComponent from "../Weather/Weather";
 import DailySentenceComponent from "../DailySentence/DailySentenceComponent";
 import WhateverSay from "../DailySentence/WhateverSay";
-import {openGithub,openTencentVedio} from "../Utils/Utils"
+import {openGithub,openTencentVedio,openMusic} from "../Utils/Utils"
 const { TabPane } = Tabs;
 
 
@@ -36,6 +36,7 @@ function RightContainer() {
                     {/*<Tag className="right-tag" color="red">技术</Tag>*/}
                     <Tag className="right-tag" color="volcano" onClick={openGithub}>GitHub</Tag>
                     <Tag className="right-tag" color="orange" onClick={openTencentVedio}>无问西东</Tag>
+                    <Tag className="right-tag" color="orange" onClick={openMusic}>音乐盒</Tag>
                     {/*<Tag className="right-tag" color="gold">流浪远方</Tag>*/}
                     {/*<Tag className="right-tag" color="lime">镜花水月</Tag>*/}
                 </div>

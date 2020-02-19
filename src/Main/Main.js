@@ -14,6 +14,7 @@ import SettingContainer from "../Container/SettingContainer";
 import SupportContainer from "../Container/SupportContainer";
 import NoLoginContainer from "../Container/NoLoginContainer";
 import MusicContainer from "../Container/MusicContainer";
+import Error from "../Error/Error"
 import {isMobileOrPc,scaleScreen} from "../Utils/Utils";
 
 class Main extends Component{
@@ -63,7 +64,7 @@ class Main extends Component{
                             <Route path="/test">
                                 <TestComponent />
                             </Route>
-
+                            <Route render={() => <Error />}/>
                         </Switch>
                     </Router>
                 </div>
