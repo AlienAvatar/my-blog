@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import "./style.css";
-import RightContainer from "./RightContainer";
 import TestComponent from "../TestCompoent/TestComponent";
 
 class TestContainer extends Component{
@@ -10,11 +9,10 @@ class TestContainer extends Component{
                 <div className="left-container">
                     <TestComponent />
                 </div>
-                <RightContainer />
             </div>
         )
     }
 }
 
 
-export default FriendLinkContainer;
+export default TestContainer;

@@ -1,149 +1,75 @@
 import React, {Fragment} from 'react';
 import {
-  EditorState, RichUtils, convertToRaw, AtomicBlockUtils, Modifier,ContentState,convertFromHTML
+  EditorState, RichUtils, AtomicBlockUtils, Modifier,ContentState,convertFromHTML,CompositeDecorator
 } from 'draft-js';
 import Editor from "draft-js-plugins-editor";
 import styled from 'styled-components';
+//使用块级的默认样式需要引入Draft.css
 import 'draft-js/dist/Draft.css';
-import ToolBar from './EditorComponet/components/tool-bar';
-import addLinkPlugin from './EditorComponet/plugins/addLinkPlugin';
-import { mediaBlockRenderer } from './EditorComponet/components/entities/mediaBlockRenderer';
-import {BLOCK_TYPES,FONT_SIZE,COLORS,styleMap} from "../Constant/EditorConstant"
-import {Select, Layout, Icon, Button, Popover, Input, message, Typography} from 'antd';
+import {FONT_SIZE,COLORS,styleMap,options} from "../Constant/EditorConstant"
+import {Select, Layout, Icon, Button, Popover, Input, message, Typography,Row, Col,Modal} from 'antd';
 import {stateToHTML} from 'draft-js-export-html';
 import {local} from "../Constant/loginConstant";
 import {getQueryVariable} from "../Utils/Utils";
+import {addArticleUrl,CONTENT,TITLE,TYPE,USERNAME,PKID,DESC} from "../Constant/ComConstant";
+import Divider from "antd/lib/divider";
 
 const { Option } = Select;
-const {Header,Footer, Sider, Content} = Layout;
-const addArticleUrl = `${local.url}/addArticle`;
-const CONTENT = "content=";
-const TITLE = "title=";
-const TYPE = "type=";
-const USERNAME = "username=";
-const PKID = "pkid=";
-const DESC = "description=";
-const { Title,Text} = Typography;
+const {Text} = Typography;
+
+const ImgComponent = (props) => {
+    return (
+        <img
+            style={{height: '300px', width: 'auto'}}
+            src={props.blockProps.src}
+            alt="图片"/>
+            )
+};
+
+const selectBefore = (
+    <Select defaultValue="Http://" style={{ width: 90 }}>
+        <Option value="Http://">Http://</Option>
+        <Option value="Https://">Https://</Option>
+    </Select>
+);
+
 
 const Container = styled.div`
   margin: 20px auto;
   padding: 15px;
   border: 1px solid #ccc;
   text-align: left;
-  max-width: 600px;
+  max-width: 800px;
   width: 90%;
   position: relative;
+  background:#fff;
 `;
 
 const EditorBox = styled.div`
-  min-height: 400px;
+  min-height: 600px;
 `;
 
-let options = {
-  inlineStyles: {
-    // Override default element (`strong`).
-    BOLD: {element: 'strong'},
-    ITALIC: {
-      // Add custom attributes. You can also use React-style `className`.
-      attributes: {class: 'article-content-text'},
-      // Use camel-case. Units (`px`) will be added where necessary.
-      style: {fontStyle: "italic"}
-    },
-    UNDERLINE:{
-      style:{textDecoration: "underline"}
-    },
-    STRIKETHROUGH:{
-      style:{textDecoration:"line-through"}
-    },
-    yellow:{
-      style:{color:'yellow'}
-    },
-    red:{
-      style:{color:'red'}
-    },
-    blue:{
-      style:{color:'blue'}
-    },
-    8:{
-      style:{fontSize:8}
-    },
-    10:{
-      style:{fontSize:10}
-    },
-    12:{
-      style:{fontSize:12}
-    },
-    14:{
-      style:{fontSize:14}
-    },
-    16:{
-      style:{fontSize:16}
-    },
-    18:{
-      style:{fontSize:18}
-    },
-    20:{
-      style:{fontSize:20}
-    },
-    24:{
-      style:{fontSize:24}
-    },
-    30:{
-      style:{fontSize:30}
-    },
-    36:{
-      style:{fontSize:36}
-    },
-  },
-  inlineStyleFn: (styles) => {
-    // export const FONT_SIZE = [8,10,12,14,16,18,20,24,30,36];
-    const isfontSize = styles.get(8) || styles.get(10) || styles.get(12) || styles.get(14)|| styles.get(16)
-                    || styles.get(18) || styles.get(20) || styles.get(24) || styles.get(30) || styles.get(36);
-    if(isfontSize !== undefined){
-      return {
-        style:{
-          fontSize:isfontSize
-        }
-      }
-    }
-  },
-  entityStyleFn: (entity) => {
-    const entityType = entity.get('type').toLowerCase();
-    if (entityType === 'image') {
-      const data = entity.getData();
-      return {
-        element: 'img',
-        attributes: {
-          src: data.src,
-        },
-      };
-    }
-  },
-
-};
-
-class MyEditor extends React.PureComponent {
-
+class MyEditor extends React.Component {
     constructor(props) {
         super(props);
 
+        //创建装饰器 CompositeDecorator自定义装饰器模式
+        const compositeDecorator  = new CompositeDecorator([
+            {
+                strategy: findLinkEntities,
+                component: LinkComponent
+            }
+        ]);
+
+        //初始化editorState状态，把装饰器添加进去
         this.state = {
-            editorState: EditorState.createEmpty(),
+            editorState: EditorState.createEmpty(compositeDecorator),
             contentValue:null,
             loginMsg: null,
             checkIsExtArt:false,
+            visibleLink:false,
+            url:"",
         };
-
-        this.plugins = [
-          addLinkPlugin,
-        ];
-
-        this.onBoldLineStyle = this.onBoldLineStyle.bind(this);
-        this.onUnderLineStyle = this.onUnderLineStyle.bind(this);
-        this.onItalicStyle = this.onItalicStyle.bind(this);
-        this.onStrikethroughStyle = this.onStrikethroughStyle.bind(this);
-        this.onFontSizeStyle = this.onFontSizeStyle.bind(this);
-        this.onColorFontStyle = this.onColorFontStyle.bind(this);
 
         this.convertToHtml = this.convertToHtml.bind(this);
         this.addArticle = this.addArticle.bind(this);
@@ -156,7 +82,7 @@ class MyEditor extends React.PureComponent {
         let userInfo = window.sessionStorage.userInfo;
         if(userInfo !== null && userInfo !== undefined && userInfo !== "null") {
           this.setState({
-            loginMsg: JSON.parse(userInfo),
+               loginMsg: JSON.parse(userInfo),
           });
         }
         this.getData();
@@ -202,12 +128,14 @@ class MyEditor extends React.PureComponent {
         if(contentValue === null) {
             return;
         }
-        const {title,desc} = this.props;
-        // let titleValue = document.getElementById("send-article-title").value;
-        if(contentValue === "" || title === ""){
+        const {data} = this.props;
+        const title = data.title;
+        const desc = data.desc;
+
+        if(contentValue === "" || title === "" || title === null){
             message.warning('文章和标题不能为空');
             return;
-        }else if(desc === ""){
+        }else if(desc === "" || desc === null){
             message.warning('描述不能为空');
             return;
         }else if(desc.length > 140){
@@ -293,69 +221,74 @@ class MyEditor extends React.PureComponent {
             console.log('请求错误', err);
         })
     }
-      onBoldLineStyle(){
-        this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, "BOLD"));
-      }
 
-      onUnderLineStyle(){
-        this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, "UNDERLINE"));
-      }
+    toggleInlineStyle = (inlineStyle) => {
+        this.onChange(
+            RichUtils.toggleInlineStyle(
+                this.state.editorState,
+                inlineStyle
+            )
+        );
+    };
 
-      onItalicStyle(){
-        this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, "ITALIC"));
-      }
-
-      onStrikethroughStyle(){
-        this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, "STRIKETHROUGH"));
-      }
-
-      onChange = (editorState) => {
+    onChange = (editorState) => {
         this.setState({ editorState });
-      }
+    };
 
-      onFontSizeStyle(e){
-        const newEditState = RichUtils.toggleInlineStyle(
-            this.state.editorState,
-            Number(e),
+    toggleBlockType = (blockType) => {
+        this.onChange(
+            RichUtils.toggleBlockType(
+                this.state.editorState,
+                blockType
+            )
         );
-        this.onChange(newEditState);
-      }
+    };
 
-      onColorFontStyle(e){
-        const newEditState = RichUtils.toggleInlineStyle(
-            this.state.editorState,
-            e,
-        );
-        this.onChange(newEditState);
-      }
-      addLink = () => {
-        const editorState = this.state.editorState;
+    /**
+     * 添加链接
+     */
+    addLink = () => {
+        const {editorState,url} = this.state;
+        //返回编辑器的当前光标/选择状态。可以获取选择了几个字符
         const selection = editorState.getSelection();
-        const link = window.prompt('Input the link here: ');
-
-        if (!link) {
-          this.onChange(RichUtils.toggleLink(editorState, selection, null));
-          return 'handled';
-        }
-
+        // 获取contentState 返回编辑器的当前内容。
         const content = editorState.getCurrentContent();
-        const contentWithEntity = content.createEntity('LINK', 'MUTABLE', { url: link });
-        const newEditorState = EditorState.push(
-          editorState, contentWithEntity, 'create-entity'
-        );
+        // 在contentState上新建entity
+        const contentWithEntity = content.createEntity('LINK', 'SEGMENTED', {url});
+        // 获取到刚才新建的entity
         const entityKey = contentWithEntity.getLastCreatedEntityKey();
+        // 把带有entity的contentState设置到新的editorState上
+        const newEditorState = EditorState.set(editorState, { currentContent: contentWithEntity });
 
-        this.onChange(RichUtils.toggleLink(newEditorState, selection, entityKey));
-        return 'handled';
-      };
+        // this.setState({
+        //     editorState: RichUtils.toggleLink(
+        //         newEditorState,
+        //         selection,
+        //         entityKey
+        //     ),
+        // });
+        //把新的newState替代原来的editorState
+        this.setState({
+            editorState: RichUtils.toggleLink(
+                newEditorState,
+                selection,
+                entityKey
+            ),
+        }, () => {
+            setTimeout(() => this.refs.editor.focus(), 0);
+        });
+        this.handleCancleLinkModal();
 
-      addImage = src => {
+    };
+
+
+    addImage = src => {
         const editorState = this.state.editorState;
         const contentState = editorState.getCurrentContent();
         const contentStateWithEntity = contentState.createEntity(
-          'image',
-          'IMMUTABLE',
-          { src }
+              'image',
+              'IMMUTABLE',
+              { src }
         );
         const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
         const newEditorState = EditorState.set(
@@ -365,13 +298,13 @@ class MyEditor extends React.PureComponent {
         );
 
         this.setState({
-          editorState: AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ')
+            editorState: AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ')
         }, () => {
-          setTimeout(this.focus, 0);
+            setTimeout(this.focus, 0);
         });
-      };
+    };
 
-      deleteImage = (block) => {
+    deleteImage = (block) => {
         const editorState = this.state.editorState;
         const contentState = editorState.getCurrentContent();
         const key = block.getKey();
@@ -393,60 +326,60 @@ class MyEditor extends React.PureComponent {
         const newEditorState =  EditorState.push(editorStateWithoutEntity, contentStateWithoutBlock, 'remove-range',);
 
         this.onChange(newEditorState);
-      };
+    };
 
-      handleKeyCommand = command => {
-        const newState = RichUtils.handleKeyCommand(
-          this.state.editorState,
-          command
-        );
-        if (newState) {
-          this.onChange(newState);
-          return "handled";
-        }
-        return "not-handled";
-      };
+    // handleKeyCommand = command => {
+    //     const newState = RichUtils.handleKeyCommand(
+    //       this.state.editorState,
+    //       command
+    //     );
+    //     if (newState) {
+    //       this.onChange(newState);
+    //       return "handled";
+    //     }
+    //     return "not-handled";
+    // };
 
-      logState = () => {
-        const content = this.state.editorState.getCurrentContent();
-        console.log(convertToRaw(content));
-      };
+    showAddLinkModal = (e) =>{
+        this.setState({
+            visibleLink : true
+        })
+    };
 
-      render() {
-        const blockItems = BLOCK_TYPES;
+    handleCancleLinkModal = () => {
+        this.setState({
+            visibleLink : false
+        })
+    };
+
+    urlChange = (e) => {
+        this.setState({
+            url : e.target.value
+        })
+    };
+
+    render() {
         const fontItems = FONT_SIZE;
         const colorItems = COLORS;
         const defaultFont = 24;
-        const {checkIsExtArt} = this.state;
-        let btn = <div className="editor-btn-send">
-                        <Button onClick={this.convertToHtml}>发送文章</Button>
-                    </div>;
+        const {checkIsExtArt,url} = this.state;
+        const {data} = this.props;
+        let btn = <Button onClick={this.convertToHtml}>发送文章</Button>;
         if(checkIsExtArt){
-            btn = <div className="editor-btn-send">
-                        <Button onClick={this.convertToHtml}>更改文章</Button>
-                    </div>;
+            btn = <Button onClick={this.convertToHtml}>更改文章</Button>
         }
+
 
         return (
             <Fragment>
               <Container>
-                <Icon className="editor-btn" type="bold" onClick={this.onBoldLineStyle}/>
-                <Icon className="editor-btn" type="underline" onClick={this.onUnderLineStyle}/>
-                <Icon className="editor-btn" type="italic" onClick={this.onItalicStyle}/>
-                <Icon className="editor-btn" type="strikethrough" onClick={this.onStrikethroughStyle}/>
+                <Icon className="editor-btn" type="bold" onClick={() => this.toggleInlineStyle("BOLD")}/>
+                <Icon className="editor-btn" type="underline" onClick={() => this.toggleInlineStyle("UNDERLINE")}/>
+                <Icon className="editor-btn" type="italic" onClick={() => this.toggleInlineStyle("ITALIC")}/>
+                <Icon className="editor-btn" type="strikethrough" onClick={() => this.toggleInlineStyle("STRIKETHROUGH")}/>
+                {/*<Icon className="editor-btn" type="strikethrough" onClick={() => this.toggleInlineStyle("CODE")}/>*/}
 
-                {/*<Select className="editor-btn" defaultValue="普通" style={{ width: 80 }} onChange={this.handleSelectChange}>*/}
-                {/*  {*/}
-                {/*    blockItems.map((item,index)=>{*/}
-                {/*      return(*/}
-                {/*          <Option key={index} value={item.style}>{item.label}</Option>*/}
-                {/*      )*/}
-                {/*    })*/}
-                {/*  }*/}
-                {/*</Select>*/}
-
-
-                <Select className="editor-btn" defaultValue={defaultFont} style={{ width: 80 }} onChange={this.onFontSizeStyle}>
+                <Select className="editor-btn" defaultValue={defaultFont} style={{ width: 80 }} onChange={(e) => this.toggleInlineStyle(e)}>
                   {
                     fontItems.map((item)=>{
                       return(
@@ -456,7 +389,7 @@ class MyEditor extends React.PureComponent {
                   }
                 </Select>
 
-                <Select className="editor-btn" defaultValue="Red" style={{ width: 80 }} onChange={this.onColorFontStyle}>
+                <Select className="editor-btn" defaultValue="Red" style={{ width: 80 }} onChange={(e) => this.toggleInlineStyle(e)}>
                   {
                     colorItems.map((item,index)=>{
                       return(
@@ -465,38 +398,98 @@ class MyEditor extends React.PureComponent {
                     })
                   }
                 </Select>
-                <ToolBar
-                  // onBoldClick={this._onBoldClick}
-                  onLinkClick={this.addLink}
-                  // onImageClick={this.addImage}
-                />
 
-                <EditorBox>
+                  <Text className="editor-btn" type="secondary" onClick={() => {this.toggleBlockType('unstyled')}}>标准</Text>
+                <Text className="editor-btn" type="secondary" onClick={() => {this.toggleBlockType('header-one')}}>H1</Text>
+                <Text className="editor-btn" type="secondary" onClick={() => {this.toggleBlockType('header-two')}}>H2</Text>
+                <Text className="editor-btn" type="secondary" onClick={() => {this.toggleBlockType('header-three')}}>H3</Text>
+                <Text className="editor-btn" type="secondary" onClick={() => {this.toggleBlockType('header-four')}}>H4</Text>
+                <Text className="editor-btn" type="secondary" onClick={() => {this.toggleBlockType('header-five')}}>H5</Text>
+                <Text className="editor-btn" type="secondary" onClick={() => {this.toggleBlockType('blockquote')}}>添加引用</Text>
+                <Text className="editor-btn" type="secondary" onClick={() => {this.toggleBlockType('code-block')}}>代码块</Text>
+                <Text className="editor-btn" type="secondary" onClick={() => {this.toggleBlockType('unordered-list-item')}}>UL</Text>
+                <Text className="editor-btn" type="secondary" onClick={() => {this.toggleBlockType('ordered-list-item')}}>OL</Text>
+
+                  {/*<Icon type="disconnect" className="editor-btn" onClick={(e) => {this.showAddLinkModal(e)}}/>*/}
+                  {/*<Button width={50} block className="editor-btn" type="secondary" onClick={() => {this.toggleBlockType('ordered-list-item')}}>添加图片</Button>*/}
+                <Divider style={{margin:"0"}} />
+                  <EditorBox>
                   <Editor
                     editorState={this.state.editorState}
-                    handleKeyCommand={this.handleKeyCommand}
                     onChange={this.onChange}
-                    placeholder="Please input here..."
                     ref={this.setDomEditorRef}
-                    plugins={this.plugins}
                     customStyleMap={styleMap}
-                    blockRendererFn={(block) => mediaBlockRenderer(block, {
-                      deleteImage: this.deleteImage
-                    })}
+                    placeholder="Please input here..."
+                    blockRendererFn={myBlockRenderer}
                   />
+
                 </EditorBox>
-
-
               </Container>
-                {btn}
-                {/*<div className="editor-btn-send">*/}
-                {/*    <Button onClick={this.convertToHtml}>发送文章</Button>*/}
-                {/*</div>*/}
+                <Row>
+                    <Col span={1}  push={11}>
+                        {btn}
+                    </Col>
+                </Row>
+
+                <Modal
+                    title="添加链接"
+                    visible={this.state.visibleLink}
+                    onOk={this.addLink}
+                    onCancel={this.handleCancleLinkModal}
+                >
+                    <div style={{ marginBottom: 16 }}>
+                        <Input id="send-add-link" addonBefore={selectBefore} value={url} onChange={(e) => this.urlChange(e)} />
+                    </div>
+                </Modal>
             </Fragment>
         );
-      }
+    }
 }
 
+function myBlockRenderer(contentBlock) {
+    // 获取到contentBlock的文本信息，可以用contentBlock提供的其它方法获取到想要使用的信息
+    const text = contentBlock.getText();
+    // 我们假定这里图片的文本格式为![图片名称](htt://....)
+    let matches = text.match(/\!\[(.*)\]\((http.*)\)/);
+        if (matches) {
+            return {
+                component: ImgComponent,  // 指定组件
+                editable: false,  // 这里设置自定义的组件可不可以编辑，因为是图片，这里选择不可编辑
+                // 这里的props在自定义的组件中需要用this.props.blockProps来访问
+                props: {
+                    src: matches[2],
+            }
+        };
+    }
+}
+
+function findLinkEntities(contentBlock, callback, contentState) {
+    contentBlock.findEntityRanges(
+        (character) => {
+            const entityKey = character.getEntity();
+            return (
+                entityKey !== null &&
+                contentState.getEntity(entityKey).getType() === 'LINK'
+            );
+        },
+        function () {
+            console.log(arguments);
+            callback(...arguments);
+        }
+
+    );
+}
+const LinkComponent = (props) => {
+    debugger;
+    const httpType = document.querySelectorAll(".ant-select-selection-selected-value")[3].title.toLowerCase();
+    const {url} = props.contentState.getEntity(props.entityKey).getData();
+    const urlValue = httpType + url;
+    return (
+        <a href={urlValue}>
+            {props.children}
+        </a>
+    );
+};
 export default MyEditor;
 
 

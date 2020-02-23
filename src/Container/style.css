@@ -111,3 +111,19 @@
     padding: 25px;
     text-align: center;
 }
+
+/*背景*/
+
+canvas {
+    background: #000;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-image: url("https://dl.dropbox.com/s/0e9y6fafbw5lv1t/image.jpg?dl=0");
+    background-size: cover;
+}
+
+/*.send-canvas-container{*/
+/*    margin:0;*/
+/*    height: 937px;*/
+/*}*/

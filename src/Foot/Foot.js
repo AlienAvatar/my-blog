@@ -47,7 +47,7 @@ class Foot extends Component{
     }
     handleCancelVersion(){
         this.setState({
-            visibleFeed: false,
+            visibleVersion: false,
         });
     }
     handleCancelFeedBack(){
@@ -57,7 +57,7 @@ class Foot extends Component{
     }
 
     render() {
-        const { visible, confirmLoading, visibleFeed } = this.state;
+        const { visible, confirmLoading, visibleFeed,visibleVersion } = this.state;
         const Feedback = Form.create({ name: 'foot_feedback' })(FeedbackForm);
         return (
             <div className="footer">
@@ -65,7 +65,7 @@ class Foot extends Component{
                     <div className="footer-banner">
                         <a href="#" className="term-item" onClick={contactMe}>联系我们</a>
                         <a href="#" className="term-item" onClick={this.showFeedBack}>帮助与反馈</a>
-                        <a href="#" className="last-term-item" onClick={this.showService}>服务条款</a>
+                        <a href="#" className="term-item" onClick={this.showService}>服务条款</a>
                         <a href="#" className="last-term-item" onClick={this.showVersion}>博客版本</a>
                     </div>
                     <span>好好学习，努力投身于社会主义建设，早日实现伟大复兴中国梦</span>
@@ -74,17 +74,6 @@ class Foot extends Component{
                 </div>
                 <div className="footer-msg">
                     <div className="btn-group">
-                        {/*<Affix className="btn-msg" offsetBottom={this.state.bottom}>*/}
-                        {/*    <Icon*/}
-                        {/*        style={{ fontSize: '30px'}} type="message"*/}
-                        {/*        onClick={() => {*/}
-                        {/*            this.setState({*/}
-                        {/*                bottom: this.state.bottom + 10,*/}
-                        {/*            });*/}
-                        {/*        }}*/}
-                        {/*    >*/}
-                        {/*    </Icon>*/}
-                        {/*</Affix>*/}
                         <div className="back-top">
                             <BackTop visibilityHeight={400}/>
                         </div>
@@ -122,7 +111,7 @@ class Foot extends Component{
 
                     <Modal
                         title="博客版本"
-                        visible={visible}
+                        visible={visibleVersion}
                         confirmLoading={confirmLoading}
                         onCancel={this.handleCancelVersion}
                         footer={[
@@ -131,7 +120,7 @@ class Foot extends Component{
                             </Button>,
                         ]}
                     >
-
+                        <span>博客版本</span>
                     </Modal>
                 </div>
             </div>

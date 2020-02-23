@@ -87,7 +87,6 @@ class ArticleList extends Component {
     }
 
     searchArticleByTitle(){
-
         const valueTitle = document.getElementById("search-title").value || "";
         this.getPageSize(valueTitle);
         const valuePage = this.state.current;
@@ -107,6 +106,7 @@ class ArticleList extends Component {
         })
     }
 
+    //富文本编辑器，用来把数据库中的html文档更新到页面上
     componentDidUpdate(){
         const {items} = this.state;
         for(let i = 0; i < 5; i++) {

@@ -1,7 +1,9 @@
+/*About me*/
 .about-container{
     min-height: 1000px;
     width: 100%;
     border-radius: 5px;
+    padding: 0 16px;
 }
 
 .about-title{
@@ -45,10 +47,11 @@
     min-height: 1000px;
     width: 100%;
     border-radius: 5px;
+    padding:16px;
 }
 
-.send-container{
-    padding:16px;
+.send-article-container{
+    margin: 0 171px;
 }
 
 .article-select{
@@ -70,10 +73,8 @@
 .editor-btn{
     margin-bottom: 20px;
     margin-right: 5px;
+    cursor:pointer;
 }
 
-.editor-btn-send{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
+

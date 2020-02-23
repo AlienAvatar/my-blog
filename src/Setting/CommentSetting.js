@@ -16,7 +16,6 @@ class CommentSetting extends Component {
     }
 
     handleHover(){
-    debugger;
         $(".setting-avatar-content").addClass("avatar-active");
     }
 
