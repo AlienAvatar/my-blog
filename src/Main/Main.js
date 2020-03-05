@@ -14,21 +14,42 @@ import SettingContainer from "../Container/SettingContainer";
 import SupportContainer from "../Container/SupportContainer";
 import NoLoginContainer from "../Container/NoLoginContainer";
 import MusicContainer from "../Container/MusicContainer";
+import DecodeContainer from "../Container/DecodeContainer";
 import Error from "../Error/Error"
 import {isMobileOrPc,scaleScreen} from "../Utils/Utils";
+import {Button, Modal} from "antd";
 
 class Main extends Component{
     constructor(props){
         super(props);
         this.state = {
-            userInfo:""
+            userInfo:"",
+            visible : true
         };
+
+
+    }
+
+    handleCancelIntro = () => {
+        this.setState({
+            visible : false
+        })
+    };
+
+    componentDidMount() {
+        const isMobile = isMobileOrPc();
+
+        if(isMobile) {
+            document.querySelectorAll(".right-container")[0].setAttribute("style", "display:none");
+            document.querySelectorAll(".left-container")[0].setAttribute("style", "min-width: -webkit-fill-available;");
+        }
     }
 
     render() {
         scaleScreen();
         return(
             <div id="page">
+
                 <div id="header">
                     <Head/>
                 </div>
@@ -61,6 +82,9 @@ class Main extends Component{
                             <Route path="/music">
                                 <MusicContainer />
                             </Route>
+                            <Route path="/decode">
+                                <DecodeContainer />
+                            </Route>
                             <Route path="/test">
                                 <TestComponent />
                             </Route>
@@ -71,18 +95,41 @@ class Main extends Component{
                 <div id="footer">
                     <Foot />
                 </div>
+
+                {/*<Modal*/}
+                {/*    title="阿凡达博客导言"*/}
+                {/*    visible={this.state.visible}*/}
+                {/*    onCancel={this.handleCancelIntro}*/}
+                {/*    footer={[*/}
+                {/*        <Button key="back" htmlType="submit" type="primary"  onClick={this.handleCancelIntro}>*/}
+                {/*            好的*/}
+                {/*        </Button>,*/}
+                {/*    ]}*/}
+                {/*>*/}
+                {/*    <span>本博客属于beta测试版，并不对外人开放</span>*/}
+                {/*    <br/>*/}
+                {/*    <span>若出现bug，请联系管理员</span>*/}
+                {/*    <br/>*/}
+                {/*</Modal>*/}
             </div>
         )
     }
 }
 
 window.onload = () =>{
-    const isMobile = isMobileOrPc();
 
-    if(isMobile) {
-        document.querySelectorAll(".right-container")[0].setAttribute("style", "display:none");
-        document.querySelectorAll(".left-container")[0].setAttribute("style", "min-width: -webkit-fill-available;");
+};
+
+
+const adjustNav = () => {
+    const head = document.querySelector("#header");
+    if(window.scrollY > head.offsetTop){
+        head.classList.add("fixed-nav");
+    }else{
+        head.classList.remove("fixed-nav");
     }
 };
+
+window.addEventListener("scroll",adjustNav);
 
 export default Main;

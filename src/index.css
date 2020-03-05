@@ -38,3 +38,8 @@ code {
   box-shadow: 2px 2px 2px 2px rgba(0,0,0,2.5);
 }
 
+.fixed-nav{
+  position: fixed;
+  min-width: 100%;
+  z-index: 999;
+}

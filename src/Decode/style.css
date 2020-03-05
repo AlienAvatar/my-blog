@@ -1,0 +1,71 @@
+.clock {
+    width: 15rem;
+    height: 15rem;
+    border: 20px solid white;
+    border-radius: 50%;
+    /* margin: 50px auto; */
+    position: relative;
+    box-shadow: 0 0 0 4px rgba(0,0,0,0.1), inset 0 0 0 3px #EFEFEF, inset 0 0 10px black, 0 0 10px rgba(0,0,0,0.2);
+    background-size: contain;
+    background-position: -6px 6px;
+    background-image: url("../../public/image/clock.png");
+    background-repeat: no-repeat;
+    margin-top: 16px;
+    overflow: hidden;
+}
+
+.hand {
+    width: 20%;
+    height: 3px;
+    background: black;
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    /*过渡效果*/
+    /*transition: all .5s;*/
+
+    transform-origin: 100%;
+    transform: rotate(90deg);
+    transition: all 0.05s;
+    transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+}
+
+.clock-face {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform: translateY(2px); /* account for the height of the clock hands */
+}
+
+.clock-face::after{
+    content: "O";
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    top: 135px;
+}
+
+
+.clock-background{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+    background: linear-gradient(to bottom, black 0%, transparent 50%, black) no-repeat;
+}
+
+.min-hand{
+    background: orange;
+    /*width: 40%;*/
+    /*height:10px;*/
+    /*margin-top: -5px;*/
+    /*border-bottom-left-radius: .5em;*/
+    /*border-top-left-radius: .5em;*/
+    transition: all 3s;
+}
+
+.clock-face .active{
+    outline: 1px solid red;
+}

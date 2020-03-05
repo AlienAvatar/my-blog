@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import "./style.css";
-import {Divider,Icon,BackTop,Form,message, Button,Input,Modal,Affix } from "antd";
+import {Divider,BackTop,Form,message, Button,Input,Modal } from "antd";
 import {contactMe,param} from "../Constant/FootConstant";
 import {local} from "../Constant/loginConstant"
 
@@ -63,9 +63,13 @@ class Foot extends Component{
             <div className="footer">
                 <div className="footer-header">
                     <div className="footer-banner">
+                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                         <a href="#" className="term-item" onClick={contactMe}>联系我们</a>
+                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                         <a href="#" className="term-item" onClick={this.showFeedBack}>帮助与反馈</a>
+                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                         <a href="#" className="term-item" onClick={this.showService}>服务条款</a>
+                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                         <a href="#" className="last-term-item" onClick={this.showVersion}>博客版本</a>
                     </div>
                     <span>好好学习，努力投身于社会主义建设，早日实现伟大复兴中国梦</span>
@@ -105,6 +109,7 @@ class Foot extends Component{
                         onCancel={this.handleCancelFeedBack}
                         footer={null}
                     >
+                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                         如需帮助，请<a href="#" onClick={contactMe}>联系我们</a>
                         <Feedback handleCancelFeedBack={this.handleCancelFeedBack}/>
                     </Modal>
@@ -120,7 +125,9 @@ class Foot extends Component{
                             </Button>,
                         ]}
                     >
-                        <span>博客版本</span>
+                        <span>本博客属于beta测试版，并不对外人开放</span>
+                        <br/>
+                        <span>若出现bug，请联系管理员</span>
                     </Modal>
                 </div>
             </div>

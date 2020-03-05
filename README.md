@@ -16,6 +16,7 @@
 
 核心依赖版本
 ```$xslt
+    "draft-js-plugins-editor": "^3.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-player": "^1.15.2",

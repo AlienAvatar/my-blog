@@ -43,7 +43,7 @@ class FriendLink extends Component {
         let createDate = item.createDate.toString().substring(0,10);
         const SendCommentForm = Form.create({ name: 'send_comment' })(SendComment);
         return(
-            <div className="send-article-container">
+            <div className="left-article">
                 <div className="about-article">
                     <div className="send-container shadow-container">
                         <span> <Title level={3}>友情链接</Title></span>

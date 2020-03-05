@@ -61,7 +61,7 @@ class DetailComponent extends Component {
         //     const content = document.getElementById("detail-content").innerHTML = item.content;
         // }
         return(
-            <div className="send-article-container">
+            <div className="left-article">
                 <div className="about-article" style={{padding:"0 16px"}}>
                     <div className="about-container shadow-container">
                         <div className="about-title">{item.title}</div>

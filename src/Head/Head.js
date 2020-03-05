@@ -185,7 +185,7 @@ class Head extends Component{
                         {loginInMsgComponent}
                         {isShowLogin === "loginIn" ? null :
                             <Button onClick={this.openLoginWindow} className="head-btn" type="primary">登录</Button>}
-                        <Button type="link" onClick={this.openRegisterWindow} className="head-btn">注册</Button>
+                        {/*<Button type="link" onClick={this.openRegisterWindow} className="head-btn">注册</Button>*/}
                     </div>
                 )};
 
